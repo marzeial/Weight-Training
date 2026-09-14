@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strength, Recovery & Pilates Tracker</title>
+    <title>Strength & Recovery Tracker</title>
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg: #f9fafb;
-            --card-bg: #ffffff;
-            --text: #1f2937;
-            --text-light: #6b7280;
-            --border: #e5e7eb;
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --accent-orange: #ff6b00;
+            --accent-orange-hover: #e05e00;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #2d2d2d;
             --danger: #ef4444;
             --success: #10b981;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             margin: 0;
             padding: 16px;
             display: flex;
@@ -30,29 +30,30 @@
             max-width: 480px;
         }
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             text-align: center;
             margin-bottom: 4px;
+            color: var(--accent-orange);
         }
         .subtitle {
             text-align: center;
-            color: var(--text-light);
+            color: var(--text-muted);
             font-size: 0.85rem;
             margin-bottom: 20px;
         }
         .card {
             background: var(--card-bg);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
         .card h2 {
             font-size: 1.1rem;
             margin-top: 0;
             margin-bottom: 12px;
-            color: var(--primary);
+            color: var(--accent-orange);
         }
         .exercise-header {
             display: flex;
@@ -65,17 +66,17 @@
             font-size: 1rem;
         }
         .tag {
-            background: #e0e7ff;
-            color: #3730a3;
+            background: rgba(255, 107, 0, 0.15);
+            color: var(--accent-orange);
             font-size: 0.7rem;
             padding: 2px 8px;
             border-radius: 999px;
-            font-weight: 500;
+            font-weight: 600;
         }
         .media-container {
             width: 100%;
             height: 160px;
-            background-color: #f3f4f6;
+            background-color: #262626;
             border-radius: 8px;
             overflow: hidden;
             display: flex;
@@ -88,15 +89,22 @@
             height: 100%;
             object-fit: cover;
         }
-        .form-cues {
+        /* How-to guide section */
+        .how-to-guide {
             font-size: 0.8rem;
-            color: var(--text-light);
-            background: #f9fafb;
-            padding: 8px 12px;
+            color: var(--text-muted);
+            background: #252525;
+            padding: 10px 12px;
             border-radius: 6px;
             margin-bottom: 12px;
+            border-left: 3px solid var(--accent-orange);
         }
-        .form-cues ul {
+        .how-to-guide h4 {
+            margin: 0 0 4px 0;
+            color: var(--text-main);
+            font-size: 0.85rem;
+        }
+        .how-to-guide ul {
             margin: 4px 0 0 16px;
             padding: 0;
         }
@@ -113,17 +121,20 @@
             font-size: 0.85rem;
         }
         .btn-complete {
-            background-color: var(--primary);
+            background-color: var(--accent-orange);
             color: white;
             flex: 1;
         }
         .btn-complete:hover {
-            background-color: var(--primary-hover);
+            background-color: var(--accent-orange-hover);
         }
         .btn-swap {
-            background-color: #f3f4f6;
-            color: var(--text);
-            border: 1px solid var(--border);
+            background-color: #2a2a2a;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+        .btn-swap:hover {
+            background-color: #333333;
         }
         .input-group {
             margin-bottom: 12px;
@@ -133,6 +144,7 @@
             font-size: 0.85rem;
             font-weight: 500;
             margin-bottom: 4px;
+            color: var(--text-muted);
         }
         .scale-selector {
             display: flex;
@@ -140,8 +152,9 @@
         }
         .scale-btn {
             flex: 1;
-            background: #f3f4f6;
-            border: 1px solid var(--border);
+            background: #262626;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
             padding: 8px 0;
             border-radius: 6px;
             font-size: 0.85rem;
@@ -149,14 +162,14 @@
             text-align: center;
         }
         .scale-btn.selected {
-            background: var(--primary);
+            background: var(--accent-orange);
             color: white;
-            border-color: var(--primary);
+            border-color: var(--accent-orange);
         }
         .alert-box {
-            background-color: #fef2f2;
-            border: 1px solid #fca5a5;
-            color: #991b1b;
+            background-color: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
             padding: 10px;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -169,6 +182,7 @@
             gap: 8px;
             font-size: 0.85rem;
             margin-bottom: 6px;
+            color: var(--text-muted);
         }
         .submit-session {
             width: 100%;
@@ -183,25 +197,30 @@
 <body>
 
 <div class="container">
-    <h1>Strength & Pilates Flow</h1>
-    <p class="subtitle">Full-Body Foundation Plan</p>
+    <h1>Strength & Recovery</h1>
+    <p class="subtitle">Custom Strength & Energy Tracker</p>
 
+    <!-- Burnout / Fatigue Alert Container -->
     <div id="alert-box" class="alert-box">
-        ⚠️ <strong>Recovery Note:</strong> High fatigue logged recently. Consider focusing on lighter weights, extra warm-ups, or swapping to Pilates today.
+        ⚠️ <strong>Recovery Note:</strong> High fatigue logged recently. Consider backing off on weight, focusing on form, or switching to machine-based options today.
     </div>
 
+    <!-- Warm-up Checklist Card -->
     <div class="card">
         <h2>1. Warm-Up Checklist</h2>
         <div class="checklist-item"><input type="checkbox"> 3-5 min light mobility / dynamic stretches</div>
         <div class="checklist-item"><input type="checkbox"> Core activation / pelvic tilt prep</div>
     </div>
 
+    <!-- Dynamic Exercises Container with How-To Guides & Swappable Equipment Modes -->
     <div class="card">
         <h2>2. Workout Circuit</h2>
         <div id="exercise-container">
-            </div>
+            <!-- Populated via JavaScript -->
+        </div>
     </div>
 
+    <!-- Energy & Fatigue Logging Card -->
     <div class="card">
         <h2>3. Post-Workout Check-in</h2>
         
@@ -232,49 +251,79 @@
 </div>
 
 <script>
-    // Initial exercises state with your exact structure, cues, and working exercise media
+    // Exercises configured with dual equipment modes (Free Weight vs Machine) and complete step-by-step How-To Guides
     let exercises = [
         {
-            name: "Goblet Squat",
-            category: "Lower Body",
-            gif: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=500&q=80",
-            cues: ["Hold weight close to chest", "Keep chest up and core tight", "Knees track over toes"],
-            alternatives: ["Bodyweight Box Squat", "Leg Press Machine"]
+            id: 0,
+            mode: 'free', // 'free' or 'machine'
+            free: {
+                name: "Goblet Squat (Free Weights)",
+                category: "Lower Body",
+                tag: "Free Weight",
+                gif: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Hold a dumbbell vertically against your chest like a goblet.", "Keep your chest tall and core braced.", "Lower your hips back and down between your knees, keeping heels flat."]
+            },
+            machine: {
+                name: "Leg Press Machine",
+                category: "Lower Body",
+                tag: "Machine",
+                gif: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Sit back against the pad with feet hip-width on the platform.", "Release safety bars and lower sled slowly until knees reach 90 degrees.", "Drive through your whole foot to extend legs without locking knees."]
+            }
         },
         {
-            name: "Dumbbell Romanian Deadlift",
-            category: "Posterior Chain",
-            gif: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=500&q=80",
-            cues: ["Hinge at hips, back flat", "Dumbbells slide down shins", "Squeeze glutes to return"],
-            alternatives: ["Cable Pull-Through", "Glute Bridge"]
+            id: 1,
+            mode: 'free',
+            free: {
+                name: "Dumbbell Romanian Deadlift",
+                category: "Posterior Chain",
+                tag: "Free Weight",
+                gif: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Hold dumbbells in front of thighs with a soft bend in knees.", "Hinge backward at the hips while keeping your back flat.", "Lower weights until you feel a deep hamstring stretch, then squeeze glutes to return."]
+            },
+            machine: {
+                name: "Seated Leg Curl Machine",
+                category: "Posterior Chain",
+                tag: "Machine",
+                gif: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Adjust pad against the back of your lower calves just above heels.", "Secure lap pad snugly across thighs.", "Curl legs downward smoothly and control the return on the eccentric phase."]
+            }
         },
         {
-            name: "Dumbbell Row",
-            category: "Upper Body",
-            gif: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=500&q=80",
-            cues: ["Support torso on bench", "Pull elbow back toward hip", "Squeeze shoulder blades at top"],
-            alternatives: ["Seated Cable Row", "Resistance Band Row"]
+            id: 2,
+            mode: 'free',
+            free: {
+                name: "Dumbbell Row",
+                category: "Upper Body",
+                tag: "Free Weight",
+                gif: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Brace one hand and knee on a bench, holding a dumbbell in the opposite hand.", "Pull your elbow straight back toward your hip, keeping it tucked close to your body.", "Squeeze your shoulder blade at the top before lowering under control."]
+            },
+            machine: {
+                name: "Seated Cable Row",
+                category: "Upper Body",
+                tag: "Machine",
+                gif: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Sit upright with feet planted on platforms and knees slightly bent.", "Grab the handle, pull toward your lower abdomen, and retract shoulder blades.", "Extend arms slowly, allowing a slight stretch forward without rounding your lower back."]
+            }
         },
         {
-            name: "Push-Ups",
-            category: "Upper Body",
-            gif: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=500&q=80",
-            cues: ["Hands slightly wider than shoulders", "Keep body in a straight line", "Lower chest toward floor"],
-            alternatives: ["Incline Bench Push-Up", "Kneeling Push-Up"]
-        },
-        {
-            name: "Glute Bridges",
-            category: "Glutes & Core",
-            gif: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=500&q=80",
-            cues: ["Feet flat, hip-width apart", "Drive through heels to lift hips", "Pause and squeeze at the top"],
-            alternatives: ["Bodyweight Hip Thrust", "Pilates Bridge"]
-        },
-        {
-            name: "Plank",
-            category: "Core",
-            gif: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=500&q=80",
-            cues: ["Forearms under shoulders", "Engage core and glutes", "Keep neck neutral"],
-            alternatives: ["Kneeling Plank", "Bird-Dog"]
+            id: 3,
+            mode: 'free',
+            free: {
+                name: "Push-Ups",
+                category: "Upper Body",
+                tag: "Bodyweight",
+                gif: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Place hands slightly wider than shoulder-width apart.", "Keep your body in a rigid straight line from head to heels.", "Lower your chest smoothly toward the floor, keeping elbows at a 45-degree angle."]
+            },
+            machine: {
+                name: "Chest Press Machine",
+                category: "Upper Body",
+                tag: "Machine",
+                gif: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=500&q=80",
+                howTo: ["Adjust seat height so handles align mid-chest.", "Press handles forward until arms are fully extended without locking elbows.", "Return weights slowly until a gentle stretch is felt across the chest."]
+            }
         }
     ];
 
@@ -282,40 +331,41 @@
 
     function renderExercises() {
         const container = document.getElementById("exercise-container");
-        container.innerHTML = exercises.map((ex, index) => `
-            <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
-                <div class="exercise-header">
-                    <h3>${ex.name}</h3>
-                    <span class="tag">${ex.category}</span>
+        container.innerHTML = exercises.map((item, index) => {
+            const currentEx = item.mode === 'free' ? item.free : item.machine;
+            const toggleText = item.mode === 'free' ? "Switch to Machine" : "Switch to Free Weight";
+
+            return `
+                <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color);">
+                    <div class="exercise-header">
+                        <h3>${currentEx.name}</h3>
+                        <span class="tag">${currentEx.tag}</span>
+                    </div>
+                    <div class="media-container">
+                        <img src="${currentEx.gif}" alt="${currentEx.name} demonstration" class="exercise-gif" loading="lazy">
+                    </div>
+                    <div class="how-to-guide">
+                        <h4>How-To Guide:</h4>
+                        <ul>
+                            ${currentEx.howTo.map(step => `<li>${step}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-complete" onclick="markDone('${currentEx.name}')">Completed</button>
+                        <button class="btn-swap" onclick="toggleEquipment(${index})">${toggleText}</button>
+                    </div>
                 </div>
-                <div class="media-container">
-                    <img src="${ex.gif}" alt="${ex.name} demo" class="exercise-gif" loading="lazy">
-                </div>
-                <div class="form-cues">
-                    <strong>Form Cues:</strong>
-                    <ul>
-                        ${ex.cues.map(cue => `<li>${cue}</li>`).join('')}
-                    </ul>
-                </div>
-                <div class="action-row">
-                    <button class="btn-complete" onclick="markDone('${ex.name}')">Completed</button>
-                    <button class="btn-swap" onclick="swapExercise(${index})" title="Switch to alternative exercise">Swap</button>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     function markDone(name) {
-        alert(`${name} checked off! Great work.`);
+        alert(`${name} checked off! Excellent execution.`);
     }
 
-    function swapExercise(index) {
-        const alt = exercises[index].alternatives[0];
-        const current = exercises[index].name;
-        exercises[index].name = alt;
-        exercises[index].alternatives[0] = current; 
+    function toggleEquipment(index) {
+        exercises[index].mode = exercises[index].mode === 'free' ? 'machine' : 'free';
         renderExercises();
-        alert(`Swapped to ${alt}!`);
     }
 
     function selectRating(type, value) {
@@ -334,12 +384,12 @@
             return;
         }
 
-        let history = JSON.parse(localStorage.getItem('workout_history') || '[]');
+        let history = JSON.parse(localStorage.getItem('workout_history_orange') || '[]');
         history.push({ date: new Date().toISOString(), ...currentRatings });
-        localStorage.setItem('workout_history', JSON.stringify(history));
+        localStorage.setItem('workout_history_orange', JSON.stringify(history));
 
         checkBurnout(history);
-        alert("Workout logged successfully! Keep up the momentum.");
+        alert("Workout session logged successfully!");
     }
 
     function checkBurnout(history) {
@@ -353,7 +403,7 @@
     }
 
     renderExercises();
-    const savedHistory = JSON.parse(localStorage.getItem('workout_history') || '[]');
+    const savedHistory = JSON.parse(localStorage.getItem('workout_history_orange') || '[]');
     checkBurnout(savedHistory);
 </script>
 
