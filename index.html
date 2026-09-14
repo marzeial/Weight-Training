@@ -74,25 +74,24 @@
         }
         .media-container {
             width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            height: 140px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #eef2ff 100%);
             border-radius: 8px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
-            position: relative;
+            margin-bottom: 10px;
         }
-        /* Custom Smooth CSS/SVG Animations for Exercise Motion */
+        /* True CSS keyframe animations for the built-in SVG graphics */
         .animated-graphic {
-            width: 80px;
-            height: 80px;
-            animation: moveRoutine 2.5s ease-in-out infinite;
+            width: 70px;
+            height: 70px;
+            animation: pulseMotion 2.5s ease-in-out infinite;
         }
-        @keyframes moveRoutine {
+        @keyframes pulseMotion {
             0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-8px) scale(1.03); }
+            50% { transform: translateY(-6px) scale(1.04); }
         }
         .form-cues {
             font-size: 0.8rem;
@@ -192,27 +191,22 @@
     <h1>Strength & Pilates Flow</h1>
     <p class="subtitle">Full-Body Foundation Plan</p>
 
-    <!-- Recovery Alert Container -->
     <div id="alert-box" class="alert-box">
-        ⚠️ <strong>Recovery Note:</strong> High fatigue logged recently. Consider lighter loads or swapping to Pilates today.
+        ⚠️ <strong>Recovery Note:</strong> High fatigue logged recently. Consider focusing on lighter weights, extra warm-ups, or swapping to Pilates today.
     </div>
 
-    <!-- Warm-up Checklist Card -->
     <div class="card">
         <h2>1. Warm-Up Checklist</h2>
         <div class="checklist-item"><input type="checkbox"> 3-5 min light mobility / dynamic stretches</div>
         <div class="checklist-item"><input type="checkbox"> Core activation / pelvic tilt prep</div>
     </div>
 
-    <!-- Dynamic Exercises Container -->
     <div class="card">
         <h2>2. Workout Circuit</h2>
         <div id="exercise-container">
-            <!-- Populated via JavaScript -->
-        </div>
+            </div>
     </div>
 
-    <!-- Energy & Fatigue Logging Card -->
     <div class="card">
         <h2>3. Post-Workout Check-in</h2>
         
@@ -243,11 +237,11 @@
 </div>
 
 <script>
+    // Initial exercises state with your exact form cues, alternatives, and integrated animated vector SVGs
     let exercises = [
         {
             name: "Goblet Squat",
             category: "Lower Body",
-            // Custom vector animation asset representing weighted squats
             svg: `<svg class="animated-graphic" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
             cues: ["Hold weight close to chest", "Keep chest up and core tight", "Knees track over toes"],
             alternatives: ["Bodyweight Box Squat", "Leg Press Machine"]
@@ -324,7 +318,7 @@
         const alt = exercises[index].alternatives[0];
         const current = exercises[index].name;
         exercises[index].name = alt;
-        exercises[index].alternatives[0] = current;
+        exercises[index].alternatives[0] = current; 
         renderExercises();
         alert(`Swapped to ${alt}!`);
     }
