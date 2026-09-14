@@ -372,7 +372,7 @@
             border-color: var(--accent);
         }
 
-        /* Guide toggle & Animated stick figure graphic */
+        /* Guide toggle & GIF demo box */
         .guide-toggle {
             font-size: 0.8rem;
             color: var(--accent);
@@ -393,34 +393,27 @@
 
         .form-guide.active {
             display: grid;
-            grid-template-columns: 100px 1fr;
+            grid-template-columns: 110px 1fr;
             gap: 1.25rem;
             align-items: center;
         }
 
-        .stick-figure-box {
-            width: 100px;
-            height: 100px;
+        .gif-container {
+            width: 110px;
+            height: 110px;
             background: white;
             border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--border);
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 4px;
         }
 
-        /* Subtle CSS Animation to give life to the stick figure box */
-        @keyframes subtleBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-        .animated-graphic {
-            animation: subtleBounce 2s infinite ease-in-out;
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .guide-text p {
@@ -602,9 +595,8 @@
                         <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
                     </div>
                     <div class="form-guide">
-                        <div class="stick-figure-box animated-graphic">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3A4D39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7l-3 5"/><path d="M12 13l3 5"/><path d="M9 9h6"/></svg>
-                            <span style="margin-top: 4px; font-weight: 600;">Squat Form</span>
+                        <div class="gif-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Goblet-squat.gif" alt="Goblet Squat Demonstration" loading="lazy">
                         </div>
                         <div class="guide-text">
                             <p><strong>Form Cue:</strong> Chest proud, weight balanced mid-foot, core braced lightly.</p>
@@ -627,9 +619,8 @@
                         <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
                     </div>
                     <div class="form-guide">
-                        <div class="stick-figure-box animated-graphic">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3A4D39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7l2 5"/><path d="M12 13l-2 5"/><path d="M8 8l4 2 4-2"/></svg>
-                            <span style="margin-top: 4px; font-weight: 600;">Hinge Form</span>
+                        <div class="gif-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Dumbbell-romanian-deadlift.gif" alt="Romanian Deadlift Demonstration" loading="lazy">
                         </div>
                         <div class="guide-text">
                             <p><strong>Form Cue:</strong> Soft bend in knees, push hips straight back until a stretch is felt in hamstrings.</p>
