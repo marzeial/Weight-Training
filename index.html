@@ -56,7 +56,6 @@
     max-width:46ch;
   }
 
-  /* Foundation blocks - week overview */
   .foundation{
     display:flex;
     gap:6px;
@@ -86,7 +85,6 @@
     letter-spacing:.02em;
   }
 
-  /* Week tabs */
   .tabs{
     display:flex;
     gap:8px;
@@ -110,13 +108,12 @@
     border-bottom-color:var(--brick);
   }
 
-  /* Day cards */
   .day-card{
     background:var(--surface);
     border:1px solid var(--line);
     border-left:6px solid var(--accent, var(--brick));
     margin-bottom:16px;
-    padding:16px 18px 8px;
+    padding:16px 18px 12px;
   }
   .day-card.day-0{ --accent: var(--brick); }
   .day-card.day-1{ --accent: var(--moss); }
@@ -160,6 +157,54 @@
   .day-equip-toggle button.active{
     background:var(--accent, var(--brick));
     color:var(--surface);
+  }
+
+  /* Energy & Fatigue Scale Controls */
+  .metrics-row{
+    display:flex;
+    gap:16px;
+    background:var(--surface-alt);
+    padding:10px 12px;
+    border:1px solid var(--line);
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .metric-group{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex:1;
+    min-width:200px;
+  }
+  .metric-group label{
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .rating-btns{
+    display:flex;
+    gap:4px;
+  }
+  .rating-btn{
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    width:26px;
+    height:26px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+  }
+  .rating-btn.active{
+    background:var(--accent, var(--brick));
+    color:var(--surface);
+    border-color:var(--accent, var(--brick));
+    font-weight:600;
   }
 
   .exercise{
@@ -242,14 +287,13 @@
     display:flex;
     align-items:center;
     gap:8px;
-    padding:12px 0 14px;
+    padding:12px 0 6px;
     font-size:13px;
     color:var(--ink-soft);
   }
   .day-complete-row input{ accent-color:var(--accent); width:15px; height:15px; }
   .day-complete-row.checked{ color:var(--ink); font-weight:600; }
 
-  /* Stats footer */
   .stats{
     margin-top:30px;
     padding-top:18px;
@@ -311,7 +355,6 @@
   }
   .reset-btn:hover{ border-color:var(--brick); color:var(--brick); }
 
-  /* View toggle */
   .view-toggle{
     display:flex;
     gap:0;
@@ -347,7 +390,6 @@
   }
   .mode-block{ display:none; }
 
-  /* Guide view */
   #guideView{ display:none; }
   .guide-section{
     margin:26px 0;
@@ -406,7 +448,6 @@
     100%{ background:var(--surface); }
   }
 
-  /* Warm-up checklist inside each day card */
   .warmup-box{
     background:var(--surface-alt);
     border:1px dashed var(--line);
@@ -493,7 +534,6 @@
     to{ opacity:1; transform:translateY(0); }
   }
 
-  /* Cardio card */
   .cardio-card{
     background:var(--surface);
     border:1px solid var(--line);
@@ -1081,7 +1121,16 @@ function blankSession(){
   EXERCISES.forEach(ex => {
     exercises[ex.key] = Array.from({length: ex.sets}, () => ({ amount:'', reps:'', done:false }));
   });
-  return { date:'', complete:false, exercises, warmup: WARMUP_STEPS.map(()=>false), equipment:'machine', note:'' };
+  return { 
+    date:'', 
+    complete:false, 
+    exercises, 
+    warmup: WARMUP_STEPS.map(()=>false), 
+    equipment:'machine', 
+    note:'',
+    energy: 0,
+    fatigue: 0
+  };
 }
 
 function blankCardio(){
@@ -1314,6 +1363,32 @@ function renderTabs(){
   }
 }
 
+function createRatingScale(label, currentVal, onChange){
+  const group = document.createElement('div');
+  group.className = 'metric-group';
+  
+  const lbl = document.createElement('label');
+  lbl.textContent = label;
+  group.appendChild(lbl);
+  
+  const btns = document.createElement('div');
+  btns.className = 'rating-btns';
+  
+  for(let i=1; i<=5; i++){
+    const b = document.createElement('button');
+    b.className = 'rating-btn' + (currentVal === i ? ' active' : '');
+    b.textContent = i;
+    b.onclick = () => {
+      const val = (currentVal === i) ? 0 : i;
+      onChange(val);
+    };
+    btns.appendChild(b);
+  }
+  
+  group.appendChild(btns);
+  return group;
+}
+
 function renderDays(){
   const el = document.getElementById('days');
   el.innerHTML = '';
@@ -1347,6 +1422,21 @@ function renderDays(){
     head.appendChild(dateInput);
     head.appendChild(equipToggle);
     card.appendChild(head);
+
+    // Energy & Fatigue ratings row
+    const metricsRow = document.createElement('div');
+    metricsRow.className = 'metrics-row';
+    metricsRow.appendChild(createRatingScale('Energy Level:', session.energy || 0, (val) => {
+      session.energy = val;
+      scheduleSave();
+      renderDays();
+    }));
+    metricsRow.appendChild(createRatingScale('Fatigue Rating:', session.fatigue || 0, (val) => {
+      session.fatigue = val;
+      scheduleSave();
+      renderDays();
+    }));
+    card.appendChild(metricsRow);
 
     // Warm-up checklist
     const warmupBox = document.createElement('div');
