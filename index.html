@@ -41,7 +41,6 @@
             font-size: 0.85rem;
             margin-bottom: 16px;
         }
-        /* Encouragement / Beginner Welcome Banner */
         .welcome-banner {
             background: rgba(255, 107, 0, 0.1);
             border: 1px solid rgba(255, 107, 0, 0.3);
@@ -96,8 +95,8 @@
         }
         .media-container {
             width: 100%;
-            height: 160px;
-            background-color: #262626;
+            height: 180px;
+            background-color: #ffffff;
             border-radius: 8px;
             overflow: hidden;
             display: flex;
@@ -108,7 +107,8 @@
         .exercise-gif {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            background: #ffffff;
         }
         .how-to-guide {
             font-size: 0.8rem;
@@ -128,7 +128,6 @@
             margin: 4px 0 0 16px;
             padding: 0;
         }
-        /* Beginner regression tip */
         .easier-tip {
             font-size: 0.75rem;
             color: #93c5fd;
@@ -242,7 +241,6 @@
             border-top: 1px solid var(--border-color);
             padding-top: 8px;
         }
-        /* Custom modal for encouraging feedback */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -274,7 +272,7 @@
 
     <!-- Beginner Welcome & Reassurance Banner -->
     <div class="welcome-banner">
-        👋 <strong>Welcome!</strong> Take a deep breath. Focus entirely on form and feeling comfortable rather than heavy weight. Pausing or stopping early is a total win.
+        👋 <strong>Welcome!</strong> Take your time. Focus entirely on form and feeling comfortable rather than heavy weight. Pausing or stopping early is a total win.
     </div>
 
     <!-- Burnout / Fatigue Alert Container -->
@@ -282,17 +280,17 @@
         ⚠️ <strong>Recovery Note:</strong> High fatigue logged recently. Consider backing off on weight, focusing on form, or switching to machine-based options today.
     </div>
 
-    <!-- Warm-up Checklist Card -->
+    <!-- Warm-up Checklist Card with Detailed Guidance -->
     <div class="card">
         <h2>
             <span>1. Warm-Up Checklist</span>
             <span class="timer-badge" onclick="startRestTimer(60)">⏱ Rest 60s</span>
         </h2>
-        <div class="checklist-item"><input type="checkbox"> 3-5 min light mobility / dynamic stretches</div>
-        <div class="checklist-item"><input type="checkbox"> Core activation / pelvic tilt prep</div>
+        <div class="checklist-item"><input type="checkbox"> <strong>3-5 min light mobility:</strong> Arm circles, torso twists, and gentle leg swings to get blood flowing.</div>
+        <div class="checklist-item"><input type="checkbox"> <strong>Core activation:</strong> Gentle pelvic tilts or dead bugs to wake up deep abdominal stabilizers.</div>
     </div>
 
-    <!-- Dynamic Exercises Container -->
+    <!-- Dynamic Exercises Container with Detailed How-To Guides -->
     <div class="card">
         <h2>
             <span>2. Workout Circuit</span>
@@ -354,17 +352,26 @@
                 name: "Goblet Squat (Free Weights)",
                 category: "Lower Body",
                 tag: "Free Weight",
-                gif: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Hold a light dumbbell vertically against your chest like a goblet.", "Keep your chest tall and core braced.", "Lower your hips back and down between your knees, keeping heels flat."],
-                easierTip: "💡 Beginner Tip: Try doing these to a stable chair or box behind you if you want extra stability."
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Squat_1/0.jpg",
+                howTo: [
+                    "Hold a light dumbbell vertically against your chest like a goblet.",
+                    "Stand with feet slightly wider than shoulder-width apart, toes turned slightly out.",
+                    "Keep your chest tall and core braced as you push your hips back and down.",
+                    "Lower until your thighs are parallel to the floor, keeping your heels firmly planted."
+                ],
+                easierTip: "💡 Beginner Tip: Try squatting down to a stable chair or box behind you if you want extra stability."
             },
             machine: {
                 name: "Leg Press Machine",
                 category: "Lower Body",
                 tag: "Machine",
-                gif: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Sit back against the pad with feet hip-width on the platform.", "Release safety bars and lower sled slowly until knees reach 90 degrees.", "Drive through your whole foot to extend legs without locking knees."],
-                easierTip: "💡 Beginner Tip: Start with just the sled weight to get comfortable with the range of motion."
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Press/0.jpg",
+                howTo: [
+                    "Sit back comfortably against the pad with feet hip-width apart on the center of the platform.",
+                    "Release the safety handles and lower the sled slowly until your knees reach a 90-degree angle.",
+                    "Drive through your whole foot to extend your legs smoothly without locking your knees at the top."
+                ],
+                easierTip: "💡 Beginner Tip: Start with just the sled weight to get completely comfortable with the range of motion."
             }
         },
         {
@@ -375,17 +382,25 @@
                 name: "Dumbbell Romanian Deadlift",
                 category: "Posterior Chain",
                 tag: "Free Weight",
-                gif: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Hold light dumbbells in front of thighs with a soft bend in knees.", "Hinge backward at the hips while keeping your back flat.", "Lower weights only as far as your hamstrings feel a gentle stretch."],
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Romanian_Deadlift/0.jpg",
+                howTo: [
+                    "Hold light dumbbells in front of your thighs with a soft, unchanging bend in your knees.",
+                    "Hinge backward at your hips (pushing your glutes toward the wall behind you) while keeping your spine neutral.",
+                    "Slide the weights down your shins until you feel a comfortable stretch in your hamstrings, then squeeze glutes to stand."
+                ],
                 easierTip: "💡 Beginner Tip: Focus entirely on the hip hinge motion with zero added weight first if needed."
             },
             machine: {
                 name: "Seated Leg Curl Machine",
                 category: "Posterior Chain",
                 tag: "Machine",
-                gif: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Adjust pad against the back of your lower calves just above heels.", "Secure lap pad snugly across thighs.", "Curl legs downward smoothly and control the return."],
-                easierTip: "💡 Beginner Tip: Keep your toes pointed slightly straight to engage calves evenly."
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/0.jpg",
+                howTo: [
+                    "Adjust the back pad and leg lever so the pivot aligns with your knees, and the pad rests on your lower calves.",
+                    "Secure the lap restraint snugly across your thighs.",
+                    "Curl your legs downward smoothly in a controlled arc, and return slowly on the eccentric phase."
+                ],
+                easierTip: "💡 Beginner Tip: Keep your toes pointed straight ahead to engage your hamstrings evenly."
             }
         },
         {
@@ -396,17 +411,25 @@
                 name: "Dumbbell Row",
                 category: "Upper Body",
                 tag: "Free Weight",
-                gif: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Brace one hand and knee on a bench, holding a light dumbbell in the opposite hand.", "Pull your elbow straight back toward your hip.", "Squeeze your shoulder blade gently at the top."],
-                easierTip: "💡 Beginner Tip: Stand and support yourself on an incline bench if kneeling feels awkward."
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
+                howTo: [
+                    "Place one knee and one hand firmly on a flat bench, keeping your back flat and parallel to the floor.",
+                    "Hold a light dumbbell in your free hand hanging straight down.",
+                    "Pull your elbow straight back toward your hip, keeping it tucked close to your body, and squeeze your shoulder blade."
+                ],
+                easierTip: "💡 Beginner Tip: Stand and support your upper body on an incline bench if kneeling feels awkward on your knees."
             },
             machine: {
                 name: "Seated Cable Row",
                 category: "Upper Body",
                 tag: "Machine",
-                gif: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Sit upright with feet planted on platforms and knees slightly bent.", "Grab the handle, pull toward your lower abdomen, and retract shoulder blades.", "Extend arms slowly, allowing a slight stretch forward."],
-                easierTip: "💡 Beginner Tip: Keep your shoulders relaxed down away from your ears."
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Cable_Row/0.jpg",
+                howTo: [
+                    "Sit upright with feet planted firmly on the platforms and a slight bend in your knees.",
+                    "Grab the handle, sit tall, and pull the handle toward your lower abdomen while retracting your shoulder blades.",
+                    "Extend your arms slowly forward, allowing a gentle stretch without rounding your lower back."
+                ],
+                easierTip: "💡 Beginner Tip: Keep your shoulders relaxed down away from your ears throughout the movement."
             }
         },
         {
@@ -417,17 +440,25 @@
                 name: "Push-Ups",
                 category: "Upper Body",
                 tag: "Bodyweight",
-                gif: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Place hands slightly wider than shoulder-width apart.", "Keep your body in a rigid straight line from head to knees or toes.", "Lower your chest smoothly toward the floor."],
-                easierTip: "💡 Beginner Tip: Incline push-ups against a sturdy countertop or high smith machine bar are fantastic for building core and chest strength safely!"
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushup/0.jpg",
+                howTo: [
+                    "Place your hands slightly wider than shoulder-width apart on the floor or an elevated surface.",
+                    "Keep your entire body in a rigid straight line from head to knees or toes.",
+                    "Lower your chest smoothly toward the floor, keeping your elbows tucked at a 45-degree angle."
+                ],
+                easierTip: "💡 Beginner Tip: Incline push-ups against a sturdy countertop or high Smith machine bar are fantastic for building core and chest strength safely!"
             },
             machine: {
                 name: "Chest Press Machine",
                 category: "Upper Body",
                 tag: "Machine",
-                gif: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Adjust seat height so handles align mid-chest.", "Press handles forward until arms are fully extended without locking elbows.", "Return weights slowly until a gentle stretch is felt."],
-                easierTip: "💡 Beginner Tip: Keep your lower back gently pressed against the back pad."
+                gif: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Chest_Press_Machine/0.jpg",
+                howTo: [
+                    "Adjust the seat height so the handles align directly with the middle of your chest.",
+                    "Press the handles forward until your arms are fully extended without locking your elbows.",
+                    "Return the weights slowly until a comfortable stretch is felt across your chest."
+                ],
+                easierTip: "💡 Beginner Tip: Keep your lower back gently pressed against the back pad for stability."
             }
         }
     ];
@@ -456,7 +487,7 @@
                         <img src="${currentEx.gif}" alt="${currentEx.name} demonstration" class="exercise-gif" loading="lazy">
                     </div>
                     <div class="how-to-guide">
-                        <h4>How-To Guide:</h4>
+                        <h4>How-To Guide & Form Cues:</h4>
                         <ul>
                             ${currentEx.howTo.map(step => `<li>${step}</li>`).join('')}
                         </ul>
