@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strength & Fatigue Tracker</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f8;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --text: #1e293b;
+      --border: #e2e8f0;
+      --warning: #ef4444;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      margin: 0;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+    .app-container {
+      max-width: 600px;
+      width: 100%;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
+    }
+    .alert {
+      display: none;
+      background-color: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .rating-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+    .rating-btn {
+      flex: 1;
+      margin: 0 0.25rem;
+      padding: 0.6rem 0;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .rating-btn.selected {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .exercise-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exercise-row:last-child {
+      border-bottom: none;
+    }
+    .input-group input {
+      width: 60px;
+      padding: 0.4rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>Workout & Fatigue Tracker</h1>
+    <p style="margin:0; color:#64748b; font-size:0.9rem;">Track effort, weight progression, and recovery.</p>
+  </header>
+
+  <div id="burnout-alert" class="alert">
+    ⚠️ Alert: Consecutive high-fatigue sessions detected! Consider a light recovery session today.
+  </div>
+
+  <form id="workout-form">
+    <div class="card">
+      <h3>Pre-Workout Energy (1 - 5)</h3>
+      <div class="rating-group" id="energy-rating">
+        <button type="button" class="rating-btn" data-value="1">1</button>
+        <button type="button" class="rating-btn" data-value="2">2</button>
+        <button type="button" class="rating-btn" data-value="3">3</button>
+        <button type="button" class="rating-btn" data-value="4">4</button>
+        <button type="button" class="rating-btn" data-value="5">5</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Today's Exercises</h3>
+      <div id="exercise-list"></div>
+    </div>
+
+    <div class="card">
+      <h3>Session Fatigue Rating (1 - 5)</h3>
+      <div class="rating-group" id="fatigue-rating">
+        <button type="button" class="rating-btn" data-value="1">1</button>
+        <button type="button" class="rating-btn" data-value="2">2</button>
+        <button type="button" class="rating-btn" data-value="3">3</button>
+        <button type="button" class="rating-btn" data-value="4">4</button>
+        <button type="button" class="rating-btn" data-value="5">5</button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit">Save Session</button>
+  </form>
+</div>
+
+<script>
+  const EXERCISES = [
+    { id: 'squat', name: 'Goblet Squats / Machine Press', cue: 'Focus on depth and control' },
+    { id: 'row', name: 'Seated Cable Row', cue: 'Squeeze shoulder blades' },
+    { id: 'press', name: 'Dumbbell Overhead Press', cue: 'Keep core tight' },
+    { id: 'plank', name: 'Core Hold / Plank', cue: 'Maintain flat posture' }
+  ];
+
+  let selectedEnergy = 3;
+  let selectedFatigue = 3;
+
+  function initApp() {
+    renderExercises();
+    setupRatingListeners();
+    checkBurnoutHistory();
+  }
+
+  function renderExercises() {
+    const container = document.getElementById('exercise-list');
+    container.innerHTML = EXERCISES.map(ex => `
+      <div class="exercise-row">
+        <div>
+          <strong>${ex.name}</strong>
+          <div style="font-size:0.8rem; color:#64748b;">${ex.cue}</div>
+        </div>
+        <div class="input-group">
+          <input type="number" placeholder="lbs" id="weight-${ex.id}" min="0">
+          <input type="number" placeholder="reps" id="reps-${ex.id}" min="0">
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function setupRatingListeners() {
+    const bindGroup = (groupId, callback) => {
+      const btns = document.querySelectorAll(`#${groupId} .rating-btn`);
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          callback(parseInt(btn.dataset.value));
+        });
+      });
+      btns[2].classList.add('selected');
+    };
+
+    bindGroup('energy-rating', v => selectedEnergy = v);
+    bindGroup('fatigue-rating', v => selectedFatigue = v);
+  }
+
+  function checkBurnoutHistory() {
+    const history = JSON.parse(localStorage.getItem('workout_history') || '[]');
+    if (history.length >= 2) {
+      const lastTwo = history.slice(-2);
+      if (lastTwo.every(session => session.fatigue >= 4)) {
+        document.getElementById('burnout-alert').style.display = 'block';
+      }
+    }
+  }
+
+  document.getElementById('workout-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const sessionData = {
+      date: new Date().toISOString(),
+      energy: selectedEnergy,
+      fatigue: selectedFatigue,
+      exercises: EXERCISES.map(ex => ({
+        id: ex.id,
+        weight: document.getElementById(`weight-${ex.id}`).value || 0,
+        reps: document.getElementById(`reps-${ex.id}`).value || 0
+      }))
+    };
+
+    const history = JSON.parse(localStorage.getItem('workout_history') || '[]');
+    history.push(sessionData);
+    localStorage.setItem('workout_history', JSON.stringify(history));
+
+    alert('Workout saved successfully!');
+    location.reload();
+  });
+
+  initApp();
+</script>
+</body>
+</html>
