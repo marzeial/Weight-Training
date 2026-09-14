@@ -372,7 +372,7 @@
             border-color: var(--accent);
         }
 
-        /* Guide toggle & Animated stick figure section */
+        /* Guide toggle & Animated stick figure graphic */
         .guide-toggle {
             font-size: 0.8rem;
             color: var(--accent);
@@ -398,22 +398,29 @@
             align-items: center;
         }
 
-        .stick-figure-gif {
+        .stick-figure-box {
             width: 100px;
             height: 100px;
             background: white;
             border-radius: 8px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             border: 1px solid var(--border);
-            overflow: hidden;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 4px;
         }
 
-        .stick-figure-gif img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* Subtle CSS Animation to give life to the stick figure box */
+        @keyframes subtleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        .animated-graphic {
+            animation: subtleBounce 2s infinite ease-in-out;
         }
 
         .guide-text p {
@@ -595,9 +602,9 @@
                         <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
                     </div>
                     <div class="form-guide">
-                        <div class="stick-figure-gif">
-                            <!-- Placeholder or link for animated stick figure GIF -->
-                            <img src="https://via.placeholder.com/100x100.png?text=Squat+GIF" alt="Goblet Squat Animation">
+                        <div class="stick-figure-box animated-graphic">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3A4D39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7l-3 5"/><path d="M12 13l3 5"/><path d="M9 9h6"/></svg>
+                            <span style="margin-top: 4px; font-weight: 600;">Squat Form</span>
                         </div>
                         <div class="guide-text">
                             <p><strong>Form Cue:</strong> Chest proud, weight balanced mid-foot, core braced lightly.</p>
@@ -620,8 +627,9 @@
                         <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
                     </div>
                     <div class="form-guide">
-                        <div class="stick-figure-gif">
-                            <img src="https://via.placeholder.com/100x100.png?text=RDL+GIF" alt="Romanian Deadlift Animation">
+                        <div class="stick-figure-box animated-graphic">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3A4D39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7l2 5"/><path d="M12 13l-2 5"/><path d="M8 8l4 2 4-2"/></svg>
+                            <span style="margin-top: 4px; font-weight: 600;">Hinge Form</span>
                         </div>
                         <div class="guide-text">
                             <p><strong>Form Cue:</strong> Soft bend in knees, push hips straight back until a stretch is felt in hamstrings.</p>
@@ -725,7 +733,7 @@
         document.getElementById(`week-${weekNum}`).classList.add('active');
     }
 
-    // Form Guide & Animated GIF Toggle
+    // Form Guide Toggle
     function toggleGuide(el) {
         const guide = el.closest('.exercise-item').querySelector('.form-guide');
         guide.classList.toggle('active');
