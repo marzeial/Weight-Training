@@ -1,796 +1,1666 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation — Strength Program for Beginners</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #F9F8F6;
-            --card-bg: #FFFFFF;
-            --text-main: #2C2A29;
-            --text-muted: #6B6764;
-            --accent: #3A4D39; /* Deep sage/olive */
-            --accent-light: #EBF0EA;
-            --accent-hover: #2E3E2D;
-            --border: #E3E0DC;
-            --border-light: #F0ECE6;
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --shadow: 0 4px 20px rgba(44, 42, 41, 0.04);
-            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundation — Strength Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EEF0E6;
+    --surface: #FAF9F3;
+    --surface-alt: #E4E4D6;
+    --ink: #23271F;
+    --ink-soft: #5B6156;
+    --brick: #A8462F;
+    --brick-dark: #7E3220;
+    --moss: #5C6B3F;
+    --moss-dark: #414A2C;
+    --ochre: #B98A2E;
+    --ochre-dark: #8C6A20;
+    --slate: #4A6670;
+    --plum: #7A5470;
+    --line: #D6D5C2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:28px 18px 60px;
+  }
+  h1,h2,h3{
+    font-family:'Zilla Slab', serif;
+    margin:0;
+  }
+  header.top{
+    margin-bottom:22px;
+  }
+  header.top h1{
+    font-size:30px;
+    font-weight:700;
+    line-height:1.1;
+    color:var(--ink);
+  }
+  header.top p{
+    margin:6px 0 0;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    max-width:46ch;
+  }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  /* Foundation blocks - week overview */
+  .foundation{
+    display:flex;
+    gap:6px;
+    margin-top:20px;
+  }
+  .block{
+    flex:1;
+    height:14px;
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .block .fill{
+    position:absolute;
+    inset:0;
+    width:0%;
+    background:linear-gradient(90deg, var(--brick), var(--ochre));
+    transition:width .5s ease;
+  }
+  .foundation-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-top:5px;
+    letter-spacing:.02em;
+  }
 
-        body {
-            font-family: 'Work Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 2rem 1rem;
-            -webkit-font-smoothing: antialiased;
-        }
+  /* Week tabs */
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin:26px 0 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .tab{
+    font-family:'Zilla Slab', serif;
+    font-size:16px;
+    font-weight:600;
+    background:none;
+    border:none;
+    padding:8px 4px 12px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    position:relative;
+    border-bottom:3px solid transparent;
+  }
+  .tab.active{
+    color:var(--ink);
+    border-bottom-color:var(--brick);
+  }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+  /* Day cards */
+  .day-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--accent, var(--brick));
+    margin-bottom:16px;
+    padding:16px 18px 8px;
+  }
+  .day-card.day-0{ --accent: var(--brick); }
+  .day-card.day-1{ --accent: var(--moss); }
+  .day-card.day-2{ --accent: var(--ochre); }
 
-        /* Header */
-        header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            padding: 0 1rem;
-        }
+  .day-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .day-head h2{
+    font-size:19px;
+    color:var(--accent);
+  }
+  .day-head .date-input{
+    font-family:'Work Sans', sans-serif;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    background:var(--surface);
+    padding:4px 6px;
+  }
+  .day-equip-toggle{
+    display:flex;
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .day-equip-toggle button{
+    font-family:'Work Sans', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    padding:4px 9px;
+    border:none;
+    background:var(--surface);
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .day-equip-toggle button.active{
+    background:var(--accent, var(--brick));
+    color:var(--surface);
+  }
 
-        .tagline {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
+  .exercise{
+    padding:11px 0;
+    border-top:1px solid var(--line);
+  }
+  .exercise:first-of-type{ border-top:none; }
+  .ex-name-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:8px;
+  }
+  .ex-name{
+    font-size:15px;
+    font-weight:600;
+  }
+  .ex-target{
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .sets-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .set-block{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--surface-alt);
+    padding:6px 8px;
+    border:1px solid var(--line);
+  }
+  .set-block .set-idx{
+    font-size:11px;
+    color:var(--ink-soft);
+    width:14px;
+    text-align:center;
+  }
+  .set-block input[type=number]{
+    width:44px;
+    border:none;
+    background:transparent;
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    color:var(--ink);
+    text-align:center;
+    -moz-appearance:textfield;
+  }
+  .set-block input[type=number]::-webkit-outer-spin-button,
+  .set-block input[type=number]::-webkit-inner-spin-button{
+    -webkit-appearance:none; margin:0;
+  }
+  .unit{
+    font-size:10.5px;
+    color:var(--ink-soft);
+  }
+  .done-dot{
+    width:16px;
+    height:16px;
+    border:1.5px solid var(--accent);
+    border-radius:50%;
+    cursor:pointer;
+    flex-shrink:0;
+    position:relative;
+    background:transparent;
+  }
+  .done-dot.on{
+    background:var(--accent);
+    animation:pop .22s ease;
+  }
+  @keyframes pop{
+    0%{ transform:scale(1); }
+    50%{ transform:scale(1.35); }
+    100%{ transform:scale(1); }
+  }
 
-        h1 {
-            font-family: 'Zilla Slab', serif;
-            font-size: 2.75rem;
-            font-weight: 500;
-            color: var(--text-main);
-            margin-bottom: 0.75rem;
-        }
+  .day-complete-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 0 14px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .day-complete-row input{ accent-color:var(--accent); width:15px; height:15px; }
+  .day-complete-row.checked{ color:var(--ink); font-weight:600; }
 
-        .subtitle {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            max-width: 500px;
-            margin: 0 auto 1.5rem auto;
-        }
+  /* Stats footer */
+  .stats{
+    margin-top:30px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+  }
+  .stats h3{
+    font-size:16px;
+    margin-bottom:12px;
+  }
+  .stat-row{
+    display:flex;
+    gap:22px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .stat{
+    min-width:90px;
+  }
+  .stat .num{
+    font-family:'Zilla Slab', serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--brick);
+  }
+  .stat .lbl{
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .spark-wrap{ margin-top:4px; }
+  .spark-caption{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+  .empty-note{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
 
-        /* Global Controls Bar */
-        .controls-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-bg);
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+  .bottom-row{
+    margin-top:26px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .save-note{
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .reset-btn{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:11.5px;
+    padding:6px 10px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+  .reset-btn:hover{ border-color:var(--brick); color:var(--brick); }
 
-        .mode-toggle {
-            display: flex;
-            background: var(--bg-color);
-            padding: 4px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-        }
+  /* View toggle */
+  .view-toggle{
+    display:flex;
+    gap:0;
+    margin-top:20px;
+    border:1px solid var(--ink);
+    width:fit-content;
+  }
+  .view-toggle button{
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding:7px 16px;
+    border:none;
+    background:var(--bg);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .view-toggle button.active{
+    background:var(--ink);
+    color:var(--surface);
+  }
+  .mode-toggle{
+    margin-top:8px;
+    border-color:var(--line);
+  }
+  .mode-toggle button{
+    font-size:12px;
+    padding:5px 12px;
+  }
+  .mode-toggle button.active{
+    background:var(--brick);
+    color:var(--surface);
+  }
+  .mode-block{ display:none; }
 
-        .mode-btn {
-            background: transparent;
-            border: none;
-            padding: 0.5rem 1rem;
-            font-family: 'Work Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: 6px;
-            transition: var(--transition);
-        }
+  /* Guide view */
+  #guideView{ display:none; }
+  .guide-section{
+    margin:26px 0;
+  }
+  .guide-section h2{
+    font-size:19px;
+    color:var(--brick);
+    margin-bottom:8px;
+  }
+  .guide-section p{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--ink);
+    max-width:56ch;
+    margin:0 0 10px;
+  }
+  .guide-section ul{
+    margin:0 0 10px;
+    padding-left:18px;
+  }
+  .guide-section li{
+    font-size:14px;
+    line-height:1.55;
+    margin-bottom:5px;
+  }
+  .cue-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:5px solid var(--accent, var(--brick));
+    padding:13px 16px;
+    margin-bottom:12px;
+  }
+  .cue-card.day-0{ --accent: var(--brick); }
+  .cue-card.day-1{ --accent: var(--moss); }
+  .cue-card.day-2{ --accent: var(--ochre); }
+  .cue-card h3{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .cue-card ul{ margin:0; padding-left:18px; }
+  .cue-card li{ font-size:13.5px; line-height:1.5; margin-bottom:3px; color:var(--ink); }
+  .warn-box{
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.55;
+  }
+  .warn-box strong{ color:var(--brick-dark); }
 
-        .mode-btn.active {
-            background: var(--card-bg);
-            color: var(--text-main);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
+  .cue-card.flash{
+    animation:flashcard 1.4s ease;
+  }
+  @keyframes flashcard{
+    0%{ background:var(--surface-alt); }
+    100%{ background:var(--surface); }
+  }
 
-        .global-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
+  /* Warm-up checklist inside each day card */
+  .warmup-box{
+    background:var(--surface-alt);
+    border:1px dashed var(--line);
+    padding:10px 14px;
+    margin-bottom:12px;
+  }
+  .warmup-box h4{
+    font-family:'Zilla Slab', serif;
+    font-size:14.5px;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .warmup-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    padding:3px 0;
+    color:var(--ink);
+  }
+  .warmup-item.done{ color:var(--ink-soft); text-decoration:line-through; }
+  .warmup-item input{ width:14px; height:14px; accent-color:var(--accent); flex-shrink:0; }
 
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+  .howto-link{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:11px;
+    padding:2px 8px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+    white-space:nowrap;
+  }
+  .howto-link:hover{ border-color:var(--brick); color:var(--brick); }
 
-        .btn-secondary:hover {
-            border-color: var(--text-muted);
-            background: var(--bg-color);
-        }
+  .cue-diagram{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:8px 0 12px;
+    flex-wrap:wrap;
+  }
+  .cue-frame{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    padding:6px 8px 5px;
+  }
+  .cue-frame svg{
+    width:78px;
+    height:78px;
+    color:var(--accent, var(--brick));
+    overflow:visible;
+  }
+  .cue-frame span{
+    font-size:10px;
+    color:var(--ink-soft);
+    letter-spacing:.01em;
+  }
+  .cue-frame.warn svg{ color:var(--brick-dark); }
+  .cue-frame.warn span{ color:var(--brick-dark); font-weight:600; }
+  .diagram-arrow{
+    font-size:18px;
+    color:var(--ink-soft);
+    margin:0 -2px;
+  }
 
-        /* Rest Timer Floating Bar */
-        .rest-timer-bar {
-            background: var(--accent);
-            color: white;
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.3s ease;
-        }
+  .affirm-note{
+    margin-top:12px;
+    padding:12px 14px;
+    background:var(--surface-alt);
+    border-left:4px solid var(--ochre);
+    font-size:13px;
+    line-height:1.5;
+    color:var(--ink);
+    display:none;
+  }
+  .affirm-note.show{ display:block; animation:fadein .4s ease; }
+  @keyframes fadein{
+    from{ opacity:0; transform:translateY(-4px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
 
-        .rest-timer-bar.hidden {
-            display: none;
-        }
+  /* Cardio card */
+  .cardio-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--slate);
+    margin-bottom:16px;
+    padding:14px 18px;
+  }
+  .cardio-card h2{
+    font-size:17px;
+    color:var(--slate);
+    margin-bottom:4px;
+  }
+  .cardio-card .cardio-note{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .cardio-slot{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    padding:7px 0;
+    border-top:1px solid var(--line);
+  }
+  .cardio-slot:first-of-type{ border-top:none; }
+  .cardio-slot label{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    width:56px;
+    flex-shrink:0;
+  }
+  .cardio-slot input[type=number]{
+    width:48px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    padding:4px 6px;
+    text-align:center;
+  }
+  .cardio-slot .cardio-unit{
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .cardio-slot .cardio-effort{
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    color:var(--ink);
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    padding:3px 4px;
+  }
+  .cardio-slot .done-dot{ border-color:var(--slate); }
+  .cardio-slot .done-dot.on{ background:var(--slate); }
 
-        .timer-display {
-            font-family: 'Zilla Slab', serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
+  .today-banner{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:5px solid var(--brick);
+    padding:12px 16px;
+    margin:16px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .today-banner .today-text{
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .today-banner .today-text strong{ color:var(--brick); }
+  .today-banner button{
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    padding:6px 12px;
+    border:1px solid var(--brick);
+    background:var(--brick);
+    color:var(--surface);
+    cursor:pointer;
+  }
 
-        .timer-controls button {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            margin-left: 0.5rem;
-        }
-        .timer-controls button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+  .pb-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:3px;
+    font-size:10.5px;
+    font-weight:600;
+    color:var(--ochre-dark);
+    background:var(--surface-alt);
+    border:1px solid var(--ochre);
+    padding:1px 6px;
+    margin-left:6px;
+    white-space:nowrap;
+  }
 
-        /* Week Tabs */
-        .week-nav {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-        }
+  .session-note{
+    width:100%;
+    margin-top:4px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    color:var(--ink);
+    padding:8px 10px;
+    resize:vertical;
+    min-height:36px;
+  }
+  .session-note-label{
+    font-size:11px;
+    color:var(--ink-soft);
+    margin:10px 0 3px;
+  }
 
-        .week-tab {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+  .checkin-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--ochre);
+    padding:14px 16px 16px;
+    margin-bottom:16px;
+  }
+  .checkin-card h2{
+    font-size:17px;
+    color:var(--ochre-dark);
+    margin-bottom:8px;
+  }
+  .checkin-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    margin-bottom:8px;
+  }
+  .checkin-field{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+  }
+  .checkin-field label{
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .checkin-field input{
+    width:90px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    padding:5px 7px;
+  }
+  .checkin-note{
+    width:100%;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    padding:8px 10px;
+    resize:vertical;
+    min-height:36px;
+  }
 
-        .week-tab:hover {
-            border-color: var(--text-muted);
-        }
+  .export-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .export-btn{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:11.5px;
+    padding:6px 10px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+  .export-btn:hover{ border-color:var(--moss); color:var(--moss-dark); }
 
-        .week-tab.active {
-            border-color: var(--accent);
-            background: var(--accent-light);
-        }
-
-        .week-tab .week-num {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .week-tab .week-focus {
-            font-family: 'Zilla Slab', serif;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-main);
-        }
-
-        /* Program Sections */
-        .week-content {
-            display: none;
-        }
-
-        .week-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Workout Card */
-        .workout-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .workout-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 1rem;
-        }
-
-        .workout-title {
-            font-family: 'Zilla Slab', serif;
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--text-main);
-        }
-
-        .workout-meta {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Pre-Workout Pulse Check */
-        .pulse-check {
-            background: var(--bg-color);
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .pulse-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .pulse-options {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .pulse-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            color: var(--text-main);
-            transition: var(--transition);
-        }
-
-        .pulse-btn.selected {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-
-        /* Exercise Item */
-        .exercise-item {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 1.5rem;
-            padding: 1.25rem 0;
-            border-bottom: 1px solid var(--border-light);
-            align-items: center;
-        }
-
-        .exercise-item:last-child {
-            border-bottom: none;
-        }
-
-        .exercise-info h4 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            color: var(--text-main);
-        }
-
-        .exercise-details {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .exercise-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .weight-input {
-            width: 70px;
-            padding: 0.4rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            text-align: center;
-            font-family: 'Work Sans', sans-serif;
-            font-size: 0.9rem;
-        }
-
-        .set-checkbox {
-            width: 24px;
-            height: 24px;
-            accent-color: var(--accent);
-            cursor: pointer;
-        }
-
-        .timer-trigger-btn {
-            background: none;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-        .timer-trigger-btn:hover {
-            background: var(--accent-light);
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        /* Guide toggle & GIF demo box */
-        .guide-toggle {
-            font-size: 0.8rem;
-            color: var(--accent);
-            cursor: pointer;
-            margin-top: 0.25rem;
-            display: inline-block;
-            text-decoration: underline;
-        }
-
-        .form-guide {
-            display: none;
-            background: var(--accent-light);
-            padding: 1.25rem;
-            border-radius: var(--radius-sm);
-            margin-top: 0.75rem;
-            grid-column: 1 / -1;
-        }
-
-        .form-guide.active {
-            display: grid;
-            grid-template-columns: 110px 1fr;
-            gap: 1.25rem;
-            align-items: center;
-        }
-
-        .gif-container {
-            width: 110px;
-            height: 110px;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .gif-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .guide-text p {
-            font-size: 0.9rem;
-            color: var(--text-main);
-            margin-bottom: 0.35rem;
-        }
-
-        /* Comprehensive How-To Guide Section */
-        .how-to-section {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-top: 3rem;
-            box-shadow: var(--shadow);
-        }
-
-        .how-to-section h3 {
-            font-family: 'Zilla Slab', serif;
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-        }
-
-        .how-to-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .how-to-card {
-            background: var(--bg-color);
-            padding: 1.25rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-light);
-        }
-
-        .how-to-card h4 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-        }
-
-        .how-to-card p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Post Workout Reflection */
-        .reflection-box {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .reflection-box textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-family: 'Work Sans', sans-serif;
-            font-size: 0.9rem;
-            resize: vertical;
-            min-height: 60px;
-            background: var(--bg-color);
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .week-nav {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .controls-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .exercise-item {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-            .exercise-controls {
-                justify-content: space-between;
-            }
-            .form-guide.active {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  .pilates-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--plum);
+    padding:14px 16px 16px;
+    margin-bottom:16px;
+  }
+  .pilates-card h2{
+    font-size:17px;
+    color:var(--plum);
+    margin-bottom:6px;
+  }
+  .pilates-note{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .pilates-slot{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 0;
+    border-top:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .pilates-slot:first-of-type{ border-top:none; }
+  .pilates-slot input[type=text]{
+    flex:1;
+    min-width:110px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    padding:5px 7px;
+  }
+  .pilates-slot input[type=number]{
+    width:48px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    padding:4px 6px;
+    text-align:center;
+  }
+  .pilates-slot .pilates-unit{
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .pilates-slot .done-dot{ border-color:var(--plum); }
+  .pilates-slot .done-dot.on{ background:var(--plum); }
+  .pilates-remove{
+    background:none;
+    border:none;
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    padding:2px 4px;
+  }
+  .pilates-remove:hover{ color:var(--brick); }
+  .pilates-add-btn{
+    margin-top:10px;
+    background:none;
+    border:1px dashed var(--plum);
+    color:var(--plum);
+    font-size:12px;
+    font-weight:600;
+    padding:6px 12px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+</style>
 </head>
 <body>
+<div class="wrap">
+  <header class="top">
+    <h1>Foundation</h1>
+    <p>A 4-week full-body strength plan, three sessions a week — laid brick by brick alongside your Pilates practice.</p>
+    <div class="foundation" id="foundation"></div>
+    <div class="foundation-label"><span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span></div>
+    <div class="view-toggle" id="viewToggle">
+      <button id="btnTracker" class="active">Tracker</button>
+      <button id="btnGuide">Guide</button>
+    </div>
+    <div class="view-toggle mode-toggle" id="modeToggle">
+      <button id="modeFree">Free Weights</button>
+      <button id="modeMachine" class="active">Machines</button>
+    </div>
+  </header>
 
-<div class="container">
-    <header>
-        <div class="tagline">Personalized Strength Program</div>
-        <h1>Foundation</h1>
-        <p class="subtitle">A gentle, progressive entry into strength training designed for confidence, mobility, and steady growth.</p>
-    </header>
+  <div id="trackerView">
+    <div id="todayBanner"></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="days"></div>
+    <div id="checkinCard"></div>
 
-    <!-- Controls Bar -->
-    <div class="controls-bar">
-        <div class="mode-toggle">
-            <button class="mode-btn active" onclick="setMode('free')">Free Weights</button>
-            <button class="mode-btn" onclick="setMode('machine')">Machine Mode</button>
-        </div>
-        <div class="global-actions">
-            <button class="btn-secondary" onclick="resetProgress()">Reset Week</button>
-        </div>
+    <div class="stats">
+      <h3>Progress</h3>
+      <div class="stat-row" id="statRow"></div>
+      <div id="sparkArea"></div>
+      <div class="affirm-note" id="affirmNote"></div>
     </div>
 
-    <!-- Rest Timer Bar -->
-    <div id="restTimerBar" class="rest-timer-bar hidden">
-        <div>
-            <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Rest Period</span>
-            <span id="timerDisplay" class="timer-display">01:00</span>
-        </div>
-        <div class="timer-controls">
-            <button onclick="startRest(60)">60s</button>
-            <button onclick="startRest(90)">90s</button>
-            <button onclick="stopRest()">Dismiss</button>
-        </div>
+    <div class="bottom-row">
+      <span class="save-note" id="saveNote">All changes save automatically.</span>
+      <div class="export-row">
+        <button class="export-btn" id="exportBtn">Backup data</button>
+        <button class="export-btn" id="importBtn">Restore backup</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none;">
+        <button class="reset-btn" id="resetBtn">Reset all data</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="guideView">
+    <div class="guide-section">
+      <h2>Before you lift</h2>
+      <p>Every session, spend 5 minutes warming up before touching a weight. This wakes up the muscles and joints you're about to use and lowers injury risk.</p>
+      <ul>
+        <li>1–2 minutes of light movement — marching in place, jogging, or jumping jacks</li>
+        <li>10 bodyweight squats</li>
+        <li>10 arm circles each direction</li>
+        <li>5 hip circles each direction</li>
+        <li>A few slow bodyweight reps of whatever the first exercise is that day, before adding weight</li>
+      </ul>
     </div>
 
-    <!-- Week Navigation -->
-    <div class="week-nav">
-        <div class="week-tab active" onclick="switchWeek(1)">
-            <span class="week-num">Week 1</span>
-            <span class="week-focus">Habit & Form</span>
-        </div>
-        <div class="week-tab" onclick="switchWeek(2)">
-            <span class="week-num">Week 2</span>
-            <span class="week-focus">Consistency</span>
-        </div>
-        <div class="week-tab" onclick="switchWeek(3)">
-            <span class="week-num">Week 3</span>
-            <span class="week-focus">Building Pace</span>
-        </div>
-        <div class="week-tab" onclick="switchWeek(4)">
-            <span class="week-num">Week 4</span>
-            <span class="week-focus">Progression</span>
-        </div>
+    <div class="guide-section mode-block" data-mode="free">
+      <h2>How to pick a starting weight</h2>
+      <p>Since you're brand new to this, start lighter than you think you need to. The goal for week 1 is to learn the movement, not to struggle.</p>
+      <ul>
+        <li>Pick a weight where the last 2–3 reps of a set feel challenging but you could still do 1–2 more with good form</li>
+        <li>If you can't finish the low end of the rep range (e.g. 10 reps), the weight is too heavy — drop it next set</li>
+        <li>If the high end of the rep range (e.g. 12 reps) feels easy the whole set, add weight next session</li>
+        <li>It's normal for different exercises to use very different weights — a shoulder press will always use less than a squat</li>
+      </ul>
     </div>
 
-    <!-- WEEK 1 CONTENT -->
-    <div id="week-1" class="week-content active">
-        <div class="workout-card">
-            <div class="workout-header">
-                <div>
-                    <h2 class="workout-title">Session A: Full Body Basics</h2>
-                    <div class="workout-meta">Estimated time: 35 mins • Focus: Lower Body & Core</div>
-                </div>
-            </div>
-
-            <!-- Pre-Workout Check-in -->
-            <div class="pulse-check">
-                <div class="pulse-label">Pre-Workout Readiness Pulse</div>
-                <div class="pulse-options">
-                    <button class="pulse-btn" onclick="selectPulse(this)">⚡ High Energy</button>
-                    <button class="pulse-btn" onclick="selectPulse(this)">🌱 Moderate</button>
-                    <button class="pulse-btn" onclick="selectPulse(this)">☕ Low / Tired</button>
-                    <button class="pulse-btn" onclick="selectPulse(this)">💪 Fresh</button>
-                    <button class="pulse-btn" onclick="selectPulse(this)">🛋️ Sore / Tight</button>
-                </div>
-            </div>
-
-            <div class="exercises-list">
-                <!-- Exercise 1 -->
-                <div class="exercise-item">
-                    <div class="exercise-info">
-                        <h4 data-free="Goblet Squat" data-machine="Leg Press Machine">Goblet Squat</h4>
-                        <div class="exercise-details">3 sets × 10 reps • RPE 6 (Comfortable)</div>
-                        <span class="guide-toggle" onclick="toggleGuide(this)">View form cue & demo</span>
-                    </div>
-                    <div class="exercise-controls">
-                        <input type="text" class="weight-input" placeholder="Weight">
-                        <button class="timer-trigger-btn" onclick="startRest(60)" title="Rest 60s">⏱️ 60s</button>
-                        <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
-                    </div>
-                    <div class="form-guide">
-                        <div class="gif-container">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Goblet-squat.gif" alt="Goblet Squat Demonstration" loading="lazy">
-                        </div>
-                        <div class="guide-text">
-                            <p><strong>Form Cue:</strong> Chest proud, weight balanced mid-foot, core braced lightly.</p>
-                            <p><strong>Breath:</strong> Inhale as you lower down, exhale powerfully on the way up.</p>
-                            <p><strong>Common Mistake:</strong> Heels lifting off the floor—keep whole foot grounded.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Exercise 2 -->
-                <div class="exercise-item">
-                    <div class="exercise-info">
-                        <h4 data-free="Dumbbell Romanian Deadlift" data-machine="Seated Leg Curl Machine">Dumbbell Romanian Deadlift</h4>
-                        <div class="exercise-details">3 sets × 10 reps • Focus on hamstrings</div>
-                        <span class="guide-toggle" onclick="toggleGuide(this)">View form cue & demo</span>
-                    </div>
-                    <div class="exercise-controls">
-                        <input type="text" class="weight-input" placeholder="Weight">
-                        <button class="timer-trigger-btn" onclick="startRest(60)">⏱️ 60s</button>
-                        <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
-                    </div>
-                    <div class="form-guide">
-                        <div class="gif-container">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Dumbbell-romanian-deadlift.gif" alt="Romanian Deadlift Demonstration" loading="lazy">
-                        </div>
-                        <div class="guide-text">
-                            <p><strong>Form Cue:</strong> Soft bend in knees, push hips straight back until a stretch is felt in hamstrings.</p>
-                            <p><strong>Breath:</strong> Inhale on the way down, exhale as hips drive forward to stand.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reflection -->
-            <div class="reflection-box">
-                <div class="pulse-label" style="margin-bottom: 0.25rem;">Workout Reflection & Notes</div>
-                <textarea placeholder="How did today feel? Any wins or tight spots to remember for next time..."></textarea>
-            </div>
-        </div>
+    <div class="guide-section mode-block" data-mode="machine">
+      <h2>How to pick a starting weight</h2>
+      <p>Machines use a weight pin in a stack rather than picking up a dumbbell, but the same idea applies: start lighter than you think you need. The goal for week 1 is learning each machine's setup, not struggling against it.</p>
+      <ul>
+        <li>Before adjusting the weight, always adjust the seat and pads to fit her body first — a machine sized wrong will feel harder or easier than it should regardless of the weight</li>
+        <li>Pick a pin position where the last 2–3 reps of a set feel challenging but she could still do 1–2 more with good form</li>
+        <li>If she can't finish the low end of the rep range (e.g. 10 reps), move the pin down one setting next set</li>
+        <li>If the high end of the rep range (e.g. 12 reps) feels easy the whole set, move the pin up one setting next session</li>
+        <li>It's normal for different machines to use very different weight numbers — a shoulder press machine will always show less than a leg press</li>
+      </ul>
     </div>
 
-    <!-- WEEK 2 CONTENT -->
-    <div id="week-2" class="week-content">
-        <div class="workout-card">
-            <div class="workout-header">
-                <div>
-                    <h2 class="workout-title">Session A: Building Flow</h2>
-                    <div class="workout-meta">Week 2 • Progressive confidence</div>
-                </div>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Content mirrors Week 1 structure with slight pacing enhancements. Ready to log your numbers!</p>
-        </div>
+    <div class="guide-section mode-block" data-mode="free">
+      <h2>Free weight setup basics</h2>
+      <p>A little bit of gym-floor know-how makes the first few sessions much less intimidating.</p>
+      <ul>
+        <li>Dumbbells are usually racked in ascending order by weight, printed on the end of each one</li>
+        <li>Grab both dumbbells of a pair from the same spot so you know they match — mismatched pairs happen more than you'd think</li>
+        <li>Always re-rack weights when you're done, even light ones — it's gym etiquette and keeps the area safe</li>
+        <li>If a movement calls for a bench, adjust it to flat (not incline) unless the exercise specifically says otherwise</li>
+      </ul>
     </div>
 
-    <!-- WEEK 3 CONTENT -->
-    <div id="week-3" class="week-content">
-        <div class="workout-card">
-            <div class="workout-header">
-                <div>
-                    <h2 class="workout-title">Session A: Finding Strength</h2>
-                    <div class="workout-meta">Week 3 • Establishing stable baseline weights</div>
-                </div>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Focus on smooth, controlled tempos on every single repetition.</p>
-        </div>
+    <div class="guide-section mode-block" data-mode="machine">
+      <h2>Machine setup basics</h2>
+      <p>Every machine at the gym has small adjustments — seat height, backrest angle, pad position — and getting these right matters as much as the weight itself.</p>
+      <ul>
+        <li>Adjust the seat or backrest before touching the weight pin — most machines have a lever or knob near the seat</li>
+        <li>Look for a small sticker or diagram on the machine showing correct joint alignment (e.g., knee lined up with the pivot point) — most commercial machines have one</li>
+        <li>If a machine feels off — a joint gets pinched, or the resistance feels uneven — that's usually a setup issue, not a form issue. Don't push through it; ask a staff member to help adjust it</li>
+        <li>Move the weight pin fully in before pulling it out and repositioning — this avoids it snagging halfway</li>
+      </ul>
     </div>
 
-    <!-- WEEK 4 CONTENT -->
-    <div id="week-4" class="week-content">
-        <div class="workout-card">
-            <div class="workout-header">
-                <div>
-                    <h2 class="workout-title">Session A: Peak Integration</h2>
-                    <div class="workout-meta">Week 4 • Full program mastery</div>
-                </div>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Celebrating completed cycles and reviewing overall consistency.</p>
-        </div>
+    <div class="guide-section">
+      <h2>Go slow, on purpose</h2>
+      <p>It's tempting to go all-in on day one, but strength training rewards patience in a way other things don't — pushing too hard too soon is the #1 reason beginners get hurt or burn out in week two.</p>
+      <ul>
+        <li>Week 1 isn't about how much weight you lift — it's about learning what correct form feels like</li>
+        <li>Never add weight and reps in the same session; progress one at a time</li>
+        <li>A little muscle fatigue by the last rep is the goal, not exhaustion by rep 3</li>
+        <li>Resting a day between sessions isn't losing progress — it's part of how the muscle actually builds</li>
+      </ul>
     </div>
 
-    <!-- Comprehensive Beginner How-To Section -->
-    <div class="how-to-section">
-        <h3>Beginner Guide & Principles</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Everything you need to feel confident, safe, and empowered while lifting.</p>
-        
-        <div class="how-to-grid">
-            <div class="how-to-card">
-                <h4>1. Understanding RPE</h4>
-                <p>RPE (Rate of Perceived Exertion) on a scale of 1-10 measures how hard a set feels. For this beginner program, aim for a comfortable 6—where you finish feeling like you could easily do 3-4 more reps.</p>
-            </div>
-            <div class="how-to-card">
-                <h4>2. Progressive Overload</h4>
-                <p>Growth happens gradually. When 10 reps start feeling easy or smooth across all sets, consider bumping the weight up by the smallest available increment next session.</p>
-            </div>
-            <div class="how-to-card">
-                <h4>3. Rest & Recovery</h4>
-                <p>Rest 60 to 90 seconds between sets. This gives your muscles enough time to replenish energy so your form stays crisp and safe throughout every single set.</p>
-            </div>
-        </div>
+    <div class="guide-section">
+      <h2>Progress takes longer than it feels like it should</h2>
+      <p>Visible changes are usually the last thing to show up, not the first. This is completely normal — it doesn't mean it isn't working.</p>
+      <ul>
+        <li>Weeks 1–2: mostly nervous-system learning — the movements start feeling smoother and less awkward</li>
+        <li>Weeks 3–4: real strength gains — the same weight starts to feel lighter, or she can do a rep or two more</li>
+        <li>Around week 6 and beyond: this is usually when physical changes become noticeable</li>
+        <li>A session that felt "easy," a plateau week, or not seeing the scale move yet are not signs to quit — they're normal parts of the process</li>
+      </ul>
     </div>
 
+    <div class="guide-section">
+      <h2>Stair Master (cardio)</h2>
+      <p>This is optional, extra calorie burn on top of the lifting — done on the days you're <em>not</em> strength training, not stacked onto a lift day. Same rule as the lifting: start light and build up.</p>
+      <ul>
+        <li>Aim for 2 sessions a week — 8–10 minutes in week 1, building to 15–20 minutes by week 4 (the tracker shows the target for whichever week you're on)</li>
+        <li>Keep it at a pace where you could hold a conversation but not sing — that's the effort level that's sustainable and actually gets used regularly</li>
+        <li>Stand tall and let your legs do the work — avoid leaning on the handrails, which quietly does the work for you</li>
+        <li>If a strength session already left your legs very fatigued, it's fine to skip cardio that day or swap in an easy walk instead</li>
+      </ul>
+    </div>
+
+    <div class="guide-section">
+      <h2>Form cues, exercise by exercise</h2>
+      <div id="cueCardsWrap"></div>
+    </div>
+
+    <div class="guide-section">
+      <h2>Rest and breathing</h2>
+      <ul>
+        <li>Rest 60–90 seconds between sets — enough to recover, not so much that you cool down</li>
+        <li>Exhale on the hard part of the lift (standing up from a squat, pressing up), inhale on the easy part (lowering down)</li>
+        <li>Never hold your breath through a whole rep</li>
+      </ul>
+    </div>
+
+    <div class="guide-section">
+      <h2>When to stop or scale back</h2>
+      <div class="warn-box">
+        <strong>Muscle fatigue and mild soreness the next day are normal.</strong> Sharp pain, joint pain, or pain during a movement is not — stop that exercise for the day if it happens.
+        If soreness from a session lasts more than 3–4 days, or something hurts even at rest, ease off and check in with a doctor or physical therapist before continuing that movement.
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-    // Mode Toggle (Free weights vs Machine)
-    function setMode(mode) {
-        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+const EXERCISES = [
+  { key:'squat',   target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-0' },
+  { key:'pushup',  target:'3 × 8–10',  unit:'lb',  sets:3, dayClass:'day-0' },
+  { key:'rdl',     target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-1' },
+  { key:'row',     target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-1' },
+  { key:'press',   target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-2' },
+  { key:'bridge',  target:'3 × 12–15', unit:'lb',  sets:3, dayClass:'day-2' },
+  { key:'plank',   target:'3 × 20–30 sec', unit:'sec', sets:3, isTimed:true, dayClass:'day-0' },
+];
 
-        document.querySelectorAll('.exercise-info h4').forEach(el => {
-            if (mode === 'machine') {
-                el.textContent = el.getAttribute('data-machine');
-            } else {
-                el.textContent = el.getAttribute('data-free');
-            }
-        });
+const MODE_STORAGE_KEY = 'wife-strength-tracker-mode-v1';
+let mode = 'machine';
+
+// Fixed animated SVG strings using proper attribute transitions
+const SQUAT_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="27" y1="90" x2="73" y2="90" stroke="var(--line)" stroke-width="2"/><g><circle cx="50" cy="25" r="6"><animate attributeName="cy" values="25;45;25" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><path d="M50 31 L50 60"><animate attributeName="d" values="M50 31 L50 60; M50 45 L50 70; M50 31 L50 60" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path><path d="M43 35 L50 60 L57 35"><animate attributeName="d" values="M43 35 L50 60 L57 35; M40 50 L50 70 L60 50; M43 35 L50 60 L57 35" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></g></svg>';
+const SQUAT_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="15" x2="20" y2="85" stroke="var(--line)" stroke-width="3"/><path d="M20 35 L50 35 L60 65"><animate attributeName="d" values="M20 35 L50 35 L60 65; M20 50 L40 50 L50 75; M20 35 L50 35 L60 65" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path><circle cx="50" cy="25" r="6"><animate attributeName="cy" values="25;40;25" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle></svg>';
+
+const PUSHUP_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="85" x2="95" y2="85" stroke="var(--line)" stroke-width="2"/><g><circle cx="75" cy="40" r="6"><animate attributeName="cy" values="40;60;40" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><path d="M20 75 L75 40 L85 85"><animate attributeName="d" values="M20 75 L75 40 L85 85; M20 75 L75 60 L85 85; M20 75 L75 40 L85 85" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></g></svg>';
+const PUSHUP_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="25" y1="15" x2="25" y2="85" stroke="var(--line)" stroke-width="3"/><circle cx="25" cy="25" r="6"/><path d="M25 45 L50 45 L75 45"><animate attributeName="d" values="M25 45 L50 45 L75 45; M25 45 L65 45 L85 45; M25 45 L50 45 L75 45" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+
+const RDL_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="90" x2="80" y2="90" stroke="var(--line)" stroke-width="2"/><circle cx="50" cy="25" r="6"><animate attributeName="cy" values="25;40;25" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><path d="M50 31 L50 65 L40 90"><animate attributeName="d" values="M50 31 L50 65 L40 90; M50 45 L65 65 L55 90; M50 31 L50 65 L40 90" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+const RDL_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="15" x2="20" y2="85" stroke="var(--line)" stroke-width="3"/><circle cx="20" cy="30" r="6"/><path d="M20 45 L50 45 L80 60"><animate attributeName="d" values="M20 45 L50 45 L80 60; M20 45 L65 45 L90 75; M20 45 L50 45 L80 60" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+
+const ROW_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="85" x2="80" y2="85" stroke="var(--line)" stroke-width="2"/><circle cx="35" cy="40" r="6"><animate attributeName="cx" values="35;45;35" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><path d="M35 46 L60 65 L30 85"><animate attributeName="d" values="M35 46 L60 65 L30 85; M45 46 L60 65 L30 85; M35 46 L60 65 L30 85" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+const ROW_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="15" x2="20" y2="85" stroke="var(--line)" stroke-width="3"/><circle cx="35" cy="40" r="6"><animate attributeName="cx" values="35;45;35" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><path d="M35 40 L70 40"><animate attributeName="d" values="M35 40 L70 40; M45 40 L60 40; M35 40 L70 40" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+
+const PRESS_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="85" x2="80" y2="85" stroke="var(--line)" stroke-width="2"/><circle cx="50" cy="40" r="6"><animate attributeName="cy" values="40;25;40" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><path d="M35 60 L50 40 L65 60"><animate attributeName="d" values="M35 60 L50 40 L65 60; M35 45 L50 25 L65 45; M35 60 L50 40 L65 60" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+const PRESS_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="15" x2="20" y2="85" stroke="var(--line)" stroke-width="3"/><circle cx="30" cy="45" r="6"/><path d="M30 51 L50 51 L70 51"><animate attributeName="d" values="M30 51 L50 51 L70 51; M30 51 L60 30 L80 30; M30 51 L50 51 L70 51" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+
+const BRIDGE_DIAGRAM = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="10" y1="85" x2="90" y2="85" stroke="var(--line)" stroke-width="2"/><circle cx="20" cy="70" r="6"/><path d="M20 76 L50 76 L80 76"><animate attributeName="d" values="M20 76 L50 76 L80 76; M20 76 L50 45 L80 76; M20 76 L50 76 L80 76" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+const PLANK_DIAGRAM  = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="10" y1="75" x2="90" y2="75" stroke="var(--line)" stroke-width="2"/><circle cx="80" cy="55" r="6"/><path d="M20 70 L50 65 L80 55"><animate attributeName="d" values="M20 70 L50 65 L80 55; M20 70 L50 67 L80 55; M20 70 L50 65 L80 55" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></path></svg>';
+
+const CUE_DATA = [
+  {
+    key: 'squat',
+    title: 'Goblet Squat (Free) / Leg Press (Machine)',
+    dayClass: 'day-0',
+    free: {
+      diagram: SQUAT_DIAGRAM_FREE,
+      steps: [
+        'Hold the dumbbell vertically against your chest like a goblet, elbows pointing down.',
+        'Feet slightly wider than shoulder-width, toes turned out just a tiny bit.',
+        'Initiate by pushing your hips back as if sitting down into a low chair.',
+        'Keep your chest proud and heels pinned flat to the floor the entire time.'
+      ],
+      mistakes: [
+        'Letting your knees collapse inward toward each other on the way up.',
+        'Lifting your heels off the floor as you reach the bottom.'
+      ]
+    },
+    machine: {
+      diagram: SQUAT_DIAGRAM_MACHINE,
+      steps: [
+        'Adjust the seat back so your knees form roughly a 90-degree angle when feet are centered on the platform.',
+        'Place feet flat shoulder-width apart on the sled platform.',
+        'Press evenly through your whole foot—never push with just your toes.',
+        'Stop just short of locking your knees out straight at the top.'
+      ],
+      mistakes: [
+        'Locking or snapping your knees completely straight at the top of every rep.',
+        'Placing feet too low on the platform, which puts excessive stress on the kneecaps.'
+      ]
     }
-
-    // Week Navigation Tabs
-    function switchWeek(weekNum) {
-        document.querySelectorAll('.week-tab').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.week-content').forEach(content => content.classList.remove('active'));
-
-        document.querySelectorAll('.week-tab')[weekNum - 1].classList.add('active');
-        document.getElementById(`week-${weekNum}`).classList.add('active');
+  },
+  {
+    key: 'pushup',
+    title: 'Incline Push-Up (Free) / Chest Press Machine (Machine)',
+    dayClass: 'day-0',
+    free: {
+      diagram: PUSHUP_DIAGRAM_FREE,
+      steps: [
+        'Set a barbell or sturdy smith bar in a rack at waist or chest height.',
+        'Hands slightly wider than shoulder-width apart on the bar.',
+        'Keep your body in a straight line from head to heels—engage your core and glutes.',
+        'Lower your chest smoothly to touch the bar, then press firmly back up.'
+      ],
+      mistakes: [
+        'Sagging your hips toward the floor, creating an uncomfortable bend in your lower back.',
+        'Flaring your elbows straight out to the sides at 90 degrees.'
+      ]
+    },
+    machine: {
+      diagram: PUSHUP_DIAGRAM_MACHINE,
+      steps: [
+        'Adjust the seat height so the handles align directly with the middle of your chest.',
+        'Plant your feet firmly flat on the floor and keep your upper back pressed against the pad.',
+        'Exhale as you push the handles forward smoothly without shrugging your shoulders.',
+        'Control the weight back until your elbows are even with your torso.'
+      ],
+      mistakes: [
+        'Allowing your shoulders to roll forward and shrug up toward your ears.',
+        'Bouncing the weight stack at the bottom of the movement.'
+      ]
     }
-
-    // Form Guide Toggle
-    function toggleGuide(el) {
-        const guide = el.closest('.exercise-item').querySelector('.form-guide');
-        guide.classList.toggle('active');
-        el.textContent = guide.classList.contains('active') ? 'Hide form cue & demo' : 'View form cue & demo';
+  },
+  {
+    key: 'rdl',
+    title: 'Romanian Deadlift (Free) / Seated Leg Curl Machine (Machine)',
+    dayClass: 'day-1',
+    free: {
+      diagram: RDL_DIAGRAM_FREE,
+      steps: [
+        'Hold dumbbells in front of your thighs with a soft bend in your knees.',
+        'Hinge strictly at your hips, sending your glutes straight back toward the wall behind you.',
+        'Slide the weights down right against your shins, keeping your back flat.',
+        'Squeeze your glutes hard to return to standing tall.'
+      ],
+      mistakes: [
+        'Rounding your lower back as you lower the weights down.',
+        'Turning the movement into a squat by bending your knees too much.'
+      ]
+    },
+    machine: {
+      diagram: RDL_DIAGRAM_MACHINE,
+      steps: [
+        'Adjust the back pad so your knees align precisely with the machine pivot point.',
+        'Position the lower pad securely against the back of your lower calves just above your heels.',
+        'Exhale as you curl your legs down smoothly, keeping your hips pinned to the seat.',
+        'Lower the weight back down under control without letting the stacks slam.'
+      ],
+      mistakes: [
+        'Lifting your hips up off the seat pad during the curl.',
+        'Letting the weight stack crash down between reps.'
+      ]
     }
-
-    // Pre-Workout Pulse Select
-    function selectPulse(btn) {
-        btn.parentElement.querySelectorAll('.pulse-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
+  },
+  {
+    key: 'row',
+    title: 'Dumbbell Row (Free) / Seated Cable Row (Machine)',
+    dayClass: 'day-1',
+    free: {
+      diagram: ROW_DIAGRAM_FREE,
+      steps: [
+        'Place one hand and one knee firmly on a flat bench for stable support.',
+        'Hold a dumbbell in your free hand hanging straight down toward the floor.',
+        'Pull your elbow straight back up past your hip, steering with your back muscles.',
+        'Lower the weight slowly with full control.'
+      ],
+      mistakes: [
+        'Twisting your entire torso wildly to yank a heavier weight up.',
+        'Shrugging your shoulder up toward your ear at the top of the row.'
+      ]
+    },
+    machine: {
+      diagram: RDL_DIAGRAM_MACHINE, // Reusing clear machine structure
+      steps: [
+        'Sit tall with your feet flat on the footrests and a slight bend in your knees.',
+        'Grab the handles with arms extended, chest resting comfortably against the chest pad.',
+        'Pull your elbows straight back past your torso while keeping your chest against the pad.',
+        'Return forward slowly with control until your upper back stretches gently.'
+      ],
+      mistakes: [
+        'Rounding your lower back forward as your arms reach out.',
+        'Leaning back too far away from the pad to pull the weight.'
+      ]
     }
+  },
+  {
+    key: 'press',
+    title: 'Dumbbell Shoulder Press (Free) / Shoulder Press Machine (Machine)',
+    dayClass: 'day-2',
+    free: {
+      diagram: PRESS_DIAGRAM_FREE,
+      steps: [
+        'Sit on a bench with back support, holding dumbbells at shoulder height with palms facing forward.',
+        'Press the weights straight up overhead until your arms are extended.',
+        'Lower them back down smoothly to ear level under control.'
+      ],
+      mistakes: [
+        'Arching your lower back aggressively as you push overhead.',
+        'Bumping the dumbbells together tightly at the top.'
+      ]
+    },
+    machine: {
+      diagram: PRESS_DIAGRAM_MACHINE,
+      steps: [
+        'Adjust the seat height so the handles start right around shoulder level.',
+        'Keep your back flat against the pad and feet planted firmly on the floor.',
+        'Press the handles straight overhead until your arms extend.',
+        'Lower slowly back to the starting shoulder height.'
+      ],
+      mistakes: [
+        'Shrugging your shoulders upward toward your ears during the press.',
+        'Lifting your hips up off the seat pad.'
+      ]
+    }
+  },
+  {
+    key: 'bridge',
+    title: 'Glute Bridge (Bodyweight / Weighted)',
+    dayClass: 'day-2',
+    free: {
+      diagram: BRIDGE_DIAGRAM,
+      steps: [
+        'Lie flat on your back with your knees bent and feet flat on the floor close to your glutes.',
+        'Drive through your heels to lift your hips up toward the ceiling.',
+        'Squeeze your glutes tightly at the top for 1 full second.',
+        'Lower your hips back down gently without fully resting on the floor between reps.'
+      ],
+      mistakes: [
+        'Pushing through your toes instead of your heels, shifting work to your quads.',
+        'Over-arching your lower back at the top instead of driving with your glutes.'
+      ]
+    },
+    machine: {
+      diagram: BRIDGE_DIAGRAM,
+      steps: [
+        'Lie flat on your back with your knees bent and feet flat on the floor close to your glutes.',
+        'Drive through your heels to lift your hips up toward the ceiling.',
+        'Squeeze your glutes tightly at the top for 1 full second.',
+        'Lower your hips back down gently without fully resting on the floor between reps.'
+      ],
+      mistakes: [
+        'Pushing through your toes instead of your heels, shifting work to your quads.',
+        'Over-arching your lower back at the top instead of driving with your glutes.'
+      ]
+    }
+  },
+  {
+    key: 'plank',
+    title: 'Forearm Plank',
+    dayClass: 'day-0',
+    free: {
+      diagram: PLANK_DIAGRAM,
+      steps: [
+        'Rest your weight on your forearms with elbows tucked directly beneath your shoulders.',
+        'Extend your legs straight back with feet hip-width apart.',
+        'Brace your core tightly as if preparing for a gentle punch in the stomach, and squeeze your glutes.',
+        'Keep your body in a straight line from your head down to your heels.'
+      ],
+      mistakes: [
+        'Letting your hips drop down toward the floor, straining your lower back.',
+        'Pike your hips high up into the air like a tent.'
+      ]
+    },
+    machine: {
+      diagram: PLANK_DIAGRAM,
+      steps: [
+        'Rest your weight on your forearms with elbows tucked directly beneath your shoulders.',
+        'Extend your legs straight back with feet hip-width apart.',
+        'Brace your core tightly as if preparing for a gentle punch in the stomach, and squeeze your glutes.',
+        'Keep your body in a straight line from your head down to your heels.'
+      ],
+      mistakes: [
+        'Letting your hips drop down toward the floor, straining your lower back.',
+        'Pike your hips high up into the air like a tent.'
+      ]
+    }
+  }
+];
 
-    // Checkbox action & micro dimming
-    function handleCheck(checkbox) {
-        if (checkbox.checked) {
-            checkbox.closest('.exercise-item').style.opacity = '0.6';
-        } else {
-            checkbox.closest('.exercise-item').style.opacity = '1';
+// Complete application logic implementation
+const WEEKS_COUNT = 4;
+const DAYS_PER_WEEK = 3;
+const CARDIO_SLOTS = 2;
+const STORAGE_KEY = 'foundation-strength-tracker-v6';
+
+function blankSession() {
+  return {
+    date: '',
+    equip: mode,
+    warmup: [false, false, false, false],
+    exercises: EXERCISES.map(ex => ({
+      sets: Array.from({ length: ex.sets }, () => ({ weight: '', reps: '', pb: false }))
+    })),
+    note: '',
+    done: false
+  };
+}
+
+function blankCheckin() {
+  return { weight: '', energy: '', sleep: '', note: '' };
+}
+
+function blankPilatesEntry() {
+  return { name: '', min: '', done: false };
+}
+
+let state = {
+  weeks: Array.from({ length: WEEKS_COUNT }, () => Array.from({ length: DAYS_PER_WEEK }, blankSession)),
+  cardio: Array.from({ length: WEEKS_COUNT }, () => Array.from({ length: CARDIO_SLOTS }, () => ({ minutes: '', level: '', done: false }))),
+  checkins: Array.from({ length: WEEKS_COUNT }, blankCheckin),
+  pilates: Array.from({ length: WEEKS_COUNT }, () => Array.from({ length: 2 }, blankPilatesEntry))
+};
+
+let activeWeek = 0;
+
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    if (parsed && parsed.weeks) {
+      for (let w = 0; w < WEEKS_COUNT; w++) {
+        for (let d = 0; d < DAYS_PER_WEEK; d++) {
+          if (parsed.weeks[w] && parsed.weeks[w][d]) {
+            state.weeks[w][d] = Object.assign(blankSession(), parsed.weeks[w][d]);
+          }
         }
-    }
-
-    // Rest Timer Logic
-    let timerInterval = null;
-    let timeLeft = 60;
-
-    function startRest(seconds) {
-        const bar = document.getElementById('restTimerBar');
-        const display = document.getElementById('timerDisplay');
-        
-        bar.classList.remove('hidden');
-        timeLeft = seconds;
-        updateTimerDisplay();
-
-        if (timerInterval) clearInterval(timerInterval);
-
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            updateTimerDisplay();
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                display.textContent = "Ready! Let's go.";
-            }
-        }, 1000);
-    }
-
-    function stopRest() {
-        if (timerInterval) clearInterval(timerInterval);
-        document.getElementById('restTimerBar').classList.add('hidden');
-    }
-
-    function updateTimerDisplay() {
-        const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-        const secs = (timeLeft % 60).toString().padStart(2, '0');
-        document.getElementById('timerDisplay').textContent = `${mins}:${secs}`;
-    }
-
-    function resetProgress() {
-        if(confirm("Clear current inputs for this view?")) {
-            document.querySelectorAll('.weight-input').forEach(i => i.value = '');
-            document.querySelectorAll('.set-checkbox').forEach(c => {
-                c.checked = false;
-                c.closest('.exercise-item').style.opacity = '1';
-            });
+        if (parsed.cardio && Array.isArray(parsed.cardio[w])) {
+          state.cardio[w] = parsed.cardio[w].map(slot => Object.assign({ minutes: '', level: '', done: false }, slot));
+          while (state.cardio[w].length < CARDIO_SLOTS) state.cardio[w].push({ minutes: '', level: '', done: false });
         }
+        if (parsed.checkins && parsed.checkins[w]) {
+          state.checkins[w] = Object.assign(blankCheckin(), parsed.checkins[w]);
+        }
+        if (parsed.pilates && Array.isArray(parsed.pilates[w])) {
+          state.pilates[w] = parsed.pilates[w].map(entry => Object.assign(blankPilatesEntry(), entry));
+        }
+      }
     }
+  }
+} catch (err) {
+  console.error('Could not load saved state:', err);
+}
+
+try {
+  const savedMode = localStorage.getItem(MODE_STORAGE_KEY);
+  if (savedMode === 'free' || savedMode === 'machine') {
+    mode = savedMode;
+  }
+} catch (err) {}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const note = document.getElementById('saveNote');
+    if (note) {
+      note.textContent = 'Saved at ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+  } catch (err) {
+    console.error('Could not save state:', err);
+  }
+}
+
+function renderAll() {
+  renderFoundationOverview();
+  renderTabs();
+  renderTodayBanner();
+  renderDays();
+  renderCheckinCard();
+  renderStats();
+  renderGuideCues();
+}
+
+function renderFoundationOverview() {
+  const container = document.getElementById('foundation');
+  if (!container) return;
+  let html = '';
+  for (let w = 0; w < WEEKS_COUNT; w++) {
+    let total = DAYS_PER_WEEK;
+    let completed = 0;
+    for (let d = 0; d < DAYS_PER_WEEK; d++) {
+      if (state.weeks[w][d].done) completed++;
+    }
+    let pct = Math.round((completed / total) * 100);
+    html += `<div class="block"><div class="fill" style="width:${pct}%"></div></div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderTabs() {
+  const tabsEl = document.getElementById('tabs');
+  if (!tabsEl) return;
+  let html = '';
+  for (let w = 0; w < WEEKS_COUNT; w++) {
+    html += `<button class="tab ${w === activeWeek ? 'active' : ''}" onclick="switchWeek(${w})">Week ${w + 1}</button>`;
+  }
+  tabsEl.innerHTML = html;
+}
+
+function switchWeek(w) {
+  activeWeek = w;
+  renderAll();
+}
+
+function renderTodayBanner() {
+  const banner = document.getElementById('todayBanner');
+  if (!banner) return;
+  banner.innerHTML = `
+    <div class="today-text">Viewing <strong>Week ${activeWeek + 1}</strong>. Log your lifts and track your progress below.</div>
+  `;
+}
+
+function renderDays() {
+  const container = document.getElementById('days');
+  if (!container) return;
+  const dayNames = ['Day 1 — Lower Body', 'Day 2 — Upper Body', 'Day 3 — Full Body'];
+  const dayClasses = ['day-0', 'day-1', 'day-2'];
+  let html = '';
+  
+  for (let d = 0; d < DAYS_PER_WEEK; d++) {
+    const session = state.weeks[activeWeek][d];
+    const dayClass = dayClasses[d];
+    
+    html += `
+      <div class="day-card ${dayClass}">
+        <div class="day-head">
+          <h2>${dayNames[d]}</h2>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <div class="day-equip-toggle">
+              <button class="${session.equip === 'machine' ? 'active' : ''}" onclick="setEquip(${activeWeek}, ${d}, 'machine')">Machines</button>
+              <button class="${session.equip === 'free' ? 'active' : ''}" onclick="setEquip(${activeWeek}, ${d}, 'free')">Free Weights</button>
+            </div>
+            <input type="date" class="date-input" value="${session.date}" onchange="updateDate(${activeWeek}, ${d}, this.value)">
+          </div>
+        </div>
+
+        <div class="warmup-box">
+          <h4>5-Minute Warm-Up Checklist</h4>
+          ${['Light movement (1–2 min)', '10 Bodyweight squats', '10 Arm & 5 hip circles', 'Few slow warm-up reps'].map((wuText, wi) => `
+            <div class="warmup-item ${session.warmup[wi] ? 'done' : ''}">
+              <input type="checkbox" ${session.warmup[wi] ? 'checked' : ''} onchange="toggleWarmup(${activeWeek}, ${d}, ${wi})">
+              <span>${wuText}</span>
+            </div>
+          `).join('')}
+        </div>
+    `;
+
+    const activeExercises = EXERCISES.filter((ex, idx) => {
+      if (d === 0) return idx === 0 || idx === 1 || idx === 6;
+      if (d === 1) return idx === 2 || idx === 3;
+      if (d === 2) return idx === 4 || idx === 5;
+      return false;
+    });
+
+    activeExercises.forEach(ex => {
+      const exIndex = EXERCISES.findIndex(item => item.key === ex.key);
+      const exData = session.exercises[exIndex];
+      
+      html += `
+        <div class="exercise">
+          <div class="ex-name-row">
+            <div>
+              <span class="ex-name">${ex.key.toUpperCase()}</span>
+              <button class="howto-link" onclick="jumpToGuide('${ex.key}')">How-to guide</button>
+            </div>
+            <span class="ex-target">${ex.target}</span>
+          </div>
+          <div class="sets-row">
+      `;
+
+      exData.sets.forEach((setObj, sIdx) => {
+        html += `
+          <div class="set-block">
+            <span class="set-idx">${sIdx + 1}</span>
+            <input type="number" placeholder="Wt" value="${setObj.weight}" oninput="updateSet(${activeWeek}, ${d}, ${exIndex}, ${sIdx}, 'weight', this.value)">
+            <span class="unit">${ex.unit}</span>
+            <input type="number" placeholder="Reps" value="${setObj.reps}" oninput="updateSet(${activeWeek}, ${d}, ${exIndex}, ${sIdx}, 'reps', this.value)">
+            <div class="done-dot ${setObj.reps ? 'on' : ''}"></div>
+          </div>
+        `;
+      });
+
+      html += `
+          </div>
+        </div>
+      `;
+    });
+
+    html += `
+        <div class="session-note-label">Session Notes</div>
+        <textarea class="session-note" placeholder="How did it feel today?" oninput="updateNote(${activeWeek}, ${d}, this.value)">${session.note}</textarea>
+
+        <div class="day-complete-row ${session.done ? 'checked' : ''}">
+          <input type="checkbox" ${session.done ? 'checked' : ''} onchange="toggleDone(${activeWeek}, ${d})">
+          <span>Mark session complete</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Cardio Section
+  html += `
+    <div class="cardio-card">
+      <h2>Stair Master (Cardio)</h2>
+      <div class="cardio-note">Target: ${activeWeek === 0 ? '8–10' : activeWeek === 1 ? '10–12' : activeWeek === 2 ? '12–15' : '15–20'} minutes, 2x per week on non-lifting days.</div>
+  `;
+  state.cardio[activeWeek].forEach((slot, cIdx) => {
+    html += `
+      <div class="cardio-slot">
+        <label>Session ${cIdx + 1}</label>
+        <input type="number" placeholder="Mins" value="${slot.minutes}" oninput="updateCardio(${activeWeek}, ${cIdx}, 'minutes', this.value)">
+        <span class="cardio-unit">mins</span>
+        <input type="text" class="cardio-effort" placeholder="Level/Notes" value="${slot.level}" oninput="updateCardio(${activeWeek}, ${cIdx}, 'level', this.value)" style="width:110px;">
+        <div class="done-dot ${slot.done ? 'on' : ''}" onclick="toggleCardioDone(${activeWeek}, ${cIdx})"></div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+
+  // Pilates Section
+  html += `
+    <div class="pilates-card">
+      <h2>Pilates Practice</h2>
+      <div class="pilates-note">Log your studio classes or home routines alongside your strength workouts.</div>
+  `;
+  state.pilates[activeWeek].forEach((entry, pIdx) => {
+    html += `
+      <div class="pilates-slot">
+        <input type="text" placeholder="Class / Routine name" value="${entry.name}" oninput="updatePilates(${activeWeek}, ${pIdx}, 'name', this.value)">
+        <input type="number" placeholder="Mins" value="${entry.min}" oninput="updatePilates(${activeWeek}, ${pIdx}, 'min', this.value)">
+        <span class="pilates-unit">mins</span>
+        <div class="done-dot ${entry.done ? 'on' : ''}" onclick="togglePilatesDone(${activeWeek}, ${pIdx})"></div>
+        <button class="pilates-remove" onclick="removePilates(${activeWeek}, ${pIdx})">&times;</button>
+      </div>
+    `;
+  });
+  html += `
+      <button class="pilates-add-btn" onclick="addPilates(${activeWeek})">+ Add Pilates session</button>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+function renderCheckinCard() {
+  const container = document.getElementById('checkinCard');
+  if (!container) return;
+  const ci = state.checkins[activeWeek];
+  container.innerHTML = `
+    <div class="checkin-card">
+      <h2>Week ${activeWeek + 1} Check-In</h2>
+      <div class="checkin-row">
+        <div class="checkin-field">
+          <label>Weight (lbs)</label>
+          <input type="number" step="0.1" value="${ci.weight}" oninput="updateCheckin(${activeWeek}, 'weight', this.value)">
+        </div>
+        <div class="checkin-field">
+          <label>Energy (1–10)</label>
+          <input type="number" min="1" max="10" value="${ci.energy}" oninput="updateCheckin(${activeWeek}, 'energy', this.value)">
+        </div>
+        <div class="checkin-field">
+          <label>Sleep (hrs)</label>
+          <input type="number" step="0.5" value="${ci.sleep}" oninput="updateCheckin(${activeWeek}, 'sleep', this.value)">
+        </div>
+      </div>
+      <textarea class="checkin-note" placeholder="How did this week feel overall?" oninput="updateCheckin(${activeWeek}, 'note', this.value)">${ci.note}</textarea>
+    </div>
+  `;
+}
+
+function renderStats() {
+  const statRow = document.getElementById('statRow');
+  const sparkArea = document.getElementById('sparkArea');
+  if (!statRow) return;
+
+  let totalCompleted = 0;
+  for (let w = 0; w < WEEKS_COUNT; w++) {
+    for (let d = 0; d < DAYS_PER_WEEK; d++) {
+      if (state.weeks[w][d].done) totalCompleted++;
+    }
+  }
+
+  statRow.innerHTML = `
+    <div class="stat">
+      <div class="num">${totalCompleted} / ${WEEKS_COUNT * DAYS_PER_WEEK}</div>
+      <div class="lbl">Sessions Done</div>
+    </div>
+  `;
+
+  if (sparkArea) {
+    sparkArea.innerHTML = totalCompleted > 0 ? `<div class="spark-caption">Great consistency! Keep building brick by brick.</div>` : `<div class="empty-note">Complete your first workout session to see progress summaries here.</div>`;
+  }
+}
+
+function renderGuideCues() {
+  const container = document.getElementById('cueCardsWrap');
+  if (!container) return;
+  let html = '';
+  CUE_DATA.forEach(cue => {
+    const detail = cue[mode] || cue.free;
+    html += `
+      <div class="cue-card ${cue.dayClass}" id="cue-${cue.key}">
+        <h3>${cue.title}</h3>
+        <div class="cue-diagram">
+          <div class="cue-frame">
+            ${detail.diagram}
+            <span>Proper Form</span>
+          </div>
+        </div>
+        <ul>
+          ${detail.steps.map(step => `<li>${step}</li>`).join('')}
+        </ul>
+        <div style="margin-top:8px; font-weight:600; font-size:13px; color:var(--brick-dark);">Common Mistakes to Avoid:</div>
+        <ul>
+          ${detail.mistakes.map(m => `<li>${m}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+// Event Handlers
+function setEquip(w, d, val) {
+  state.weeks[w][d].equip = val;
+  saveState();
+  renderAll();
+}
+
+function updateDate(w, d, val) {
+  state.weeks[w][d].date = val;
+  saveState();
+}
+
+function toggleWarmup(w, d, wi) {
+  state.weeks[w][d].warmup[wi] = !state.weeks[w][d].warmup[wi];
+  saveState();
+  renderAll();
+}
+
+function updateSet(w, d, exI, sI, field, val) {
+  state.weeks[w][d].exercises[exI].sets[sI][field] = val;
+  saveState();
+}
+
+function updateNote(w, d, val) {
+  state.weeks[w][d].note = val;
+  saveState();
+}
+
+function toggleDone(w, d) {
+  state.weeks[w][d].done = !state.weeks[w][d].done;
+  saveState();
+  renderAll();
+}
+
+function updateCardio(w, cI, field, val) {
+  state.cardio[w][cI][field] = val;
+  saveState();
+}
+
+function toggleCardioDone(w, cI) {
+  state.cardio[w][cI].done = !state.cardio[w][cI].done;
+  saveState();
+  renderAll();
+}
+
+function updatePilates(w, pI, field, val) {
+  state.pilates[w][pI][field] = val;
+  saveState();
+}
+
+function togglePilatesDone(w, pI) {
+  state.pilates[w][pI].done = !state.pilates[w][pI].done;
+  saveState();
+  renderAll();
+}
+
+function addPilates(w) {
+  state.pilates[w].push(blankPilatesEntry());
+  saveState();
+  renderAll();
+}
+
+function removePilates(w, pI) {
+  state.pilates[w].splice(pI, 1);
+  saveState();
+  renderAll();
+}
+
+function updateCheckin(w, field, val) {
+  state.checkins[w][field] = val;
+  saveState();
+}
+
+function jumpToGuide(exKey) {
+  document.getElementById('btnGuide').click();
+  const card = document.getElementById('cue-' + exKey);
+  if (card) {
+    card.scrollIntoView({ behavior: 'smooth' });
+    card.classList.add('flash');
+    setTimeout(() => card.classList.remove('flash'), 1400);
+  }
+}
+
+// View switching logic
+document.getElementById('btnTracker').addEventListener('click', () => {
+  document.getElementById('btnTracker').classList.add('active');
+  document.getElementById('btnGuide').classList.remove('active');
+  document.getElementById('trackerView').style.display = 'block';
+  document.getElementById('guideView').style.display = 'none';
+});
+
+document.getElementById('btnGuide').addEventListener('click', () => {
+  document.getElementById('btnGuide').classList.add('active');
+  document.getElementById('btnTracker').classList.remove('active');
+  document.getElementById('trackerView').style.display = 'none';
+  document.getElementById('guideView').style.display = 'block';
+});
+
+function applyMode(newMode) {
+  mode = newMode;
+  try { localStorage.setItem(MODE_STORAGE_KEY, mode); } catch (err) {}
+  
+  if (mode === 'free') {
+    document.getElementById('modeFree').classList.add('active');
+    document.getElementById('modeMachine').classList.remove('active');
+    document.querySelectorAll('.guide-section.mode-block[data-mode="free"]').forEach(el => el.style.display = 'block');
+    document.querySelectorAll('.guide-section.mode-block[data-mode="machine"]').forEach(el => el.style.display = 'none');
+  } else {
+    document.getElementById('modeMachine').classList.add('active');
+    document.getElementById('modeFree').classList.remove('active');
+    document.querySelectorAll('.guide-section.mode-block[data-mode="machine"]').forEach(el => el.style.display = 'block');
+    document.querySelectorAll('.guide-section.mode-block[data-mode="free"]').forEach(el => el.style.display = 'none');
+  }
+  renderGuideCues();
+}
+
+document.getElementById('modeFree').addEventListener('click', () => applyMode('free'));
+document.getElementById('modeMachine').addEventListener('click', () => applyMode('machine'));
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+  const dlAnchor = document.createElement('a');
+  dlAnchor.setAttribute("href", dataStr);
+  dlAnchor.setAttribute("download", "foundation_strength_backup.json");
+  document.body.appendChild(dlAnchor);
+  dlAnchor.click();
+  dlAnchor.remove();
+});
+
+document.getElementById('importBtn').addEventListener('click', () => {
+  document.getElementById('importFile').click();
+});
+
+document.getElementById('importFile').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const parsed = JSON.parse(evt.target.result);
+      if (parsed && parsed.weeks) {
+        state = parsed;
+        saveState();
+        renderAll();
+        alert('Backup successfully restored.');
+      } else {
+        alert('Invalid backup structure.');
+      }
+    } catch (err) {
+      alert('Could not parse JSON backup file.');
+    }
+  };
+  reader.readAsText(file);
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('Are you sure you want to reset all tracker data?')) {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+});
+
+// Initial Setup execution
+applyMode(mode);
+renderAll();
 </script>
-
 </body>
 </html>
