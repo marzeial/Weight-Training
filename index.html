@@ -1,441 +1,1855 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Complete 4-Week Strength & Guide Tracker</title>
-  <style>
-    :root {
-      --bg-color: #f4f6f8;
-      --card-bg: #ffffff;
-      --primary: #2563eb;
-      --text: #1e293b;
-      --border: #e2e8f0;
-      --warning: #ef4444;
-      --accent: #059669;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text);
-      margin: 0;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-    }
-    .app-container {
-      max-width: 600px;
-      width: 100%;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 1.25rem;
-    }
-    h1 { margin: 0 0 0.25rem 0; font-size: 1.5rem; }
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      border: 1px solid var(--border);
-    }
-    .nav-selectors {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
-    }
-    select {
-      flex: 1;
-      padding: 0.6rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #fff;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
-    .alert {
-      display: none;
-      background-color: #fee2e2;
-      border: 1px solid #fca5a5;
-      color: #991b1b;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-    .toggle-bar {
-      display: flex;
-      background: #e2e8f0;
-      border-radius: 8px;
-      padding: 2px;
-      margin-bottom: 1rem;
-    }
-    .toggle-btn {
-      flex: 1;
-      padding: 0.5rem 0;
-      border: none;
-      background: transparent;
-      font-size: 0.85rem;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .toggle-btn.active {
-      background: #fff;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      color: var(--primary);
-    }
-    .rating-group {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.5rem;
-    }
-    .rating-btn {
-      flex: 1;
-      margin: 0 0.25rem;
-      padding: 0.6rem 0;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .rating-btn.selected {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-    .exercise-row {
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .exercise-row:last-child { border-bottom: none; }
-    .exercise-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .cue-box {
-      font-size: 0.8rem;
-      color: #475569;
-      background: #f1f5f9;
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
-      margin: 0.5rem 0;
-      border-left: 3px solid var(--primary);
-    }
-    .input-row {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    .input-row input {
-      flex: 1;
-      padding: 0.5rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      text-align: center;
-    }
-    .btn-submit {
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.85rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 0.5rem;
-    }
-    details {
-      margin-bottom: 1rem;
-    }
-    summary {
-      font-weight: bold;
-      cursor: pointer;
-      color: var(--primary);
-      padding: 0.5rem 0;
-    }
-    .guide-content {
-      font-size: 0.85rem;
-      line-height: 1.4;
-      color: #334155;
-      padding-top: 0.5rem;
-    }
-    .guide-content ul { padding-left: 1.2rem; margin: 0.5rem 0; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundation — Strength Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EEF0E6;
+    --surface: #FAF9F3;
+    --surface-alt: #E4E4D6;
+    --ink: #23271F;
+    --ink-soft: #5B6156;
+    --brick: #A8462F;
+    --brick-dark: #7E3220;
+    --moss: #5C6B3F;
+    --moss-dark: #414A2C;
+    --ochre: #B98A2E;
+    --ochre-dark: #8C6A20;
+    --slate: #4A6670;
+    --plum: #7A5470;
+    --line: #D6D5C2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:28px 18px 60px;
+  }
+  h1,h2,h3{
+    font-family:'Zilla Slab', serif;
+    margin:0;
+  }
+  header.top{
+    margin-bottom:22px;
+  }
+  header.top h1{
+    font-size:30px;
+    font-weight:700;
+    line-height:1.1;
+    color:var(--ink);
+  }
+  header.top p{
+    margin:6px 0 0;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    max-width:46ch;
+  }
+
+  /* Foundation blocks - week overview */
+  .foundation{
+    display:flex;
+    gap:6px;
+    margin-top:20px;
+  }
+  .block{
+    flex:1;
+    height:14px;
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .block .fill{
+    position:absolute;
+    inset:0;
+    width:0%;
+    background:linear-gradient(90deg, var(--brick), var(--ochre));
+    transition:width .5s ease;
+  }
+  .foundation-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-top:5px;
+    letter-spacing:.02em;
+  }
+
+  /* Week tabs */
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin:26px 0 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .tab{
+    font-family:'Zilla Slab', serif;
+    font-size:16px;
+    font-weight:600;
+    background:none;
+    border:none;
+    padding:8px 4px 12px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    position:relative;
+    border-bottom:3px solid transparent;
+  }
+  .tab.active{
+    color:var(--ink);
+    border-bottom-color:var(--brick);
+  }
+
+  /* Day cards */
+  .day-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--accent, var(--brick));
+    margin-bottom:16px;
+    padding:16px 18px 8px;
+  }
+  .day-card.day-0{ --accent: var(--brick); }
+  .day-card.day-1{ --accent: var(--moss); }
+  .day-card.day-2{ --accent: var(--ochre); }
+
+  .day-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .day-head h2{
+    font-size:19px;
+    color:var(--accent);
+  }
+  .day-head .date-input{
+    font-family:'Work Sans', sans-serif;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    background:var(--surface);
+    padding:4px 6px;
+  }
+  .day-equip-toggle{
+    display:flex;
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .day-equip-toggle button{
+    font-family:'Work Sans', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    padding:4px 9px;
+    border:none;
+    background:var(--surface);
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .day-equip-toggle button.active{
+    background:var(--accent, var(--brick));
+    color:var(--surface);
+  }
+
+  .exercise{
+    padding:11px 0;
+    border-top:1px solid var(--line);
+  }
+  .exercise:first-of-type{ border-top:none; }
+  .ex-name-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:8px;
+  }
+  .ex-name{
+    font-size:15px;
+    font-weight:600;
+  }
+  .ex-target{
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .sets-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .set-block{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--surface-alt);
+    padding:6px 8px;
+    border:1px solid var(--line);
+  }
+  .set-block .set-idx{
+    font-size:11px;
+    color:var(--ink-soft);
+    width:14px;
+    text-align:center;
+  }
+  .set-block input[type=number]{
+    width:44px;
+    border:none;
+    background:transparent;
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    color:var(--ink);
+    text-align:center;
+    -moz-appearance:textfield;
+  }
+  .set-block input[type=number]::-webkit-outer-spin-button,
+  .set-block input[type=number]::-webkit-inner-spin-button{
+    -webkit-appearance:none; margin:0;
+  }
+  .unit{
+    font-size:10.5px;
+    color:var(--ink-soft);
+  }
+  .done-dot{
+    width:16px;
+    height:16px;
+    border:1.5px solid var(--accent);
+    border-radius:50%;
+    cursor:pointer;
+    flex-shrink:0;
+    position:relative;
+    background:transparent;
+  }
+  .done-dot.on{
+    background:var(--accent);
+    animation:pop .22s ease;
+  }
+  @keyframes pop{
+    0%{ transform:scale(1); }
+    50%{ transform:scale(1.35); }
+    100%{ transform:scale(1); }
+  }
+
+  .day-complete-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 0 14px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .day-complete-row input{ accent-color:var(--accent); width:15px; height:15px; }
+  .day-complete-row.checked{ color:var(--ink); font-weight:600; }
+
+  /* Stats footer */
+  .stats{
+    margin-top:30px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+  }
+  .stats h3{
+    font-size:16px;
+    margin-bottom:12px;
+  }
+  .stat-row{
+    display:flex;
+    gap:22px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .stat{
+    min-width:90px;
+  }
+  .stat .num{
+    font-family:'Zilla Slab', serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--brick);
+  }
+  .stat .lbl{
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .spark-wrap{ margin-top:4px; }
+  .spark-caption{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+  .empty-note{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+
+  .bottom-row{
+    margin-top:26px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .save-note{
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .reset-btn{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:11.5px;
+    padding:6px 10px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+  .reset-btn:hover{ border-color:var(--brick); color:var(--brick); }
+
+  /* View toggle */
+  .view-toggle{
+    display:flex;
+    gap:0;
+    margin-top:20px;
+    border:1px solid var(--ink);
+    width:fit-content;
+  }
+  .view-toggle button{
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding:7px 16px;
+    border:none;
+    background:var(--bg);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .view-toggle button.active{
+    background:var(--ink);
+    color:var(--surface);
+  }
+  .mode-toggle{
+    margin-top:8px;
+    border-color:var(--line);
+  }
+  .mode-toggle button{
+    font-size:12px;
+    padding:5px 12px;
+  }
+  .mode-toggle button.active{
+    background:var(--brick);
+    color:var(--surface);
+  }
+  .mode-block{ display:none; }
+
+  /* Guide view */
+  #guideView{ display:none; }
+  .guide-section{
+    margin:26px 0;
+  }
+  .guide-section h2{
+    font-size:19px;
+    color:var(--brick);
+    margin-bottom:8px;
+  }
+  .guide-section p{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--ink);
+    max-width:56ch;
+    margin:0 0 10px;
+  }
+  .guide-section ul{
+    margin:0 0 10px;
+    padding-left:18px;
+  }
+  .guide-section li{
+    font-size:14px;
+    line-height:1.55;
+    margin-bottom:5px;
+  }
+  .cue-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:5px solid var(--accent, var(--brick));
+    padding:13px 16px;
+    margin-bottom:12px;
+  }
+  .cue-card.day-0{ --accent: var(--brick); }
+  .cue-card.day-1{ --accent: var(--moss); }
+  .cue-card.day-2{ --accent: var(--ochre); }
+  .cue-card h3{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .cue-card ul{ margin:0; padding-left:18px; }
+  .cue-card li{ font-size:13.5px; line-height:1.5; margin-bottom:3px; color:var(--ink); }
+  .warn-box{
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.55;
+  }
+  .warn-box strong{ color:var(--brick-dark); }
+
+  .cue-card.flash{
+    animation:flashcard 1.4s ease;
+  }
+  @keyframes flashcard{
+    0%{ background:var(--surface-alt); }
+    100%{ background:var(--surface); }
+  }
+
+  /* Warm-up checklist inside each day card */
+  .warmup-box{
+    background:var(--surface-alt);
+    border:1px dashed var(--line);
+    padding:10px 14px;
+    margin-bottom:12px;
+  }
+  .warmup-box h4{
+    font-family:'Zilla Slab', serif;
+    font-size:14.5px;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .warmup-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    padding:3px 0;
+    color:var(--ink);
+  }
+  .warmup-item.done{ color:var(--ink-soft); text-decoration:line-through; }
+  .warmup-item input{ width:14px; height:14px; accent-color:var(--accent); flex-shrink:0; }
+
+  .howto-link{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:11px;
+    padding:2px 8px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+    white-space:nowrap;
+  }
+  .howto-link:hover{ border-color:var(--brick); color:var(--brick); }
+
+  .cue-diagram{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:8px 0 12px;
+    flex-wrap:wrap;
+  }
+  .cue-frame{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    padding:6px 8px 5px;
+  }
+  .cue-frame svg{
+    width:78px;
+    height:78px;
+    color:var(--accent, var(--brick));
+    overflow:visible;
+  }
+  .cue-frame span{
+    font-size:10px;
+    color:var(--ink-soft);
+    letter-spacing:.01em;
+  }
+  .cue-frame.warn svg{ color:var(--brick-dark); }
+  .cue-frame.warn span{ color:var(--brick-dark); font-weight:600; }
+  .diagram-arrow{
+    font-size:18px;
+    color:var(--ink-soft);
+    margin:0 -2px;
+  }
+
+  .affirm-note{
+    margin-top:12px;
+    padding:12px 14px;
+    background:var(--surface-alt);
+    border-left:4px solid var(--ochre);
+    font-size:13px;
+    line-height:1.5;
+    color:var(--ink);
+    display:none;
+  }
+  .affirm-note.show{ display:block; animation:fadein .4s ease; }
+  @keyframes fadein{
+    from{ opacity:0; transform:translateY(-4px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* Cardio card */
+  .cardio-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--slate);
+    margin-bottom:16px;
+    padding:14px 18px;
+  }
+  .cardio-card h2{
+    font-size:17px;
+    color:var(--slate);
+    margin-bottom:4px;
+  }
+  .cardio-card .cardio-note{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .cardio-slot{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    padding:7px 0;
+    border-top:1px solid var(--line);
+  }
+  .cardio-slot:first-of-type{ border-top:none; }
+  .cardio-slot label{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    width:56px;
+    flex-shrink:0;
+  }
+  .cardio-slot input[type=number]{
+    width:48px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    padding:4px 6px;
+    text-align:center;
+  }
+  .cardio-slot .cardio-unit{
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .cardio-slot .cardio-effort{
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    color:var(--ink);
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    padding:3px 4px;
+  }
+  .cardio-slot .done-dot{ border-color:var(--slate); }
+  .cardio-slot .done-dot.on{ background:var(--slate); }
+
+  .today-banner{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:5px solid var(--brick);
+    padding:12px 16px;
+    margin:16px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .today-banner .today-text{
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .today-banner .today-text strong{ color:var(--brick); }
+  .today-banner button{
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    padding:6px 12px;
+    border:1px solid var(--brick);
+    background:var(--brick);
+    color:var(--surface);
+    cursor:pointer;
+  }
+
+  .pb-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:3px;
+    font-size:10.5px;
+    font-weight:600;
+    color:var(--ochre-dark);
+    background:var(--surface-alt);
+    border:1px solid var(--ochre);
+    padding:1px 6px;
+    margin-left:6px;
+    white-space:nowrap;
+  }
+
+  .session-note{
+    width:100%;
+    margin-top:4px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    color:var(--ink);
+    padding:8px 10px;
+    resize:vertical;
+    min-height:36px;
+  }
+  .session-note-label{
+    font-size:11px;
+    color:var(--ink-soft);
+    margin:10px 0 3px;
+  }
+
+  .checkin-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--ochre);
+    padding:14px 16px 16px;
+    margin-bottom:16px;
+  }
+  .checkin-card h2{
+    font-size:17px;
+    color:var(--ochre-dark);
+    margin-bottom:8px;
+  }
+  .checkin-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    margin-bottom:8px;
+  }
+  .checkin-field{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+  }
+  .checkin-field label{
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .checkin-field input{
+    width:90px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    padding:5px 7px;
+  }
+  .checkin-note{
+    width:100%;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    padding:8px 10px;
+    resize:vertical;
+    min-height:36px;
+  }
+
+  .export-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .export-btn{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:11.5px;
+    padding:6px 10px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+  .export-btn:hover{ border-color:var(--moss); color:var(--moss-dark); }
+
+  .pilates-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:6px solid var(--plum);
+    padding:14px 16px 16px;
+    margin-bottom:16px;
+  }
+  .pilates-card h2{
+    font-size:17px;
+    color:var(--plum);
+    margin-bottom:6px;
+  }
+  .pilates-note{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .pilates-slot{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 0;
+    border-top:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .pilates-slot:first-of-type{ border-top:none; }
+  .pilates-slot input[type=text]{
+    flex:1;
+    min-width:110px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    padding:5px 7px;
+  }
+  .pilates-slot input[type=number]{
+    width:48px;
+    border:1px solid var(--line);
+    background:var(--surface-alt);
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    padding:4px 6px;
+    text-align:center;
+  }
+  .pilates-slot .pilates-unit{
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .pilates-slot .done-dot{ border-color:var(--plum); }
+  .pilates-slot .done-dot.on{ background:var(--plum); }
+  .pilates-remove{
+    background:none;
+    border:none;
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    padding:2px 4px;
+  }
+  .pilates-remove:hover{ color:var(--brick); }
+  .pilates-add-btn{
+    margin-top:10px;
+    background:none;
+    border:1px dashed var(--plum);
+    color:var(--plum);
+    font-size:12px;
+    font-weight:600;
+    padding:6px 12px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+</style>
 </head>
 <body>
-
-<div class="app-container">
-  <header>
-    <h1>Strength & Fatigue Tracker</h1>
-    <p style="margin:0; color:#64748b; font-size:0.9rem;">4-Week Full-Body Plan</p>
+<div class="wrap">
+  <header class="top">
+    <h1>Foundation</h1>
+    <p>A 4-week full-body strength plan, three sessions a week — laid brick by brick alongside your Pilates practice.</p>
+    <div class="foundation" id="foundation"></div>
+    <div class="foundation-label"><span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span></div>
+    <div class="view-toggle" id="viewToggle">
+      <button id="btnTracker" class="active">Tracker</button>
+      <button id="btnGuide">Guide</button>
+    </div>
+    <div class="view-toggle mode-toggle" id="modeToggle">
+      <button id="modeFree">Free Weights</button>
+      <button id="modeMachine" class="active">Machines</button>
+    </div>
   </header>
 
-  <!-- HOW TO GUIDE & EXERCISE MANUAL -->
-  <div class="card">
-    <details>
-      <summary>📘 How-To Guide & Workout Instructions</summary>
-      <div class="guide-content">
-        <p><strong>Program Rules:</strong></p>
-        <ul>
-          <li><strong>Warm-up:</strong> Perform 5 minutes of light cardio or dynamic stretches before lifting.</li>
-          <li><strong>Progressive Overload:</strong> Increase weight slightly each week if form remains solid.</li>
-          <li><strong>Rest Intervals:</strong> Rest 60–90 seconds between sets.</li>
-          <li><strong>Deloading (Week 4):</strong> Lower weights by 20% to let joints and muscles fully recover.</li>
-        </ul>
-        <p><strong>Fatigue & Burnout Scale:</strong></p>
-        <ul>
-          <li><strong>Energy (Pre-workout):</strong> 1 = Exhausted, 5 = Peak Energy.</li>
-          <li><strong>Fatigue (Post-workout):</strong> 1 = Very Light, 5 = Maximum Exhaustion.</li>
-        </ul>
-      </div>
-    </details>
-  </div>
+  <div id="trackerView">
+    <div id="todayBanner"></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="days"></div>
+    <div id="checkinCard"></div>
 
-  <div id="burnout-alert" class="alert">
-    ⚠️ Alert: Consecutive high-fatigue sessions detected! Consider taking a deload day or focusing on light recovery.
-  </div>
-
-  <div class="nav-selectors">
-    <select id="week-select">
-      <option value="1">Week 1 (Baseline)</option>
-      <option value="2">Week 2 (Progressive Load)</option>
-      <option value="3">Week 3 (Peak Intensity)</option>
-      <option value="4">Week 4 (Deload & Recover)</option>
-    </select>
-
-    <select id="day-select">
-      <option value="day1">Day 1: Full Body A</option>
-      <option value="day2">Day 2: Full Body B</option>
-      <option value="day3">Day 3: Full Body C</option>
-    </select>
-  </div>
-
-  <!-- EQUIPMENT MODE TOGGLE -->
-  <div class="toggle-bar">
-    <button type="button" class="toggle-btn active" id="mode-freeweight" onclick="setEquipmentMode('freeweight')">Free Weights</button>
-    <button type="button" class="toggle-btn" id="mode-machine" onclick="setEquipmentMode('machine')">Machines</button>
-  </div>
-
-  <form id="workout-form">
-    <div class="card">
-      <h3>Pre-Workout Energy (1 - 5)</h3>
-      <div class="rating-group" id="energy-rating">
-        <button type="button" class="rating-btn" data-value="1">1</button>
-        <button type="button" class="rating-btn" data-value="2">2</button>
-        <button type="button" class="rating-btn" data-value="3">3</button>
-        <button type="button" class="rating-btn" data-value="4">4</button>
-        <button type="button" class="rating-btn" data-value="5">5</button>
-      </div>
+    <div class="stats">
+      <h3>Progress</h3>
+      <div class="stat-row" id="statRow"></div>
+      <div id="sparkArea"></div>
+      <div class="affirm-note" id="affirmNote"></div>
     </div>
 
-    <div class="card">
-      <h3 id="session-title">Today's Routine</h3>
-      <div id="exercise-list"></div>
-    </div>
-
-    <div class="card">
-      <h3>Post-Workout Fatigue (1 - 5)</h3>
-      <div class="rating-group" id="fatigue-rating">
-        <button type="button" class="rating-btn" data-value="1">1</button>
-        <button type="button" class="rating-btn" data-value="2">2</button>
-        <button type="button" class="rating-btn" data-value="3">3</button>
-        <button type="button" class="rating-btn" data-value="4">4</button>
-        <button type="button" class="rating-btn" data-value="5">5</button>
+    <div class="bottom-row">
+      <span class="save-note" id="saveNote">All changes save automatically.</span>
+      <div class="export-row">
+        <button class="export-btn" id="exportBtn">Backup data</button>
+        <button class="export-btn" id="importBtn">Restore backup</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none;">
+        <button class="reset-btn" id="resetBtn">Reset all data</button>
       </div>
     </div>
+  </div>
 
-    <button type="submit" class="btn-submit">Save Workout Session</button>
-  </form>
+  <div id="guideView">
+    <div class="guide-section">
+      <h2>Before you lift</h2>
+      <p>Every session, spend 5 minutes warming up before touching a weight. This wakes up the muscles and joints you're about to use and lowers injury risk.</p>
+      <ul>
+        <li>1–2 minutes of light movement — marching in place, jogging, or jumping jacks</li>
+        <li>10 bodyweight squats</li>
+        <li>10 arm circles each direction</li>
+        <li>5 hip circles each direction</li>
+        <li>A few slow bodyweight reps of whatever the first exercise is that day, before adding weight</li>
+      </ul>
+    </div>
+
+    <div class="guide-section mode-block" data-mode="free">
+      <h2>How to pick a starting weight</h2>
+      <p>Since you're brand new to this, start lighter than you think you need to. The goal for week 1 is to learn the movement, not to struggle.</p>
+      <ul>
+        <li>Pick a weight where the last 2–3 reps of a set feel challenging but you could still do 1–2 more with good form</li>
+        <li>If you can't finish the low end of the rep range (e.g. 10 reps), the weight is too heavy — drop it next set</li>
+        <li>If the high end of the rep range (e.g. 12 reps) feels easy the whole set, add weight next session</li>
+        <li>It's normal for different exercises to use very different weights — a shoulder press will always use less than a squat</li>
+      </ul>
+    </div>
+
+    <div class="guide-section mode-block" data-mode="machine">
+      <h2>How to pick a starting weight</h2>
+      <p>Machines use a weight pin in a stack rather than picking up a dumbbell, but the same idea applies: start lighter than you think you need. The goal for week 1 is learning each machine's setup, not struggling against it.</p>
+      <ul>
+        <li>Before adjusting the weight, always adjust the seat and pads to fit her body first — a machine sized wrong will feel harder or easier than it should regardless of the weight</li>
+        <li>Pick a pin position where the last 2–3 reps of a set feel challenging but she could still do 1–2 more with good form</li>
+        <li>If she can't finish the low end of the rep range (e.g. 10 reps), move the pin down one setting next set</li>
+        <li>If the high end of the rep range (e.g. 12 reps) feels easy the whole set, move the pin up one setting next session</li>
+        <li>It's normal for different machines to use very different weight numbers — a shoulder press machine will always show less than a leg press</li>
+      </ul>
+    </div>
+
+    <div class="guide-section mode-block" data-mode="free">
+      <h2>Free weight setup basics</h2>
+      <p>A little bit of gym-floor know-how makes the first few sessions much less intimidating.</p>
+      <ul>
+        <li>Dumbbells are usually racked in ascending order by weight, printed on the end of each one</li>
+        <li>Grab both dumbbells of a pair from the same spot so you know they match — mismatched pairs happen more than you'd think</li>
+        <li>Always re-rack weights when you're done, even light ones — it's gym etiquette and keeps the area safe</li>
+        <li>If a movement calls for a bench, adjust it to flat (not incline) unless the exercise specifically says otherwise</li>
+      </ul>
+    </div>
+
+    <div class="guide-section mode-block" data-mode="machine">
+      <h2>Machine setup basics</h2>
+      <p>Every machine at the gym has small adjustments — seat height, backrest angle, pad position — and getting these right matters as much as the weight itself.</p>
+      <ul>
+        <li>Adjust the seat or backrest before touching the weight pin — most machines have a lever or knob near the seat</li>
+        <li>Look for a small sticker or diagram on the machine showing correct joint alignment (e.g., knee lined up with the pivot point) — most commercial machines have one</li>
+        <li>If a machine feels off — a joint gets pinched, or the resistance feels uneven — that's usually a setup issue, not a form issue. Don't push through it; ask a staff member to help adjust it</li>
+        <li>Move the weight pin fully in before pulling it out and repositioning — this avoids it snagging halfway</li>
+      </ul>
+    </div>
+
+    <div class="guide-section">
+      <h2>Go slow, on purpose</h2>
+      <p>It's tempting to go all-in on day one, but strength training rewards patience in a way other things don't — pushing too hard too soon is the #1 reason beginners get hurt or burn out in week two.</p>
+      <ul>
+        <li>Week 1 isn't about how much weight you lift — it's about learning what correct form feels like</li>
+        <li>Never add weight and reps in the same session; progress one at a time</li>
+        <li>A little muscle fatigue by the last rep is the goal, not exhaustion by rep 3</li>
+        <li>Resting a day between sessions isn't losing progress — it's part of how the muscle actually builds</li>
+      </ul>
+    </div>
+
+    <div class="guide-section">
+      <h2>Progress takes longer than it feels like it should</h2>
+      <p>Visible changes are usually the last thing to show up, not the first. This is completely normal — it doesn't mean it isn't working.</p>
+      <ul>
+        <li>Weeks 1–2: mostly nervous-system learning — the movements start feeling smoother and less awkward</li>
+        <li>Weeks 3–4: real strength gains — the same weight starts to feel lighter, or she can do a rep or two more</li>
+        <li>Around week 6 and beyond: this is usually when physical changes become noticeable</li>
+        <li>A session that felt "easy," a plateau week, or not seeing the scale move yet are not signs to quit — they're normal parts of the process</li>
+      </ul>
+    </div>
+
+    <div class="guide-section">
+      <h2>Stair Master (cardio)</h2>
+      <p>This is optional, extra calorie burn on top of the lifting — done on the days you're <em>not</em> strength training, not stacked onto a lift day. Same rule as the lifting: start light and build up.</p>
+      <ul>
+        <li>Aim for 2 sessions a week — 8–10 minutes in week 1, building to 15–20 minutes by week 4 (the tracker shows the target for whichever week you're on)</li>
+        <li>Keep it at a pace where you could hold a conversation but not sing — that's the effort level that's sustainable and actually gets used regularly</li>
+        <li>Stand tall and let your legs do the work — avoid leaning on the handrails, which quietly does the work for you</li>
+        <li>If a strength session already left your legs very fatigued, it's fine to skip cardio that day or swap in an easy walk instead</li>
+      </ul>
+    </div>
+
+    <div class="guide-section">
+      <h2>Form cues, exercise by exercise</h2>
+      <div id="cueCardsWrap"></div>
+    </div>
+
+    <div class="guide-section">
+      <h2>Rest and breathing</h2>
+      <ul>
+        <li>Rest 60–90 seconds between sets — enough to recover, not so much that you cool down</li>
+        <li>Exhale on the hard part of the lift (standing up from a squat, pressing up), inhale on the easy part (lowering down)</li>
+        <li>Never hold your breath through a whole rep</li>
+      </ul>
+    </div>
+
+    <div class="guide-section">
+      <h2>When to stop or scale back</h2>
+      <div class="warn-box">
+        <strong>Muscle fatigue and mild soreness the next day are normal.</strong> Sharp pain, joint pain, or pain during a movement is not — stop that exercise for the day if it happens.
+        If soreness from a session lasts more than 3–4 days, or something hurts even at rest, ease off and check in with a doctor or physical therapist before continuing that movement.
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  let currentEquipmentMode = 'freeweight';
+const EXERCISES = [
+  { key:'squat',   target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-0' },
+  { key:'pushup',  target:'3 × 8–10',  unit:'lb',  sets:3, dayClass:'day-0' },
+  { key:'rdl',     target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-1' },
+  { key:'row',     target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-1' },
+  { key:'press',   target:'3 × 10–12', unit:'lb',  sets:3, dayClass:'day-2' },
+  { key:'bridge',  target:'3 × 12–15', unit:'lb',  sets:3, dayClass:'day-2' },
+  { key:'plank',   target:'3 × 20–30 sec', unit:'sec', sets:3, isTimed:true, dayClass:'day-0' },
+];
 
-  const ROUTINES = {
-    day1: [
-      { 
-        id: 'squat', 
-        name: { freeweight: 'Goblet Squat', machine: 'Leg Press Machine' }, 
-        target: 'Quads & Glutes', 
-        cue: 'Keep chest upright, push through heels, knees tracking over toes.' 
-      },
-      { 
-        id: 'push', 
-        name: { freeweight: 'Dumbbell Chest Press', machine: 'Chest Press Machine' }, 
-        target: 'Chest & Triceps', 
-        cue: 'Retract shoulder blades, lower dumbbells smoothly to chest level.' 
-      },
-      { 
-        id: 'row', 
-        name: { freeweight: 'Dumbbell Bent Rows', machine: 'Seated Cable Row' }, 
-        target: 'Upper Back & Lats', 
-        cue: 'Pull toward belly button, pause briefly to squeeze shoulder blades.' 
-      },
-      { 
-        id: 'plank', 
-        name: { freeweight: 'Forearm Plank', machine: 'Abdominal Crunch Machine' }, 
-        target: 'Core Stability', 
-        cue: 'Keep glutes tight, brace core like preparing for a punch.' 
-      }
-    ],
-    day2: [
-      { 
-        id: 'deadlift', 
-        name: { freeweight: 'Romanian Deadlift (RDL)', machine: 'Seated Hamstring Curl' }, 
-        target: 'Hamstrings & Glutes', 
-        cue: 'Hinge hips backward, keep spine flat, feel stretch in hamstrings.' 
-      },
-      { 
-        id: 'overhead', 
-        name: { freeweight: 'Dumbbell Overhead Press', machine: 'Shoulder Press Machine' }, 
-        target: 'Shoulders', 
-        cue: 'Press straight overhead without arching your lower back.' 
-      },
-      { 
-        id: 'pulldown', 
-        name: { freeweight: 'Single-Arm DB Row', machine: 'Lat Pulldown Machine' }, 
-        target: 'Lats & Back', 
-        cue: 'Drive elbows down toward side pockets, control the return.' 
-      },
-      { 
-        id: 'carry', 
-        name: { freeweight: 'Farmers Walk', machine: 'Captain Chair Leg Raise' }, 
-        target: 'Grip & Core', 
-        cue: 'Walk tall with shoulders back and core engaged.' 
-      }
-    ],
-    day3: [
-      { 
-        id: 'lunge', 
-        name: { freeweight: 'Reverse Dumbbell Lunges', machine: 'Leg Extension Machine' }, 
-        target: 'Quads & Balance', 
-        cue: 'Step back smoothly, control back knee descent to gentle tap.' 
-      },
-      { 
-        id: 'incline', 
-        name: { freeweight: 'Incline DB Press', machine: 'Incline Machine Press' }, 
-        target: 'Upper Chest', 
-        cue: 'Set bench to 30-45 degrees, press straight upward.' 
-      },
-      { 
-        id: 'facepull', 
-        name: { freeweight: 'Rear Delt DB Flyes', machine: 'Cable Face Pulls' }, 
-        target: 'Rear Delts & Posture', 
-        cue: 'Pull hands toward forehead, focus on back of shoulders.' 
-      },
-      { 
-        id: 'hollow', 
-        name: { freeweight: 'Deadbugs', machine: 'Torso Rotation Machine' }, 
-        target: 'Deep Core', 
-        cue: 'Press lower back flat into floor throughout movement.' 
-      }
-    ]
-  };
+const MODE_STORAGE_KEY = 'wife-strength-tracker-mode-v1';
+let mode = 'machine';
 
-  let selectedEnergy = 3;
-  let selectedFatigue = 3;
+const SQUAT_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="27" y1="90" x2="73" y2="90" stroke="var(--line)" stroke-width="2"/><g><circle cx="50" cy="16" r="6"><animate attributeName="cy" values="16;34;16" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><line x1="50" x2="50"><animate attributeName="y1" values="22;40;22" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y2" values="48;60;48" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></line><polyline><animate attributeName="points" values="43,26 41,36 47,44;43,44 41,54 47,62;43,26 41,36 47,44" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><polyline><animate attributeName="points" values="57,26 59,36 53,44;57,44 59,54 53,62;57,26 59,36 53,44" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><rect x="45" width="10" height="7" rx="1.5" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="y" values="41;59;41" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></rect><polyline><animate attributeName="points" values="50,48 45,70 43,90;49,60 38,72 40,90;50,48 45,70 43,90" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><polyline><animate attributeName="points" values="50,48 55,70 57,90;49,60 60,72 58,90;50,48 55,70 57,90" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline></g></svg>';
+const SQUAT_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="18" x2="34" y2="62" stroke="var(--line)" stroke-width="3"/><line x1="34" y1="62" x2="58" y2="66" stroke="var(--line)" stroke-width="3"/><g><circle cx="20" cy="20" r="6"/><polyline><animate attributeName="points" values="40,60 55,45 62,35;40,60 70,60 88,58;40,60 55,45 62,35" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><rect width="10" height="8" rx="1.5" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="x" values="57;83;57" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y" values="29;52;29" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></rect></g></svg>';
 
-  function setEquipmentMode(mode) {
-    currentEquipmentMode = mode;
-    document.getElementById('mode-freeweight').classList.toggle('active', mode === 'freeweight');
-    document.getElementById('mode-machine').classList.toggle('active', mode === 'machine');
-    renderExercises();
+const PUSHUP_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="84" x2="95" y2="84" stroke="var(--line)" stroke-width="2"/><g><circle cx="80" r="6"><animate attributeName="cy" values="47;55;47" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><line x1="22" x2="75"><animate attributeName="y1" values="58;66;58" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y2" values="50;58;50" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></line><polyline><animate attributeName="points" values="55,53 55,66 55,80;55,61 62,70 55,80;55,53 55,66 55,80" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><line x1="22" x2="18" y2="80"><animate attributeName="y1" values="58;66;58" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></line></g></svg>';
+const PUSHUP_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="25" y1="15" x2="25" y2="70" stroke="var(--line)" stroke-width="3"/><line x1="20" y1="82" x2="42" y2="86" stroke="var(--line)" stroke-width="2"/><g><circle cx="25" cy="18" r="6"/><line x1="25" y1="65" x2="40" y2="84"/><polyline><animate attributeName="points" values="30,30 24,34 26,40;30,30 45,32 60,30;30,30 24,34 26,40" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><circle r="3" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="cx" values="26;60;26" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="cy" values="40;30;40" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle></g></svg>';
+
+const RDL_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="27" y1="90" x2="73" y2="90" stroke="var(--line)" stroke-width="2"/><g><circle r="6"><animate attributeName="cx" values="50;66;50" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="cy" values="16;28;16" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><line><animate attributeName="x1" values="50;62;50" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y1" values="22;34;22" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="x2" values="50;50;50" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y2" values="50;55;50" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></line><line><animate attributeName="x1" values="45;62;45" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y1" values="26;34;26" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="x2" values="45;59;45" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y2" values="46;58;46" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></line><rect width="6" height="6" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="x" values="42;55;42" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y" values="44;56;44" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></rect><polyline><animate attributeName="points" values="50,50 48,70 46,90;50,55 48,72 46,90;50,50 48,70 46,90" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><polyline><animate attributeName="points" values="50,50 52,70 54,90;50,55 55,72 56,90;50,50 52,70 54,90" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline></g></svg>';
+const RDL_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="15" x2="18" y2="65" stroke="var(--line)" stroke-width="3"/><line x1="18" y1="52" x2="55" y2="54" stroke="var(--line)" stroke-width="2"/><g><circle cx="18" cy="18" r="6"/><polyline><animate attributeName="points" values="25,50 55,50 75,45;25,50 55,50 60,75;25,50 55,50 75,45" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><rect width="9" height="7" rx="1.5" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="x" values="72;56;72" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y" values="42;72;42" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></rect></g></svg>';
+
+const ROW_DIAGRAM_FREE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="25" y1="90" x2="75" y2="90" stroke="var(--line)" stroke-width="2"/><g><circle cx="66" cy="28" r="6"/><line x1="62" y1="34" x2="50" y2="55"/><polyline><animate attributeName="points" values="62,34 61,45 60,56;62,34 70,38 66,42;62,34 61,45 60,56" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><rect width="6" height="6" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="x" values="57;62;57" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y" values="54;39;54" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></rect><polyline points="50,55 48,72 46,90"/><polyline points="50,55 55,72 56,90"/></g></svg>';
+const ROW_DIAGRAM_MACHINE = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="22" y1="20" x2="22" y2="60" stroke="var(--line)" stroke-width="3"/><line x1="22" y1="58" x2="55" y2="80" stroke="var(--line)" stroke-width="2"/><g><circle cx="22" cy="22" r="6"/><polyline><animate attributeName="points" values="28,34 45,36 65,34;28,34 24,40 20,44;28,34 45,36 65,34" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><circle r="3" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="cx" values="65;20;65" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="cy" values="34;44;34" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle></g></svg>';
+
+const PRESS_DIAGRAM = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="30" y1="90" x2="70" y2="90" stroke="var(--line)" stroke-width="2"/><g><circle cx="50" cy="16" r="6"/><line x1="50" y1="22" x2="50" y2="50"/><polyline><animate attributeName="points" values="42,26 36,30 40,22;42,26 39,16 36,6;42,26 36,30 40,22" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><polyline><animate attributeName="points" values="58,26 64,30 60,22;58,26 61,16 64,6;58,26 64,30 60,22" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></polyline><circle r="3" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="cx" values="40;36;40" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="cy" values="22;6;22" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><circle r="3" fill="currentColor" opacity=".3" stroke="none"><animate attributeName="cx" values="60;64;60" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="cy" values="22;6;22" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></circle><polyline points="50,50 46,70 44,90"/><polyline points="50,50 54,70 56,90"/></g></svg>';
+
+const BRIDGE_DIAGRAM = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="10" y1="68" x2="90" y2="68" stroke="var(--line)" stroke-width="2"/><g><circle cx="18" cy="62" r="6"/><line x1="24" x2="50"><animate attributeName="y1" values="64;64;64" dur="2.6s" repeatCount="indefinite"/><animate attributeName="y2" values="64;54;64" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></line><line x1="50" x2="62" y2="52"><animate attributeName="y1" values="64;54;64" keyTimes="0;0.5;1" dur="2.6s" repeatCount="indefinite"/></line><line x1="62" y1="52" x2="62" y2="66"/></g></svg>';
+
+const PLANK_DIAGRAM = '<div class="cue-diagram"><div class="cue-frame"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="70" x2="95" y2="70" stroke="var(--line)" stroke-width="2"/><circle cx="80" cy="42" r="6"/><polyline points="15,64 45,52 74,44"/><line x1="74" y1="44" x2="74" y2="64"/></svg><span>Correct — straight line</span></div><span class="diagram-arrow">✕</span><div class="cue-frame warn"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="70" x2="95" y2="70" stroke="var(--line)" stroke-width="2"/><circle cx="80" cy="46" r="6"/><polyline points="15,60 45,66 74,48"/><line x1="74" y1="48" x2="74" y2="66"/></svg><span>Avoid — hips sagging</span></div></div>';
+
+function wrapDiagram(svg){
+  return '<div class="cue-diagram"><div class="cue-frame">' + svg + '<span>Slow rep — loops</span></div></div>';
+}
+
+const EQUIPMENT_DATA = {
+  squat: {
+    free:    { name:'Goblet Squat', diagram: wrapDiagram(SQUAT_DIAGRAM_FREE), cues:[
+      'Hold one dumbbell vertically against your chest with both hands',
+      'Feet just outside shoulder width, toes slightly turned out',
+      'Sit your hips back and down like sitting into a chair — knees track over (not past) your toes',
+      'Go as low as you can while keeping your heels flat and back flat, then drive up through your heels',
+    ]},
+    machine: { name:'Leg Press', diagram: wrapDiagram(SQUAT_DIAGRAM_MACHINE), cues:[
+      'Sit back fully against the pad, feet placed shoulder-width on the platform, flat and centered',
+      'Release the safety handles only once your feet are set',
+      'Lower the platform until your knees are at roughly 90°, never letting your lower back round off the pad',
+      'Press through your heels (not your toes) to extend — stop just short of locking your knees out completely',
+    ]},
+  },
+  pushup: {
+    free:    { name:'Push-up (knee or incline OK)', diagram: wrapDiagram(PUSHUP_DIAGRAM_FREE), cues:[
+      'Hands slightly wider than shoulders, body in a straight line from head to knees (or feet)',
+      'If a full push-up is too hard, drop to your knees or push up against a couch/counter — same movement, less resistance',
+      'Lower your chest toward the ground with elbows at roughly 45° from your body, not flared straight out',
+      'Push back up without letting your hips sag or pike up',
+    ]},
+    machine: { name:'Chest Press Machine', diagram: wrapDiagram(PUSHUP_DIAGRAM_MACHINE), cues:[
+      'Adjust the seat so the handles line up with the middle of your chest, not your shoulders or stomach',
+      "Back and head stay against the pad the whole set — don't let your shoulders round forward as you press",
+      'Press the handles forward until your arms are extended, without locking your elbows hard',
+      'Bring the handles back with control until you feel a light stretch across your chest, then repeat',
+    ]},
+  },
+  rdl: {
+    free:    { name:'Dumbbell Romanian Deadlift', diagram: wrapDiagram(RDL_DIAGRAM_FREE), cues:[
+      'Hold a dumbbell in each hand in front of your thighs',
+      'Soft bend in the knees that stays roughly the same throughout the movement',
+      'Hinge at the hips — push your hips back and let the weights slide down your legs, chest stays up',
+      'You should feel this in your hamstrings; stop lowering when you feel a stretch there, then squeeze your glutes to stand back up',
+    ]},
+    machine: { name:'Seated Leg Curl', diagram: wrapDiagram(RDL_DIAGRAM_MACHINE), cues:[
+      'Sit with the back of your knees right at the edge of the seat pad, and the ankle pad resting just above your heels',
+      "Hold the side handles for stability — don't let your hips lift off the seat as you curl",
+      'Pull your heels down and back in a slow, controlled curl, squeezing your hamstrings at the bottom',
+      "Let the pad return with control — don't let the weight stack drop and yank your legs back straight",
+    ]},
+  },
+  row: {
+    free:    { name:'Seated / Bent-over Row', diagram: wrapDiagram(ROW_DIAGRAM_FREE), cues:[
+      'Keep your back flat, not rounded — hinge from the hips if bent-over, chest up if seated',
+      'Pull the weight toward your lower ribs, leading with your elbows',
+      'Squeeze your shoulder blades together at the top of the movement',
+      "Lower with control — don't let the weight just drop",
+    ]},
+    machine: { name:'Seated Row Machine', diagram: wrapDiagram(ROW_DIAGRAM_MACHINE), cues:[
+      'Sit tall with your chest against the pad and feet planted on the footplate — this should stay in place the whole set',
+      "Grab the handle with a slight bend in your elbows, don't let your shoulders round forward to reach it",
+      'Pull the handle toward your torso, leading with your elbows and squeezing your shoulder blades together',
+      "Let your arms extend back out with control — don't let the weight stack yank you forward off the pad",
+    ]},
+  },
+  press: {
+    free:    { name:'Dumbbell Shoulder Press', diagram: wrapDiagram(PRESS_DIAGRAM), cues:[
+      'Start with dumbbells at shoulder height, palms facing forward',
+      'Press straight up until your arms are extended, without arching your lower back',
+      'Lower with control back to shoulder height',
+      "If your lower back arches a lot, drop the weight — that's a sign it's too heavy",
+    ]},
+    machine: { name:'Shoulder Press Machine', diagram: wrapDiagram(PRESS_DIAGRAM), cues:[
+      'Adjust the seat so the handles start level with your shoulders, not above your ears or below your chest',
+      "Keep your back flat against the pad the whole set — don't arch to help the weight up",
+      'Press the handles straight up until your arms are extended, without locking your elbows hard',
+      "Lower with control back to shoulder height — if your back starts arching off the pad, that's a sign to reduce the weight",
+    ]},
+  },
+  bridge: {
+    free:    { name:'Glute Bridge / Hip Thrust', diagram: wrapDiagram(BRIDGE_DIAGRAM), cues:[
+      'Lie on your back, knees bent, feet flat on the floor near your glutes',
+      'Drive through your heels and squeeze your glutes to lift your hips up',
+      'At the top, your body should form a straight line from shoulders to knees — avoid over-arching the lower back',
+      'Lower with control and repeat',
+    ]},
+    machine: { name:'Hip Thrust Machine (or Cable Pull-through)', diagram: wrapDiagram(BRIDGE_DIAGRAM), cues:[
+      "Setup varies more than other machines here — ask a staff member to show you your gym's specific hip thrust machine or cable pull-through station if you're not sure",
+      'Position yourself so the pad sits across your hips, not your lower back or stomach',
+      'Drive your hips forward/up by squeezing your glutes, not by arching your lower back',
+      "Pause briefly at the top with hips fully extended, then return with control — don't let the weight yank you back",
+    ]},
+  },
+  plank: {
+    free:    { name:'Plank', diagram: PLANK_DIAGRAM, cues:[
+      'Forearms on the ground, elbows under shoulders, body in a straight line',
+      "Squeeze your abs and glutes — don't let your hips sag or pike up",
+      "Breathe normally throughout; don't hold your breath",
+      "Stop the moment your hips drop or your form breaks down — that's the real end of the set, not the clock",
+    ]},
+    machine: { name:'Plank', diagram: PLANK_DIAGRAM, cues:[
+      'Forearms on the ground, elbows under shoulders, body in a straight line',
+      "Squeeze your abs and glutes — don't let your hips sag or pike up",
+      "Breathe normally throughout; don't hold your breath",
+      "Stop the moment your hips drop or your form breaks down — that's the real end of the set, not the clock",
+    ]},
+  },
+};
+
+const WEEKS = 4;
+const DAYS_PER_WEEK = 3;
+const CARDIO_SLOTS = 2;
+const CARDIO_TARGETS = {
+  1: '8–10 min',
+  2: '10–12 min',
+  3: '12–15 min',
+  4: '15–20 min',
+};
+const STORAGE_KEY = 'wife-strength-tracker-v1';
+
+let state = null;
+let currentWeek = 1;
+let saveTimeout = null;
+
+const WARMUP_STEPS = [
+  'Light cardio — 1–2 min marching, jogging, or jumping jacks',
+  '10 bodyweight squats',
+  '10 arm circles each direction',
+  '5 hip circles each direction',
+];
+
+const AFFIRMATIONS = [
+  "That's the box checked — showing up is the whole game in week 1.",
+  "Consistency beats intensity. This session counts just as much as a hard one.",
+  "You don't have to feel stronger yet for this to be working.",
+  "Slow and steady is the plan working exactly as intended.",
+  "Every session logged is one closer to it feeling easy.",
+  "No pressure to add weight today — repeating a session at the same weight is real progress too.",
+  "The habit is the hard part, and you're building it.",
+  "Good rest between sessions is part of getting stronger, not a step back.",
+];
+
+function randomAffirmation(){
+  return AFFIRMATIONS[Math.floor(Math.random() * AFFIRMATIONS.length)];
+}
+
+function blankSession(){
+  const exercises = {};
+  EXERCISES.forEach(ex => {
+    exercises[ex.key] = Array.from({length: ex.sets}, () => ({ amount:'', reps:'', done:false }));
+  });
+  return { date:'', complete:false, exercises, warmup: WARMUP_STEPS.map(()=>false), equipment:'machine', note:'' };
+}
+
+function blankCardio(){
+  return Array.from({length: CARDIO_SLOTS}, () => ({ minutes:'', level:'', done:false }));
+}
+
+function blankPilatesEntry(){
+  return { label:'', minutes:'', done:false };
+}
+
+function blankCheckin(){
+  return { weight:'', note:'' };
+}
+
+function blankState(){
+  const s = { weeks:{}, cardio:{}, checkins:{}, pilates:{} };
+  for(let w=1; w<=WEEKS; w++){
+    s.weeks[w] = {};
+    for(let d=0; d<DAYS_PER_WEEK; d++){
+      s.weeks[w][d] = blankSession();
+    }
+    s.cardio[w] = blankCardio();
+    s.checkins[w] = blankCheckin();
+    s.pilates[w] = [];
   }
+  return s;
+}
 
-  function initApp() {
-    renderExercises();
-    setupRatingListeners();
-    checkBurnoutHistory();
-
-    document.getElementById('week-select').addEventListener('change', renderExercises);
-    document.getElementById('day-select').addEventListener('change', renderExercises);
-  }
-
-  function renderExercises() {
-    const day = document.getElementById('day-select').value;
-    const exercises = ROUTINES[day] || [];
-    const container = document.getElementById('exercise-list');
-
-    container.innerHTML = exercises.map(ex => {
-      const name = typeof ex.name === 'object' ? ex.name[currentEquipmentMode] : ex.name;
-      return `
-        <div class="exercise-row">
-          <div class="exercise-header">
-            <strong>${name}</strong>
-            <span style="font-size:0.75rem; background:#e2e8f0; padding:0.2rem 0.4rem; border-radius:4px;">${ex.target}</span>
-          </div>
-          <div class="cue-box">💡 <strong>Form Cue:</strong> ${ex.cue}</div>
-          <div class="input-row">
-            <input type="number" placeholder="Weight (lbs)" id="weight-${ex.id}" min="0">
-            <input type="number" placeholder="Reps" id="reps-${ex.id}" min="0">
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function setupRatingListeners() {
-    const bindGroup = (groupId, callback) => {
-      const btns = document.querySelectorAll(`#${groupId} .rating-btn`);
-      btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          btns.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          callback(parseInt(btn.dataset.value));
-        });
-      });
-      btns[2].classList.add('selected');
-    };
-
-    bindGroup('energy-rating', v => selectedEnergy = v);
-    bindGroup('fatigue-rating', v => selectedFatigue = v);
-  }
-
-  function checkBurnoutHistory() {
-    const history = JSON.parse(localStorage.getItem('workout_history') || '[]');
-    if (history.length >= 2) {
-      const lastTwo = history.slice(-2);
-      if (lastTwo.every(session => session.fatigue >= 4)) {
-        document.getElementById('burnout-alert').style.display = 'block';
+async function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      const fresh = blankState();
+      for(let w=1; w<=WEEKS; w++){
+        for(let d=0; d<DAYS_PER_WEEK; d++){
+          if(parsed.weeks && parsed.weeks[w] && parsed.weeks[w][d]){
+            fresh.weeks[w][d] = Object.assign(blankSession(), parsed.weeks[w][d]);
+            EXERCISES.forEach(ex=>{
+              if(!fresh.weeks[w][d].exercises[ex.key]){
+                fresh.weeks[w][d].exercises[ex.key] = blankSession().exercises[ex.key];
+              }
+            });
+            if(!Array.isArray(fresh.weeks[w][d].warmup) || fresh.weeks[w][d].warmup.length !== WARMUP_STEPS.length){
+              fresh.weeks[w][d].warmup = WARMUP_STEPS.map(()=>false);
+            }
+          }
+        }
+        if(parsed.cardio && Array.isArray(parsed.cardio[w])){
+          fresh.cardio[w] = parsed.cardio[w].map(slot => Object.assign({ minutes:'', level:'', done:false }, slot));
+          while(fresh.cardio[w].length < CARDIO_SLOTS) fresh.cardio[w].push({ minutes:'', level:'', done:false });
+        }
+        if(parsed.checkins && parsed.checkins[w]){
+          fresh.checkins[w] = Object.assign(blankCheckin(), parsed.checkins[w]);
+        }
+        if(parsed.pilates && Array.isArray(parsed.pilates[w])){
+          fresh.pilates[w] = parsed.pilates[w].map(entry => Object.assign(blankPilatesEntry(), entry));
+        }
       }
+      return fresh;
+    }
+  }catch(e){
+    console.log('No existing data found, starting fresh.', e);
+  }
+  return blankState();
+}
+
+function scheduleSave(){
+  const note = document.getElementById('saveNote');
+  note.textContent = 'Saving…';
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      note.textContent = 'All changes saved.';
+    }catch(e){
+      note.textContent = 'Could not save — changes may be lost.';
+      console.error(e);
+    }
+  }, 400);
+}
+
+function sessionVolume(session){
+  let vol = 0;
+  EXERCISES.forEach(ex=>{
+    if(ex.isTimed) return;
+    session.exercises[ex.key].forEach(set=>{
+      const amt = parseFloat(set.amount) || 0;
+      const reps = parseFloat(set.reps) || 0;
+      vol += amt * reps;
+    });
+  });
+  return vol;
+}
+
+function allSessionsInOrder(){
+  const list = [];
+  for(let w=1; w<=WEEKS; w++){
+    for(let d=0; d<DAYS_PER_WEEK; d++){
+      list.push(state.weeks[w][d]);
     }
   }
+  return list;
+}
 
-  document.getElementById('workout-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const week = document.getElementById('week-select').value;
-    const day = document.getElementById('day-select').value;
+function computeStreak(){
+  const list = allSessionsInOrder();
+  let streak = 0;
+  for(let i=list.length-1; i>=0; i--){
+    if(list[i].complete) streak++;
+    else break;
+  }
+  return streak;
+}
 
-    const sessionData = {
-      date: new Date().toISOString(),
-      week: week,
-      day: day,
-      mode: currentEquipmentMode,
-      energy: selectedEnergy,
-      fatigue: selectedFatigue,
-      exercises: ROUTINES[day].map(ex => ({
-        id: ex.id,
-        name: typeof ex.name === 'object' ? ex.name[currentEquipmentMode] : ex.name,
-        weight: document.getElementById(`weight-${ex.id}`).value || 0,
-        reps: document.getElementById(`reps-${ex.id}`).value || 0
-      }))
-    };
-
-    const history = JSON.parse(localStorage.getItem('workout_history') || '[]');
-    history.push(sessionData);
-    localStorage.setItem('workout_history', JSON.stringify(history));
-
-    alert(`Week ${week} - ${day.toUpperCase()} saved successfully!`);
-    location.reload();
+function bestValueInSession(session, key, isTimed){
+  let best = 0;
+  session.exercises[key].forEach(set => {
+    const val = parseFloat(isTimed ? set.reps : set.amount) || 0;
+    if(val > best) best = val;
   });
+  return best;
+}
 
-  initApp();
+function bestBeforeSession(key, isTimed, excludeWeek, excludeDay){
+  let best = 0;
+  for(let w=1; w<=WEEKS; w++){
+    for(let d=0; d<DAYS_PER_WEEK; d++){
+      if(w === excludeWeek && d === excludeDay) continue;
+      const val = bestValueInSession(state.weeks[w][d], key, isTimed);
+      if(val > best) best = val;
+    }
+  }
+  return best;
+}
+
+function findNextSession(){
+  for(let w=1; w<=WEEKS; w++){
+    for(let d=0; d<DAYS_PER_WEEK; d++){
+      if(!state.weeks[w][d].complete) return { week:w, day:d };
+    }
+  }
+  return null;
+}
+
+function renderTodayBanner(){
+  const el = document.getElementById('todayBanner');
+  const next = findNextSession();
+  if(!next){
+    el.innerHTML = '<div class="today-banner"><span class="today-text"><strong>All 12 sessions complete!</strong> Time to think about what comes next.</span></div>';
+    return;
+  }
+  const label = 'Week ' + next.week + ', Day ' + (next.day + 1);
+  const isHere = (next.week === currentWeek);
+  el.innerHTML = '<div class="today-banner"><span class="today-text">Next up: <strong>' + label + '</strong></span>' +
+    (isHere ? '' : '<button id="goToNextBtn">Go to it</button>') + '</div>';
+  if(!isHere){
+    document.getElementById('goToNextBtn').onclick = () => {
+      currentWeek = next.week;
+      renderAll();
+    };
+  }
+}
+
+function renderCheckinCard(){
+  const el = document.getElementById('checkinCard');
+  const checkin = state.checkins[currentWeek];
+  el.innerHTML = '';
+  const card = document.createElement('div');
+  card.className = 'checkin-card';
+  card.innerHTML = '<h2>Weekly check-in — Week ' + currentWeek + '</h2>';
+
+  const row = document.createElement('div');
+  row.className = 'checkin-row';
+  const weightField = document.createElement('div');
+  weightField.className = 'checkin-field';
+  weightField.innerHTML = '<label>Weight (optional)</label>';
+  const weightInput = document.createElement('input');
+  weightInput.type = 'number';
+  weightInput.min = '0';
+  weightInput.step = '0.1';
+  weightInput.value = checkin.weight;
+  weightInput.placeholder = 'lb';
+  weightInput.oninput = (e) => { checkin.weight = e.target.value; scheduleSave(); };
+  weightField.appendChild(weightInput);
+  row.appendChild(weightField);
+  card.appendChild(row);
+
+  const noteLabel = document.createElement('div');
+  noteLabel.className = 'session-note-label';
+  noteLabel.textContent = 'How are things feeling this week? (energy, clothes fitting, motivation — whatever\'s worth noting)';
+  card.appendChild(noteLabel);
+
+  const noteArea = document.createElement('textarea');
+  noteArea.className = 'checkin-note';
+  noteArea.value = checkin.note;
+  noteArea.placeholder = 'Optional notes...';
+  noteArea.oninput = (e) => { checkin.note = e.target.value; scheduleSave(); };
+  card.appendChild(noteArea);
+
+  el.appendChild(card);
+}
+
+function renderFoundation(){
+  const el = document.getElementById('foundation');
+  el.innerHTML = '';
+  for(let w=1; w<=WEEKS; w++){
+    const sessions = Object.values(state.weeks[w]);
+    const done = sessions.filter(s=>s.complete).length;
+    const pct = Math.round((done / DAYS_PER_WEEK) * 100);
+    const block = document.createElement('div');
+    block.className = 'block';
+    const fill = document.createElement('div');
+    fill.className = 'fill';
+    fill.style.width = pct + '%';
+    block.appendChild(fill);
+    el.appendChild(block);
+  }
+}
+
+function renderTabs(){
+  const el = document.getElementById('tabs');
+  el.innerHTML = '';
+  for(let w=1; w<=WEEKS; w++){
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (w === currentWeek ? ' active' : '');
+    btn.textContent = 'Week ' + w;
+    btn.onclick = () => { currentWeek = w; renderAll(); };
+    el.appendChild(btn);
+  }
+}
+
+function renderDays(){
+  const el = document.getElementById('days');
+  el.innerHTML = '';
+  for(let d=0; d<DAYS_PER_WEEK; d++){
+    const session = state.weeks[currentWeek][d];
+    const card = document.createElement('div');
+    card.className = 'day-card day-' + d;
+
+    const head = document.createElement('div');
+    head.className = 'day-head';
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Day ' + (d+1);
+    const dateInput = document.createElement('input');
+    dateInput.type = 'date';
+    dateInput.className = 'date-input';
+    dateInput.value = session.date || '';
+    dateInput.onchange = (e) => { session.date = e.target.value; scheduleSave(); };
+    const equipToggle = document.createElement('div');
+    equipToggle.className = 'day-equip-toggle';
+    const freeBtn = document.createElement('button');
+    freeBtn.textContent = 'Free Weights';
+    freeBtn.className = session.equipment === 'free' ? 'active' : '';
+    const machBtn = document.createElement('button');
+    machBtn.textContent = 'Machines';
+    machBtn.className = session.equipment === 'machine' ? 'active' : '';
+    freeBtn.onclick = () => { session.equipment = 'free'; scheduleSave(); renderDays(); };
+    machBtn.onclick = () => { session.equipment = 'machine'; scheduleSave(); renderDays(); };
+    equipToggle.appendChild(freeBtn);
+    equipToggle.appendChild(machBtn);
+    head.appendChild(h2);
+    head.appendChild(dateInput);
+    head.appendChild(equipToggle);
+    card.appendChild(head);
+
+    // Warm-up checklist
+    const warmupBox = document.createElement('div');
+    warmupBox.className = 'warmup-box';
+    const warmupTitle = document.createElement('h4');
+    warmupTitle.textContent = 'Warm up first (about 5 minutes)';
+    warmupBox.appendChild(warmupTitle);
+    WARMUP_STEPS.forEach((step, i) => {
+      const row = document.createElement('label');
+      row.className = 'warmup-item' + (session.warmup[i] ? ' done' : '');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = session.warmup[i];
+      cb.onchange = (e) => {
+        session.warmup[i] = e.target.checked;
+        row.className = 'warmup-item' + (session.warmup[i] ? ' done' : '');
+        scheduleSave();
+      };
+      row.appendChild(cb);
+      row.appendChild(document.createTextNode(step));
+      warmupBox.appendChild(row);
+    });
+    card.appendChild(warmupBox);
+
+    EXERCISES.forEach(ex => {
+      const exEl = document.createElement('div');
+      exEl.className = 'exercise';
+
+      const nameRow = document.createElement('div');
+      nameRow.className = 'ex-name-row';
+      const leftSide = document.createElement('div');
+      leftSide.style.display = 'flex';
+      leftSide.style.alignItems = 'center';
+      const nameEl = document.createElement('div');
+      nameEl.className = 'ex-name';
+      nameEl.textContent = EQUIPMENT_DATA[ex.key][session.equipment].name;
+      leftSide.appendChild(nameEl);
+      const currentBest = bestValueInSession(session, ex.key, ex.isTimed);
+      const priorBest = bestBeforeSession(ex.key, ex.isTimed, currentWeek, d);
+      if(currentBest > 0 && currentBest > priorBest){
+        const badge = document.createElement('span');
+        badge.className = 'pb-badge';
+        badge.textContent = '🏆 PB';
+        leftSide.appendChild(badge);
+      }
+      const rightSide = document.createElement('div');
+      rightSide.style.display = 'flex';
+      rightSide.style.alignItems = 'center';
+      rightSide.style.gap = '8px';
+      const targetEl = document.createElement('div');
+      targetEl.className = 'ex-target';
+      targetEl.textContent = ex.target;
+      const howtoBtn = document.createElement('button');
+      howtoBtn.className = 'howto-link';
+      howtoBtn.textContent = 'How to';
+      howtoBtn.onclick = () => { applyMode(session.equipment); showGuide('cue-' + ex.key); };
+      rightSide.appendChild(targetEl);
+      rightSide.appendChild(howtoBtn);
+      nameRow.appendChild(leftSide);
+      nameRow.appendChild(rightSide);
+      exEl.appendChild(nameRow);
+
+      const setsRow = document.createElement('div');
+      setsRow.className = 'sets-row';
+
+      session.exercises[ex.key].forEach((set, i) => {
+        const block = document.createElement('div');
+        block.className = 'set-block';
+
+        const idx = document.createElement('span');
+        idx.className = 'set-idx';
+        idx.textContent = (i+1);
+        block.appendChild(idx);
+
+        if(!ex.isTimed){
+          const amtInput = document.createElement('input');
+          amtInput.type = 'number';
+          amtInput.min = '0';
+          amtInput.placeholder = ex.bodyweightOk ? 'BW' : '0';
+          amtInput.value = set.amount;
+          amtInput.oninput = (e) => { set.amount = e.target.value; scheduleSave(); refreshStats(); };
+          block.appendChild(amtInput);
+
+          const unit1 = document.createElement('span');
+          unit1.className = 'unit';
+          unit1.textContent = ex.unit;
+          block.appendChild(unit1);
+
+          const repsInput = document.createElement('input');
+          repsInput.type = 'number';
+          repsInput.min = '0';
+          repsInput.placeholder = 'reps';
+          repsInput.value = set.reps;
+          repsInput.oninput = (e) => { set.reps = e.target.value; scheduleSave(); refreshStats(); };
+          block.appendChild(repsInput);
+        } else {
+          const secInput = document.createElement('input');
+          secInput.type = 'number';
+          secInput.min = '0';
+          secInput.placeholder = '0';
+          secInput.value = set.reps;
+          secInput.oninput = (e) => { set.reps = e.target.value; scheduleSave(); };
+          block.appendChild(secInput);
+
+          const unit2 = document.createElement('span');
+          unit2.className = 'unit';
+          unit2.textContent = 'sec';
+          block.appendChild(unit2);
+        }
+
+        const dot = document.createElement('div');
+        dot.className = 'done-dot' + (set.done ? ' on' : '');
+        dot.onclick = () => {
+          set.done = !set.done;
+          dot.className = 'done-dot' + (set.done ? ' on' : '');
+          scheduleSave();
+        };
+        block.appendChild(dot);
+
+        setsRow.appendChild(block);
+      });
+
+      exEl.appendChild(setsRow);
+      card.appendChild(exEl);
+    });
+
+    const noteLabel = document.createElement('div');
+    noteLabel.className = 'session-note-label';
+    noteLabel.textContent = 'Notes for this session (optional)';
+    card.appendChild(noteLabel);
+    const noteArea = document.createElement('textarea');
+    noteArea.className = 'session-note';
+    noteArea.value = session.note || '';
+    noteArea.placeholder = 'How did it feel? Anything to remember for next time?';
+    noteArea.oninput = (e) => { session.note = e.target.value; scheduleSave(); };
+    card.appendChild(noteArea);
+
+    const completeRow = document.createElement('div');
+    completeRow.className = 'day-complete-row' + (session.complete ? ' checked' : '');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = session.complete;
+    cb.onchange = (e) => {
+      session.complete = e.target.checked;
+      scheduleSave();
+      renderFoundation();
+      refreshStats();
+      renderTodayBanner();
+      if(session.complete){
+        const note = document.getElementById('affirmNote');
+        note.textContent = randomAffirmation();
+        note.classList.remove('show');
+        void note.offsetWidth;
+        note.classList.add('show');
+      }
+      renderDays();
+    };
+    const cbLabel = document.createElement('label');
+    cbLabel.textContent = 'Mark this session complete';
+    completeRow.appendChild(cb);
+    completeRow.appendChild(cbLabel);
+    card.appendChild(completeRow);
+
+    el.appendChild(card);
+  }
+
+  // Cardio card
+  const cardioSlots = state.cardio[currentWeek];
+  const cardioCard = document.createElement('div');
+  cardioCard.className = 'cardio-card';
+  cardioCard.innerHTML = '<h2>Stair Master (optional)</h2><div class="cardio-note">2 sessions this week, ' + CARDIO_TARGETS[currentWeek] + ' at a pace where you can talk but not sing — on days you\'re not lifting.</div>';
+  cardioSlots.forEach((slot, i) => {
+    const row = document.createElement('div');
+    row.className = 'cardio-slot';
+
+    const label = document.createElement('label');
+    label.textContent = 'Session ' + (i+1);
+    row.appendChild(label);
+
+    const minInput = document.createElement('input');
+    minInput.type = 'number';
+    minInput.min = '0';
+    minInput.placeholder = '0';
+    minInput.value = slot.minutes;
+    minInput.oninput = (e) => { slot.minutes = e.target.value; scheduleSave(); refreshStats(); };
+    row.appendChild(minInput);
+
+    const minUnit = document.createElement('span');
+    minUnit.className = 'cardio-unit';
+    minUnit.textContent = 'min';
+    row.appendChild(minUnit);
+
+    const effortSelect = document.createElement('select');
+    effortSelect.className = 'cardio-effort';
+    ['', 'Easy', 'Moderate', 'Hard'].forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt;
+      o.textContent = opt || 'Effort';
+      if(slot.level === opt) o.selected = true;
+      effortSelect.appendChild(o);
+    });
+    effortSelect.onchange = (e) => { slot.level = e.target.value; scheduleSave(); };
+    row.appendChild(effortSelect);
+
+    const dot = document.createElement('div');
+    dot.className = 'done-dot' + (slot.done ? ' on' : '');
+    dot.title = 'Mark complete';
+    dot.onclick = () => {
+      slot.done = !slot.done;
+      dot.className = 'done-dot' + (slot.done ? ' on' : '');
+      scheduleSave();
+      refreshStats();
+    };
+    row.appendChild(dot);
+
+    cardioCard.appendChild(row);
+  });
+  el.appendChild(cardioCard);
+
+  // Pilates log
+  const pilatesEntries = state.pilates[currentWeek];
+  const pilatesCard = document.createElement('div');
+  pilatesCard.className = 'pilates-card';
+  pilatesCard.innerHTML = '<h2>Pilates</h2><div class="pilates-note">Log whatever sessions happen this week — no set target, just tracking.</div>';
+  pilatesEntries.forEach((entry, i) => {
+    const row = document.createElement('div');
+    row.className = 'pilates-slot';
+
+    const labelInput = document.createElement('input');
+    labelInput.type = 'text';
+    labelInput.placeholder = 'e.g. Tuesday mat class';
+    labelInput.value = entry.label;
+    labelInput.oninput = (e) => { entry.label = e.target.value; scheduleSave(); };
+    row.appendChild(labelInput);
+
+    const minInput = document.createElement('input');
+    minInput.type = 'number';
+    minInput.min = '0';
+    minInput.placeholder = '0';
+    minInput.value = entry.minutes;
+    minInput.oninput = (e) => { entry.minutes = e.target.value; scheduleSave(); refreshStats(); };
+    row.appendChild(minInput);
+
+    const minUnit = document.createElement('span');
+    minUnit.className = 'pilates-unit';
+    minUnit.textContent = 'min';
+    row.appendChild(minUnit);
+
+    const dot = document.createElement('div');
+    dot.className = 'done-dot' + (entry.done ? ' on' : '');
+    dot.title = 'Mark complete';
+    dot.onclick = () => {
+      entry.done = !entry.done;
+      dot.className = 'done-dot' + (entry.done ? ' on' : '');
+      scheduleSave();
+      refreshStats();
+    };
+    row.appendChild(dot);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'pilates-remove';
+    removeBtn.textContent = '✕';
+    removeBtn.title = 'Remove this session';
+    removeBtn.onclick = () => {
+      pilatesEntries.splice(i, 1);
+      scheduleSave();
+      refreshStats();
+      renderDays();
+    };
+    row.appendChild(removeBtn);
+
+    pilatesCard.appendChild(row);
+  });
+  const addPilatesBtn = document.createElement('button');
+  addPilatesBtn.className = 'pilates-add-btn';
+  addPilatesBtn.textContent = '+ Add Pilates session';
+  addPilatesBtn.onclick = () => {
+    pilatesEntries.push(blankPilatesEntry());
+    scheduleSave();
+    renderDays();
+  };
+  pilatesCard.appendChild(addPilatesBtn);
+  el.appendChild(pilatesCard);
+}
+
+function renderSpark(){
+  const el = document.getElementById('sparkArea');
+  const sessions = allSessionsInOrder();
+  const volumes = sessions.map(sessionVolume);
+  const hasAny = volumes.some(v => v > 0);
+  if(!hasAny){
+    el.innerHTML = '<div class="empty-note">Log your first session\'s weights and reps to see your volume trend here.</div>';
+    return;
+  }
+  const w = 340, h = 60, pad = 6;
+  const max = Math.max(...volumes, 1);
+  const stepX = (w - pad*2) / (volumes.length - 1 || 1);
+  let points = volumes.map((v, i) => {
+    const x = pad + i*stepX;
+    const y = h - pad - (v / max) * (h - pad*2);
+    return x + ',' + y;
+  }).join(' ');
+
+  el.innerHTML = `
+    <div class="spark-wrap">
+      <svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none">
+        <polyline points="${points}" fill="none" stroke="#A8462F" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <div class="spark-caption">Total volume (weight × reps) across all 12 sessions</div>
+    </div>
+  `;
+}
+
+function totalCardioMinutes(){
+  let total = 0;
+  for(let w=1; w<=WEEKS; w++){
+    state.cardio[w].forEach(slot => { total += parseFloat(slot.minutes) || 0; });
+  }
+  return total;
+}
+
+function totalPilatesMinutes(){
+  let total = 0;
+  for(let w=1; w<=WEEKS; w++){
+    (state.pilates[w] || []).forEach(entry => { total += parseFloat(entry.minutes) || 0; });
+  }
+  return total;
+}
+
+function refreshStats(){
+  const statRow = document.getElementById('statRow');
+  const sessions = allSessionsInOrder();
+  const completed = sessions.filter(s=>s.complete).length;
+  const streak = computeStreak();
+  const totalVolume = sessions.reduce((sum,s) => sum + sessionVolume(s), 0);
+  const cardioMin = totalCardioMinutes();
+  const pilatesMin = totalPilatesMinutes();
+
+  statRow.innerHTML = '';
+  const stats = [
+    { num: completed + ' / 12', lbl: 'Sessions logged' },
+    { num: streak, lbl: 'Current streak' },
+    { num: Math.round(totalVolume).toLocaleString(), lbl: 'Total volume (lb)' },
+    { num: Math.round(cardioMin), lbl: 'Cardio minutes' },
+    { num: Math.round(pilatesMin), lbl: 'Pilates minutes' },
+  ];
+  stats.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'stat';
+    div.innerHTML = `<div class="num">${s.num}</div><div class="lbl">${s.lbl}</div>`;
+    statRow.appendChild(div);
+  });
+  renderSpark();
+}
+
+function renderCueCards(){
+  const wrap = document.getElementById('cueCardsWrap');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  EXERCISES.forEach(ex => {
+    const data = EQUIPMENT_DATA[ex.key][mode];
+    const card = document.createElement('div');
+    card.id = 'cue-' + ex.key;
+    card.className = 'cue-card ' + ex.dayClass;
+    const cuesHtml = data.cues.map(c => '<li>' + c + '</li>').join('');
+    card.innerHTML = '<h3>' + data.name + '</h3>' + data.diagram + '<ul>' + cuesHtml + '</ul>';
+    wrap.appendChild(card);
+  });
+}
+
+function renderAll(){
+  renderFoundation();
+  renderTabs();
+  renderDays();
+  renderCheckinCard();
+  renderTodayBanner();
+  refreshStats();
+  renderCueCards();
+}
+
+function applyMode(newMode){
+  mode = newMode;
+  try{ localStorage.setItem(MODE_STORAGE_KEY, mode); }catch(e){ console.error(e); }
+  document.getElementById('modeFree').classList.toggle('active', mode === 'free');
+  document.getElementById('modeMachine').classList.toggle('active', mode === 'machine');
+  document.querySelectorAll('.mode-block').forEach(el => {
+    el.style.display = (el.dataset.mode === mode) ? 'block' : 'none';
+  });
+  renderCueCards();
+  renderDays();
+}
+document.getElementById('modeFree').onclick = () => applyMode('free');
+document.getElementById('modeMachine').onclick = () => applyMode('machine');
+
+function showTracker(){
+  document.getElementById('trackerView').style.display = 'block';
+  document.getElementById('guideView').style.display = 'none';
+  document.getElementById('btnTracker').classList.add('active');
+  document.getElementById('btnGuide').classList.remove('active');
+}
+function showGuide(scrollToId){
+  document.getElementById('trackerView').style.display = 'none';
+  document.getElementById('guideView').style.display = 'block';
+  document.getElementById('btnGuide').classList.add('active');
+  document.getElementById('btnTracker').classList.remove('active');
+  if(scrollToId){
+    const target = document.getElementById(scrollToId);
+    if(target){
+      setTimeout(() => {
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+        target.classList.add('flash');
+        setTimeout(() => target.classList.remove('flash'), 1400);
+      }, 50);
+    }
+  }
+}
+document.getElementById('btnTracker').onclick = () => showTracker();
+document.getElementById('btnGuide').onclick = () => showGuide();
+
+document.getElementById('resetBtn').onclick = () => {
+  if(!confirm('This clears all logged sessions. Are you sure?')) return;
+  state = blankState();
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ console.error(e); }
+  renderAll();
+};
+
+document.getElementById('exportBtn').onclick = () => {
+  try{
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const today = new Date().toISOString().slice(0,10);
+    a.href = url;
+    a.download = 'foundation-backup-' + today + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }catch(e){
+    console.error(e);
+    alert('Could not create backup file.');
+  }
+};
+
+document.getElementById('importBtn').onclick = () => {
+  document.getElementById('importFile').click();
+};
+
+document.getElementById('importFile').onchange = (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try{
+      const parsed = JSON.parse(ev.target.result);
+      if(!parsed || !parsed.weeks){
+        alert('That file doesn\'t look like a valid backup.');
+        return;
+      }
+      if(!confirm('This will replace all current data with the backup. Continue?')) return;
+      const fresh = blankState();
+      for(let w=1; w<=WEEKS; w++){
+        for(let d=0; d<DAYS_PER_WEEK; d++){
+          if(parsed.weeks[w] && parsed.weeks[w][d]){
+            fresh.weeks[w][d] = Object.assign(blankSession(), parsed.weeks[w][d]);
+          }
+        }
+        if(parsed.cardio && Array.isArray(parsed.cardio[w])){
+          fresh.cardio[w] = parsed.cardio[w].map(slot => Object.assign({ minutes:'', level:'', done:false }, slot));
+          while(fresh.cardio[w].length < CARDIO_SLOTS) fresh.cardio[w].push({ minutes:'', level:'', done:false });
+        }
+        if(parsed.checkins && parsed.checkins[w]){
+          fresh.checkins[w] = Object.assign(blankCheckin(), parsed.checkins[w]);
+        }
+        if(parsed.pilates && Array.isArray(parsed.pilates[w])){
+          fresh.pilates[w] = parsed.pilates[w].map(entry => Object.assign(blankPilatesEntry(), entry));
+        }
+      }
+      state = fresh;
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(err){ console.error(err); }
+      renderAll();
+      alert('Backup restored.');
+    }catch(err){
+      console.error(err);
+      alert('Could not read that file — it may not be a valid backup.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+};
+
+(async function init(){
+  state = await loadState();
+  renderAll();
+  let savedMode = 'machine';
+  try{
+    const m = localStorage.getItem(MODE_STORAGE_KEY);
+    if(m === 'free' || m === 'machine') savedMode = m;
+  }catch(e){ console.error(e); }
+  applyMode(savedMode);
+})();
 </script>
 </body>
 </html>
