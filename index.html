@@ -372,7 +372,7 @@
             border-color: var(--accent);
         }
 
-        /* Stick figure guide toggle */
+        /* Guide toggle & Animated stick figure section */
         .guide-toggle {
             font-size: 0.8rem;
             color: var(--accent);
@@ -385,7 +385,7 @@
         .form-guide {
             display: none;
             background: var(--accent-light);
-            padding: 1rem;
+            padding: 1.25rem;
             border-radius: var(--radius-sm);
             margin-top: 0.75rem;
             grid-column: 1 / -1;
@@ -393,30 +393,76 @@
 
         .form-guide.active {
             display: grid;
-            grid-template-columns: 80px 1fr;
-            gap: 1rem;
+            grid-template-columns: 100px 1fr;
+            gap: 1.25rem;
             align-items: center;
         }
 
-        .stick-figure {
-            width: 80px;
-            height: 80px;
+        .stick-figure-gif {
+            width: 100px;
+            height: 100px;
             background: white;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            border: 1px dashed var(--border);
-            text-align: center;
-            padding: 4px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .stick-figure-gif img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .guide-text p {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-main);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.35rem;
+        }
+
+        /* Comprehensive How-To Guide Section */
+        .how-to-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: var(--shadow);
+        }
+
+        .how-to-section h3 {
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .how-to-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .how-to-card {
+            background: var(--bg-color);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .how-to-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .how-to-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         /* Post Workout Reflection */
@@ -454,6 +500,9 @@
             .exercise-controls {
                 justify-content: space-between;
             }
+            .form-guide.active {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -477,7 +526,7 @@
         </div>
     </div>
 
-    <!-- Rest Timer Bar (Interactive) -->
+    <!-- Rest Timer Bar -->
     <div id="restTimerBar" class="rest-timer-bar hidden">
         <div>
             <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Rest Period</span>
@@ -524,11 +573,11 @@
             <div class="pulse-check">
                 <div class="pulse-label">Pre-Workout Readiness Pulse</div>
                 <div class="pulse-options">
-                    <button class="pulse-btn" onclick="selectPulse(this, 'Energy')">⚡ High Energy</button>
-                    <button class="pulse-btn" onclick="selectPulse(this, 'Energy')">🌱 Moderate</button>
-                    <button class="pulse-btn" onclick="selectPulse(this, 'Energy')">☕ Low / Tired</button>
-                    <button class="pulse-btn" onclick="selectPulse(this, 'Fatigue')">💪 Fresh</button>
-                    <button class="pulse-btn" onclick="selectPulse(this, 'Fatigue')">🛋️ Sore / Tight</button>
+                    <button class="pulse-btn" onclick="selectPulse(this)">⚡ High Energy</button>
+                    <button class="pulse-btn" onclick="selectPulse(this)">🌱 Moderate</button>
+                    <button class="pulse-btn" onclick="selectPulse(this)">☕ Low / Tired</button>
+                    <button class="pulse-btn" onclick="selectPulse(this)">💪 Fresh</button>
+                    <button class="pulse-btn" onclick="selectPulse(this)">🛋️ Sore / Tight</button>
                 </div>
             </div>
 
@@ -538,7 +587,7 @@
                     <div class="exercise-info">
                         <h4 data-free="Goblet Squat" data-machine="Leg Press Machine">Goblet Squat</h4>
                         <div class="exercise-details">3 sets × 10 reps • RPE 6 (Comfortable)</div>
-                        <span class="guide-toggle" onclick="toggleGuide(this)">View form cue</span>
+                        <span class="guide-toggle" onclick="toggleGuide(this)">View form cue & demo</span>
                     </div>
                     <div class="exercise-controls">
                         <input type="text" class="weight-input" placeholder="Weight">
@@ -546,13 +595,14 @@
                         <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
                     </div>
                     <div class="form-guide">
-                        <div class="stick-figure">
-                            <!-- Minimalist Stick Figure representation -->
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#3A4D39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7l-3 5"/><path d="M12 13l3 5"/><path d="M9 9h6"/></svg>
+                        <div class="stick-figure-gif">
+                            <!-- Placeholder or link for animated stick figure GIF -->
+                            <img src="https://via.placeholder.com/100x100.png?text=Squat+GIF" alt="Goblet Squat Animation">
                         </div>
                         <div class="guide-text">
-                            <p><strong>Form Cue:</strong> Chest proud, weight balanced mid-foot.</p>
-                            <p><strong>Breath:</strong> Inhale down, exhale powerfully on the way up.</p>
+                            <p><strong>Form Cue:</strong> Chest proud, weight balanced mid-foot, core braced lightly.</p>
+                            <p><strong>Breath:</strong> Inhale as you lower down, exhale powerfully on the way up.</p>
+                            <p><strong>Common Mistake:</strong> Heels lifting off the floor—keep whole foot grounded.</p>
                         </div>
                     </div>
                 </div>
@@ -562,7 +612,7 @@
                     <div class="exercise-info">
                         <h4 data-free="Dumbbell Romanian Deadlift" data-machine="Seated Leg Curl Machine">Dumbbell Romanian Deadlift</h4>
                         <div class="exercise-details">3 sets × 10 reps • Focus on hamstrings</div>
-                        <span class="guide-toggle" onclick="toggleGuide(this)">View form cue</span>
+                        <span class="guide-toggle" onclick="toggleGuide(this)">View form cue & demo</span>
                     </div>
                     <div class="exercise-controls">
                         <input type="text" class="weight-input" placeholder="Weight">
@@ -570,11 +620,12 @@
                         <input type="checkbox" class="set-checkbox" onchange="handleCheck(this)">
                     </div>
                     <div class="form-guide">
-                        <div class="stick-figure">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#3A4D39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7l2 5"/><path d="M12 13l-2 5"/><path d="M8 8l4 2 4-2"/></svg>
+                        <div class="stick-figure-gif">
+                            <img src="https://via.placeholder.com/100x100.png?text=RDL+GIF" alt="Romanian Deadlift Animation">
                         </div>
                         <div class="guide-text">
-                            <p><strong>Form Cue:</strong> Soft bend in knees, hinge hips back until a stretch is felt.</p>
+                            <p><strong>Form Cue:</strong> Soft bend in knees, push hips straight back until a stretch is felt in hamstrings.</p>
+                            <p><strong>Breath:</strong> Inhale on the way down, exhale as hips drive forward to stand.</p>
                         </div>
                     </div>
                 </div>
@@ -627,6 +678,27 @@
         </div>
     </div>
 
+    <!-- Comprehensive Beginner How-To Section -->
+    <div class="how-to-section">
+        <h3>Beginner Guide & Principles</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Everything you need to feel confident, safe, and empowered while lifting.</p>
+        
+        <div class="how-to-grid">
+            <div class="how-to-card">
+                <h4>1. Understanding RPE</h4>
+                <p>RPE (Rate of Perceived Exertion) on a scale of 1-10 measures how hard a set feels. For this beginner program, aim for a comfortable 6—where you finish feeling like you could easily do 3-4 more reps.</p>
+            </div>
+            <div class="how-to-card">
+                <h4>2. Progressive Overload</h4>
+                <p>Growth happens gradually. When 10 reps start feeling easy or smooth across all sets, consider bumping the weight up by the smallest available increment next session.</p>
+            </div>
+            <div class="how-to-card">
+                <h4>3. Rest & Recovery</h4>
+                <p>Rest 60 to 90 seconds between sets. This gives your muscles enough time to replenish energy so your form stays crisp and safe throughout every single set.</p>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -653,20 +725,20 @@
         document.getElementById(`week-${weekNum}`).classList.add('active');
     }
 
-    // Form Guide Toggle
+    // Form Guide & Animated GIF Toggle
     function toggleGuide(el) {
         const guide = el.closest('.exercise-item').querySelector('.form-guide');
         guide.classList.toggle('active');
-        el.textContent = guide.classList.contains('active') ? 'Hide form cue' : 'View form cue';
+        el.textContent = guide.classList.contains('active') ? 'Hide form cue & demo' : 'View form cue & demo';
     }
 
     // Pre-Workout Pulse Select
-    function selectPulse(btn, group) {
+    function selectPulse(btn) {
         btn.parentElement.querySelectorAll('.pulse-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
     }
 
-    // Checkbox action & micro celebration
+    // Checkbox action & micro dimming
     function handleCheck(checkbox) {
         if (checkbox.checked) {
             checkbox.closest('.exercise-item').style.opacity = '0.6';
