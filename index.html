@@ -39,7 +39,21 @@
             text-align: center;
             color: var(--text-muted);
             font-size: 0.85rem;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+        }
+        /* Encouragement / Beginner Welcome Banner */
+        .welcome-banner {
+            background: rgba(255, 107, 0, 0.1);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.85rem;
+            color: #ffb074;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        .welcome-banner strong {
+            color: var(--accent-orange);
         }
         .card {
             background: var(--card-bg);
@@ -54,6 +68,9 @@
             margin-top: 0;
             margin-bottom: 12px;
             color: var(--accent-orange);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .exercise-header {
             display: flex;
@@ -65,11 +82,15 @@
             margin: 0;
             font-size: 1rem;
         }
+        .tag-group {
+            display: flex;
+            gap: 4px;
+        }
         .tag {
             background: rgba(255, 107, 0, 0.15);
             color: var(--accent-orange);
-            font-size: 0.7rem;
-            padding: 2px 8px;
+            font-size: 0.65rem;
+            padding: 2px 6px;
             border-radius: 999px;
             font-weight: 600;
         }
@@ -89,14 +110,13 @@
             height: 100%;
             object-fit: cover;
         }
-        /* How-to guide section */
         .how-to-guide {
             font-size: 0.8rem;
             color: var(--text-muted);
             background: #252525;
             padding: 10px 12px;
             border-radius: 6px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             border-left: 3px solid var(--accent-orange);
         }
         .how-to-guide h4 {
@@ -107,6 +127,16 @@
         .how-to-guide ul {
             margin: 4px 0 0 16px;
             padding: 0;
+        }
+        /* Beginner regression tip */
+        .easier-tip {
+            font-size: 0.75rem;
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
         }
         .action-row {
             display: flex;
@@ -124,6 +154,10 @@
             background-color: var(--accent-orange);
             color: white;
             flex: 1;
+            transition: background 0.2s;
+        }
+        .btn-complete.completed-state {
+            background-color: var(--success);
         }
         .btn-complete:hover {
             background-color: var(--accent-orange-hover);
@@ -192,13 +226,56 @@
             font-size: 1rem;
             margin-top: 8px;
         }
+        .timer-badge {
+            font-size: 0.75rem;
+            background: #2a2a2a;
+            color: var(--accent-orange);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        .history-list {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 8px;
+        }
+        /* Custom modal for encouraging feedback */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 16px;
+        }
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 320px;
+            text-align: center;
+        }
+        .modal-card h3 { color: var(--accent-orange); margin-top: 0; }
+        .modal-card p { font-size: 0.9rem; color: var(--text-main); line-height: 1.4; }
+        .modal-btn { background: var(--accent-orange); color: white; margin-top: 12px; width: 100%; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Strength & Recovery</h1>
-    <p class="subtitle">Custom Strength & Energy Tracker</p>
+    <p class="subtitle" id="streak-subtitle">Building a strong foundation, one step at a time</p>
+
+    <!-- Beginner Welcome & Reassurance Banner -->
+    <div class="welcome-banner">
+        👋 <strong>Welcome!</strong> Take a deep breath. Focus entirely on form and feeling comfortable rather than heavy weight. Pausing or stopping early is a total win.
+    </div>
 
     <!-- Burnout / Fatigue Alert Container -->
     <div id="alert-box" class="alert-box">
@@ -207,14 +284,20 @@
 
     <!-- Warm-up Checklist Card -->
     <div class="card">
-        <h2>1. Warm-Up Checklist</h2>
+        <h2>
+            <span>1. Warm-Up Checklist</span>
+            <span class="timer-badge" onclick="startRestTimer(60)">⏱ Rest 60s</span>
+        </h2>
         <div class="checklist-item"><input type="checkbox"> 3-5 min light mobility / dynamic stretches</div>
         <div class="checklist-item"><input type="checkbox"> Core activation / pelvic tilt prep</div>
     </div>
 
-    <!-- Dynamic Exercises Container with How-To Guides & Swappable Equipment Modes -->
+    <!-- Dynamic Exercises Container -->
     <div class="card">
-        <h2>2. Workout Circuit</h2>
+        <h2>
+            <span>2. Workout Circuit</span>
+            <span id="timer-display" style="font-size: 0.85rem; color: var(--accent-orange);"></span>
+        </h2>
         <div id="exercise-container">
             <!-- Populated via JavaScript -->
         </div>
@@ -247,99 +330,127 @@
         </div>
 
         <button class="submit-session" onclick="submitSession()">Finish & Save Session</button>
+        
+        <div id="history-summary" class="history-list"></div>
+    </div>
+</div>
+
+<!-- Encouraging Feedback Modal -->
+<div id="feedback-modal" class="modal-overlay">
+    <div class="modal-card">
+        <h3 id="modal-title">Amazing Job!</h3>
+        <p id="modal-text">You showed up for yourself today, and that's what builds lifelong habits.</p>
+        <button class="modal-btn" onclick="closeModal()">Got it, thank you!</button>
     </div>
 </div>
 
 <script>
-    // Exercises configured with dual equipment modes (Free Weight vs Machine) and complete step-by-step How-To Guides
     let exercises = [
         {
             id: 0,
-            mode: 'free', // 'free' or 'machine'
+            mode: 'free', 
+            completed: false,
             free: {
                 name: "Goblet Squat (Free Weights)",
                 category: "Lower Body",
                 tag: "Free Weight",
                 gif: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Hold a dumbbell vertically against your chest like a goblet.", "Keep your chest tall and core braced.", "Lower your hips back and down between your knees, keeping heels flat."]
+                howTo: ["Hold a light dumbbell vertically against your chest like a goblet.", "Keep your chest tall and core braced.", "Lower your hips back and down between your knees, keeping heels flat."],
+                easierTip: "💡 Beginner Tip: Try doing these to a stable chair or box behind you if you want extra stability."
             },
             machine: {
                 name: "Leg Press Machine",
                 category: "Lower Body",
                 tag: "Machine",
                 gif: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Sit back against the pad with feet hip-width on the platform.", "Release safety bars and lower sled slowly until knees reach 90 degrees.", "Drive through your whole foot to extend legs without locking knees."]
+                howTo: ["Sit back against the pad with feet hip-width on the platform.", "Release safety bars and lower sled slowly until knees reach 90 degrees.", "Drive through your whole foot to extend legs without locking knees."],
+                easierTip: "💡 Beginner Tip: Start with just the sled weight to get comfortable with the range of motion."
             }
         },
         {
             id: 1,
             mode: 'free',
+            completed: false,
             free: {
                 name: "Dumbbell Romanian Deadlift",
                 category: "Posterior Chain",
                 tag: "Free Weight",
                 gif: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Hold dumbbells in front of thighs with a soft bend in knees.", "Hinge backward at the hips while keeping your back flat.", "Lower weights until you feel a deep hamstring stretch, then squeeze glutes to return."]
+                howTo: ["Hold light dumbbells in front of thighs with a soft bend in knees.", "Hinge backward at the hips while keeping your back flat.", "Lower weights only as far as your hamstrings feel a gentle stretch."],
+                easierTip: "💡 Beginner Tip: Focus entirely on the hip hinge motion with zero added weight first if needed."
             },
             machine: {
                 name: "Seated Leg Curl Machine",
                 category: "Posterior Chain",
                 tag: "Machine",
                 gif: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Adjust pad against the back of your lower calves just above heels.", "Secure lap pad snugly across thighs.", "Curl legs downward smoothly and control the return on the eccentric phase."]
+                howTo: ["Adjust pad against the back of your lower calves just above heels.", "Secure lap pad snugly across thighs.", "Curl legs downward smoothly and control the return."],
+                easierTip: "💡 Beginner Tip: Keep your toes pointed slightly straight to engage calves evenly."
             }
         },
         {
             id: 2,
             mode: 'free',
+            completed: false,
             free: {
                 name: "Dumbbell Row",
                 category: "Upper Body",
                 tag: "Free Weight",
                 gif: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Brace one hand and knee on a bench, holding a dumbbell in the opposite hand.", "Pull your elbow straight back toward your hip, keeping it tucked close to your body.", "Squeeze your shoulder blade at the top before lowering under control."]
+                howTo: ["Brace one hand and knee on a bench, holding a light dumbbell in the opposite hand.", "Pull your elbow straight back toward your hip.", "Squeeze your shoulder blade gently at the top."],
+                easierTip: "💡 Beginner Tip: Stand and support yourself on an incline bench if kneeling feels awkward."
             },
             machine: {
                 name: "Seated Cable Row",
                 category: "Upper Body",
                 tag: "Machine",
                 gif: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Sit upright with feet planted on platforms and knees slightly bent.", "Grab the handle, pull toward your lower abdomen, and retract shoulder blades.", "Extend arms slowly, allowing a slight stretch forward without rounding your lower back."]
+                howTo: ["Sit upright with feet planted on platforms and knees slightly bent.", "Grab the handle, pull toward your lower abdomen, and retract shoulder blades.", "Extend arms slowly, allowing a slight stretch forward."],
+                easierTip: "💡 Beginner Tip: Keep your shoulders relaxed down away from your ears."
             }
         },
         {
             id: 3,
             mode: 'free',
+            completed: false,
             free: {
                 name: "Push-Ups",
                 category: "Upper Body",
                 tag: "Bodyweight",
                 gif: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Place hands slightly wider than shoulder-width apart.", "Keep your body in a rigid straight line from head to heels.", "Lower your chest smoothly toward the floor, keeping elbows at a 45-degree angle."]
+                howTo: ["Place hands slightly wider than shoulder-width apart.", "Keep your body in a rigid straight line from head to knees or toes.", "Lower your chest smoothly toward the floor."],
+                easierTip: "💡 Beginner Tip: Incline push-ups against a sturdy countertop or high smith machine bar are fantastic for building core and chest strength safely!"
             },
             machine: {
                 name: "Chest Press Machine",
                 category: "Upper Body",
                 tag: "Machine",
                 gif: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=500&q=80",
-                howTo: ["Adjust seat height so handles align mid-chest.", "Press handles forward until arms are fully extended without locking elbows.", "Return weights slowly until a gentle stretch is felt across the chest."]
+                howTo: ["Adjust seat height so handles align mid-chest.", "Press handles forward until arms are fully extended without locking elbows.", "Return weights slowly until a gentle stretch is felt."],
+                easierTip: "💡 Beginner Tip: Keep your lower back gently pressed against the back pad."
             }
         }
     ];
 
     let currentRatings = { energy: null, fatigue: null };
+    let timerInterval = null;
 
     function renderExercises() {
         const container = document.getElementById("exercise-container");
         container.innerHTML = exercises.map((item, index) => {
             const currentEx = item.mode === 'free' ? item.free : item.machine;
             const toggleText = item.mode === 'free' ? "Switch to Machine" : "Switch to Free Weight";
+            const btnClass = item.completed ? "btn-complete completed-state" : "btn-complete";
+            const btnText = item.completed ? "Completed ✓" : "Complete Set";
 
             return `
                 <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color);">
                     <div class="exercise-header">
                         <h3>${currentEx.name}</h3>
-                        <span class="tag">${currentEx.tag}</span>
+                        <div class="tag-group">
+                            <span class="tag">${currentEx.category}</span>
+                            <span class="tag">${currentEx.tag}</span>
+                        </div>
                     </div>
                     <div class="media-container">
                         <img src="${currentEx.gif}" alt="${currentEx.name} demonstration" class="exercise-gif" loading="lazy">
@@ -350,8 +461,11 @@
                             ${currentEx.howTo.map(step => `<li>${step}</li>`).join('')}
                         </ul>
                     </div>
+                    <div class="easier-tip">
+                        ${currentEx.easierTip}
+                    </div>
                     <div class="action-row">
-                        <button class="btn-complete" onclick="markDone('${currentEx.name}')">Completed</button>
+                        <button class="${btnClass}" onclick="toggleComplete(${index})">${btnText}</button>
                         <button class="btn-swap" onclick="toggleEquipment(${index})">${toggleText}</button>
                     </div>
                 </div>
@@ -359,13 +473,30 @@
         }).join('');
     }
 
-    function markDone(name) {
-        alert(`${name} checked off! Excellent execution.`);
+    function toggleComplete(index) {
+        exercises[index].completed = !exercises[index].completed;
+        renderExercises();
     }
 
     function toggleEquipment(index) {
         exercises[index].mode = exercises[index].mode === 'free' ? 'machine' : 'free';
         renderExercises();
+    }
+
+    function startRestTimer(seconds) {
+        clearInterval(timerInterval);
+        let timeLeft = seconds;
+        const display = document.getElementById("timer-display");
+        
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                display.textContent = "Rest over! Ready.";
+                return;
+            }
+            display.textContent = `Rest: ${timeLeft}s`;
+            timeLeft--;
+        }, 1000);
     }
 
     function selectRating(type, value) {
@@ -385,11 +516,35 @@
         }
 
         let history = JSON.parse(localStorage.getItem('workout_history_orange') || '[]');
-        history.push({ date: new Date().toISOString(), ...currentRatings });
+        history.push({ date: new Date().toLocaleDateString(), ...currentRatings });
         localStorage.setItem('workout_history_orange', JSON.stringify(history));
 
         checkBurnout(history);
-        alert("Workout session logged successfully!");
+        loadHistorySummary();
+        showEncouragingModal(currentRatings);
+    }
+
+    function showEncouragingModal(ratings) {
+        const modal = document.getElementById("feedback-modal");
+        const title = document.getElementById("modal-title");
+        const text = document.getElementById("modal-text");
+
+        if (ratings.fatigue >= 4) {
+            title.textContent = "Listen to Your Body 💛";
+            text.textContent = "You completed your session even when fatigue was high. Take extra time to hydrate, stretch gently, and rest up!";
+        } else if (ratings.energy >= 4) {
+            title.textContent = "You Crushed It! ✨";
+            text.textContent = "Look at you building that strength foundation with great energy today. Every session makes you more confident!";
+        } else {
+            title.textContent = "Session Logged Successfully! 🎉";
+            text.textContent = "Showing up consistently is the hardest part, and you did it today. Great job moving at your own pace.";
+        }
+
+        modal.style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("feedback-modal").style.display = "none";
     }
 
     function checkBurnout(history) {
@@ -402,7 +557,20 @@
         }
     }
 
+    function loadHistorySummary() {
+        const history = JSON.parse(localStorage.getItem('workout_history_orange') || '[]');
+        const summaryEl = document.getElementById("history-summary");
+        const streakSubtitle = document.getElementById("streak-subtitle");
+
+        if (history.length > 0) {
+            streakSubtitle.textContent = `Consistency Milestone: ${history.length} completed session${history.length > 1 ? 's' : ''} logged!`;
+            const last = history[history.length - 1];
+            summaryEl.innerHTML = `<strong>Last Logged:</strong> ${last.date} — Energy: ${last.energy}/5, Fatigue: ${last.fatigue}/5`;
+        }
+    }
+
     renderExercises();
+    loadHistorySummary();
     const savedHistory = JSON.parse(localStorage.getItem('workout_history_orange') || '[]');
     checkBurnout(savedHistory);
 </script>
