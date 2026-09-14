@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strength & Fatigue Tracker</title>
+  <title>4-Week Strength & Fatigue Tracker</title>
   <style>
     :root {
       --bg-color: #f4f6f8;
@@ -12,6 +12,7 @@
       --text: #1e293b;
       --border: #e2e8f0;
       --warning: #ef4444;
+      --accent: #f59e0b;
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -31,7 +32,7 @@
       margin-bottom: 1.5rem;
     }
     h1 {
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.25rem 0;
       font-size: 1.5rem;
     }
     .card {
@@ -41,6 +42,20 @@
       margin-bottom: 1rem;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       border: 1px solid var(--border);
+    }
+    .nav-selectors {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    select {
+      flex: 1;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.95rem;
+      font-weight: bold;
     }
     .alert {
       display: none;
@@ -74,17 +89,33 @@
       border-color: var(--primary);
     }
     .exercise-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 0.75rem 0;
       border-bottom: 1px solid var(--border);
     }
     .exercise-row:last-child {
       border-bottom: none;
     }
-    .input-group input {
-      width: 60px;
+    .exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    .cue-box {
+      font-size: 0.8rem;
+      color: #64748b;
+      background: #f8fafc;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      margin: 0.4rem 0;
+    }
+    .input-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .input-row input {
+      flex: 1;
       padding: 0.4rem;
       border: 1px solid var(--border);
       border-radius: 4px;
@@ -108,12 +139,27 @@
 
 <div class="app-container">
   <header>
-    <h1>Workout & Fatigue Tracker</h1>
-    <p style="margin:0; color:#64748b; font-size:0.9rem;">Track effort, weight progression, and recovery.</p>
+    <h1>Full-Body Strength Plan</h1>
+    <p style="margin:0; color:#64748b; font-size:0.9rem;">4-Week Progression & Recovery Tracker</p>
   </header>
 
   <div id="burnout-alert" class="alert">
-    ⚠️ Alert: Consecutive high-fatigue sessions detected! Consider a light recovery session today.
+    ⚠️ Alert: Consecutive high-fatigue sessions detected! Consider taking a deload day or focusing on light recovery.
+  </div>
+
+  <div class="nav-selectors">
+    <select id="week-select">
+      <option value="1">Week 1 (Baseline & Form)</option>
+      <option value="2">Week 2 (Progressive Load)</option>
+      <option value="3">Week 3 (Intensity Peak)</option>
+      <option value="4">Week 4 (Deload & Recovery)</option>
+    </select>
+
+    <select id="day-select">
+      <option value="day1">Day 1: Full Body A</option>
+      <option value="day2">Day 2: Full Body B</option>
+      <option value="day3">Day 3: Full Body C</option>
+    </select>
   </div>
 
   <form id="workout-form">
@@ -129,12 +175,12 @@
     </div>
 
     <div class="card">
-      <h3>Today's Exercises</h3>
+      <h3 id="session-title">Today's Routine</h3>
       <div id="exercise-list"></div>
     </div>
 
     <div class="card">
-      <h3>Session Fatigue Rating (1 - 5)</h3>
+      <h3>Post-Workout Fatigue (1 - 5)</h3>
       <div class="rating-group" id="fatigue-rating">
         <button type="button" class="rating-btn" data-value="1">1</button>
         <button type="button" class="rating-btn" data-value="2">2</button>
@@ -144,17 +190,31 @@
       </div>
     </div>
 
-    <button type="submit" class="btn-submit">Save Session</button>
+    <button type="submit" class="btn-submit">Save Workout Session</button>
   </form>
 </div>
 
 <script>
-  const EXERCISES = [
-    { id: 'squat', name: 'Goblet Squats / Machine Press', cue: 'Focus on depth and control' },
-    { id: 'row', name: 'Seated Cable Row', cue: 'Squeeze shoulder blades' },
-    { id: 'press', name: 'Dumbbell Overhead Press', cue: 'Keep core tight' },
-    { id: 'plank', name: 'Core Hold / Plank', cue: 'Maintain flat posture' }
-  ];
+  const ROUTINES = {
+    day1: [
+      { id: 'squat', name: 'Goblet Squats / Leg Press', target: 'Quads & Glutes', cue: 'Keep chest upright, push through heels' },
+      { id: 'push', name: 'Dumbbell Chest Press / Machine Press', target: 'Chest & Triceps', cue: 'Retract shoulder blades, control the lower' },
+      { id: 'row', name: 'Seated Cable Row', target: 'Upper Back & Lats', cue: 'Pull toward belly button, squeeze back' },
+      { id: 'plank', name: 'Forearm Plank / Core Hold', target: 'Core Stability', cue: 'Maintain straight hips and squeeze glutes' }
+    ],
+    day2: [
+      { id: 'deadlift', name: 'RDL / Romanian Deadlift', target: 'Hamstrings & Glutes', cue: 'Hinge at hips, keep spine neutral' },
+      { id: 'overhead', name: 'Dumbbell Overhead Press', target: 'Shoulders', cue: 'Press straight up without arching lower back' },
+      { id: 'pulldown', name: 'Lat Pulldown', target: 'Lats & Upper Back', cue: 'Drive elbows down toward side pockets' },
+      { id: 'carry', name: 'Farmers Carry', target: 'Grip & Core', cue: 'Walk tall with shoulders back' }
+    ],
+    day3: [
+      { id: 'lunge', name: 'Reverse Lunges / Step-Ups', target: 'Quads & Balance', cue: 'Control back knee descent' },
+      { id: 'incline', name: 'Incline DB Press', target: 'Upper Chest', cue: 'Keep 45-degree angle on bench' },
+      { id: 'facepull', name: 'Cable Face Pulls', target: 'Rear Delts & Posture', cue: 'Pull hands toward forehead, thumbs back' },
+      { id: 'hollow', name: 'Deadbugs / Hollow Hold', target: 'Deep Core', cue: 'Press lower back flat into floor' }
+    ]
+  };
 
   let selectedEnergy = 3;
   let selectedFatigue = 3;
@@ -163,19 +223,26 @@
     renderExercises();
     setupRatingListeners();
     checkBurnoutHistory();
+
+    document.getElementById('week-select').addEventListener('change', renderExercises);
+    document.getElementById('day-select').addEventListener('change', renderExercises);
   }
 
   function renderExercises() {
+    const day = document.getElementById('day-select').value;
+    const exercises = ROUTINES[day] || [];
     const container = document.getElementById('exercise-list');
-    container.innerHTML = EXERCISES.map(ex => `
+
+    container.innerHTML = exercises.map(ex => `
       <div class="exercise-row">
-        <div>
+        <div class="exercise-header">
           <strong>${ex.name}</strong>
-          <div style="font-size:0.8rem; color:#64748b;">${ex.cue}</div>
+          <span style="font-size:0.75rem; background:#e2e8f0; padding:0.2rem 0.4rem; border-radius:4px;">${ex.target}</span>
         </div>
-        <div class="input-group">
-          <input type="number" placeholder="lbs" id="weight-${ex.id}" min="0">
-          <input type="number" placeholder="reps" id="reps-${ex.id}" min="0">
+        <div class="cue-box">💡 <strong>Form Cue:</strong> ${ex.cue}</div>
+        <div class="input-row">
+          <input type="number" placeholder="Weight (lbs)" id="weight-${ex.id}" min="0">
+          <input type="number" placeholder="Reps" id="reps-${ex.id}" min="0">
         </div>
       </div>
     `).join('');
@@ -210,12 +277,18 @@
 
   document.getElementById('workout-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    const week = document.getElementById('week-select').value;
+    const day = document.getElementById('day-select').value;
+
     const sessionData = {
       date: new Date().toISOString(),
+      week: week,
+      day: day,
       energy: selectedEnergy,
       fatigue: selectedFatigue,
-      exercises: EXERCISES.map(ex => ({
+      exercises: ROUTINES[day].map(ex => ({
         id: ex.id,
+        name: ex.name,
         weight: document.getElementById(`weight-${ex.id}`).value || 0,
         reps: document.getElementById(`reps-${ex.id}`).value || 0
       }))
@@ -225,7 +298,7 @@
     history.push(sessionData);
     localStorage.setItem('workout_history', JSON.stringify(history));
 
-    alert('Workout saved successfully!');
+    alert(`Week ${week} - ${day.toUpperCase()} saved successfully!`);
     location.reload();
   });
 
