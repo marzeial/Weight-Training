@@ -74,19 +74,25 @@
         }
         .media-container {
             width: 100%;
-            height: 160px;
-            background-color: #f3f4f6;
+            height: 150px;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
             border-radius: 8px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            position: relative;
         }
-        .exercise-gif {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* Custom Smooth CSS/SVG Animations for Exercise Motion */
+        .animated-graphic {
+            width: 80px;
+            height: 80px;
+            animation: moveRoutine 2.5s ease-in-out infinite;
+        }
+        @keyframes moveRoutine {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.03); }
         }
         .form-cues {
             font-size: 0.8rem;
@@ -186,9 +192,9 @@
     <h1>Strength & Pilates Flow</h1>
     <p class="subtitle">Full-Body Foundation Plan</p>
 
-    <!-- Burnout / Fatigue Alert Container -->
+    <!-- Recovery Alert Container -->
     <div id="alert-box" class="alert-box">
-        ⚠️ <strong>Recovery Note:</strong> High fatigue logged recently. Consider focusing on lighter weights, extra warm-ups, or swapping to Pilates today.
+        ⚠️ <strong>Recovery Note:</strong> High fatigue logged recently. Consider lighter loads or swapping to Pilates today.
     </div>
 
     <!-- Warm-up Checklist Card -->
@@ -237,47 +243,47 @@
 </div>
 
 <script>
-    // Initial exercises state with visual demo media and fallback/swaps
     let exercises = [
         {
             name: "Goblet Squat",
             category: "Lower Body",
-            gif: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=500&q=80",
+            // Custom vector animation asset representing weighted squats
+            svg: `<svg class="animated-graphic" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
             cues: ["Hold weight close to chest", "Keep chest up and core tight", "Knees track over toes"],
             alternatives: ["Bodyweight Box Squat", "Leg Press Machine"]
         },
         {
             name: "Dumbbell Romanian Deadlift",
             category: "Posterior Chain",
-            gif: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=500&q=80",
+            svg: `<svg class="animated-graphic" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v12M9 13h6"/></svg>`,
             cues: ["Hinge at hips, back flat", "Dumbbells slide down shins", "Squeeze glutes to return"],
             alternatives: ["Cable Pull-Through", "Glute Bridge"]
         },
         {
             name: "Dumbbell Row",
             category: "Upper Body",
-            gif: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=500&q=80",
+            svg: `<svg class="animated-graphic" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V5s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="20" y2="22"/></svg>`,
             cues: ["Support torso on bench", "Pull elbow back toward hip", "Squeeze shoulder blades at top"],
             alternatives: ["Seated Cable Row", "Resistance Band Row"]
         },
         {
             name: "Push-Ups",
             category: "Upper Body",
-            gif: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=500&q=80",
+            svg: `<svg class="animated-graphic" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 17h20M6 7l6 3 6-3"/></svg>`,
             cues: ["Hands slightly wider than shoulders", "Keep body in a straight line", "Lower chest toward floor"],
             alternatives: ["Incline Bench Push-Up", "Kneeling Push-Up"]
         },
         {
             name: "Glute Bridges",
             category: "Glutes & Core",
-            gif: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=500&q=80",
+            svg: `<svg class="animated-graphic" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18c3-6 9-6 18 0"/><circle cx="12" cy="8" r="3"/></svg>`,
             cues: ["Feet flat, hip-width apart", "Drive through heels to lift hips", "Pause and squeeze at the top"],
             alternatives: ["Bodyweight Hip Thrust", "Pilates Bridge"]
         },
         {
             name: "Plank",
             category: "Core",
-            gif: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=500&q=80",
+            svg: `<svg class="animated-graphic" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="22" y2="12"/><circle cx="5" cy="8" r="2"/></svg>`,
             cues: ["Forearms under shoulders", "Engage core and glutes", "Keep neck neutral"],
             alternatives: ["Kneeling Plank", "Bird-Dog"]
         }
@@ -294,7 +300,7 @@
                     <span class="tag">${ex.category}</span>
                 </div>
                 <div class="media-container">
-                    <img src="${ex.gif}" alt="${ex.name} demo" class="exercise-gif" loading="lazy">
+                    ${ex.svg}
                 </div>
                 <div class="form-cues">
                     <strong>Form Cues:</strong>
@@ -318,7 +324,7 @@
         const alt = exercises[index].alternatives[0];
         const current = exercises[index].name;
         exercises[index].name = alt;
-        exercises[index].alternatives[0] = current; // Keep cycle going if swapped back
+        exercises[index].alternatives[0] = current;
         renderExercises();
         alert(`Swapped to ${alt}!`);
     }
@@ -339,7 +345,6 @@
             return;
         }
 
-        // Check history logic for burnout alert simulation
         let history = JSON.parse(localStorage.getItem('workout_history') || '[]');
         history.push({ date: new Date().toISOString(), ...currentRatings });
         localStorage.setItem('workout_history', JSON.stringify(history));
@@ -358,7 +363,6 @@
         }
     }
 
-    // Initialize on load
     renderExercises();
     const savedHistory = JSON.parse(localStorage.getItem('workout_history') || '[]');
     checkBurnout(savedHistory);
